@@ -1,6 +1,7 @@
-import { UserRepository } from "@/repositories/user-repository"
-import { User } from "@/types/user"
+
 import { hash } from "bcryptjs"
+import { User } from "../../types/user"
+import { UserRepository } from "../../repositories/user-repository"
 
 
 interface CreateUserUseCaseRequest {

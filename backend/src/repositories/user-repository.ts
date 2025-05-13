@@ -1,4 +1,4 @@
-import { CreateUserDto, User } from "@/types/user";
+import { CreateUserDto, User } from "../types/user";
 
 
 export abstract class UserRepository {
