@@ -3,6 +3,7 @@ import { z } from "zod";
 import { AuthUserUseCase } from "../../useCases/users/auth-user-useCase";
 import { PrismaUserRepository } from "../../repositories/prisma/prisma-user-repository";
 import { InvalidCredentialsErrors } from "../../errors/invalid-credentials-errors";
+import { sign } from "jsonwebtoken";
 
 export async function autenticate(request: Request, response: Response) {
 
@@ -18,9 +19,21 @@ export async function autenticate(request: Request, response: Response) {
         const prismaUserRepository = new PrismaUserRepository()
         const authenticateUseCase = new AuthUserUseCase(prismaUserRepository)
 
-        await authenticateUseCase.execute({
+        const { user } = await authenticateUseCase.execute({
             email,
             password
+        })
+
+        const token = sign(
+            {},
+            process.env.JWT_SECRET as string,
+            {
+                subject: user.id,
+                expiresIn: '60s'
+            })
+
+        response.status(200).send({
+            token
         })
 
     } catch (error) {
@@ -33,5 +46,5 @@ export async function autenticate(request: Request, response: Response) {
     }
 
 
-    response.status(200).send()
+
 }
