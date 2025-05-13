@@ -12,3 +12,7 @@ export type User = {
     createdAt: Date
     updatedAt: Date
 }
+
+export type UserWithPassword = {
+    password: string
+} & User

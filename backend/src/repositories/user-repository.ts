@@ -1,7 +1,7 @@
-import { CreateUserDto, User } from "../types/user";
+import { CreateUserDto, User, UserWithPassword } from "../types/user";
 
 
 export abstract class UserRepository {
     abstract create(data: CreateUserDto): Promise<User>
-    abstract findByEmail(email: string): Promise<User | null>
+    abstract findByEmail(email: string): Promise<UserWithPassword | null>
 }
