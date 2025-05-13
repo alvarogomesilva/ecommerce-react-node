@@ -2,6 +2,7 @@
 import { hash } from "bcryptjs"
 import { User } from "../../types/user"
 import { UserRepository } from "../../repositories/user-repository"
+import { UserAlredyExistsError } from "../../errors/user-alredy-exists-error"
 
 
 interface CreateUserUseCaseRequest {
@@ -20,7 +21,14 @@ export class CreateUserUseCase {
 
     async execute({ name, email, password }: CreateUserUseCaseRequest): Promise<CreateUserUseCaseReponse> {
 
+        const userWithSameEmail = await this.userRepository.findByEmail(email)
+
+        if (userWithSameEmail) {
+            throw new UserAlredyExistsError()
+        }
+
         const password_hash = await hash(password, 6)
+
 
         const user = await this.userRepository.create({
             name,
@@ -29,7 +37,7 @@ export class CreateUserUseCase {
         })
 
         return {
-            user,
+            user
         }
     }
 }

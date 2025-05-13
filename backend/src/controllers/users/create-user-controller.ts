@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { z } from "zod"
 import { PrismaUserRepository } from "../../repositories/prisma/prisma-user-repository";
 import { CreateUserUseCase } from "../../useCases/users/create-user-usecase";
+import { UserAlredyExistsError } from "../../errors/user-alredy-exists-error";
 
 export async function create(request: Request, response: Response) {
 
@@ -25,7 +26,9 @@ export async function create(request: Request, response: Response) {
         })
         
     } catch (error) {
-        console.log(error)
+        if (error instanceof UserAlredyExistsError) {
+            response.status(409).send({ message: error.message })
+        }
     }
 
     response.status(201).send()
