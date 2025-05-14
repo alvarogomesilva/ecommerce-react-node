@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import { SignIn } from "./pages/auth/sign-in";
 import { Inicial } from "./pages/store";
+import { StoreLayout } from "./pages/_layouts/store";
 
 export const router = createBrowserRouter([
     {
@@ -10,6 +11,9 @@ export const router = createBrowserRouter([
 
     {
         path: '/',
-        element: <Inicial />
+        element: <StoreLayout />,
+        children: [
+            { path: '/', element: <Inicial /> }
+        ]
     }
 ])
