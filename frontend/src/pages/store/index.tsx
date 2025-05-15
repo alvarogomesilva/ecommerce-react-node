@@ -71,6 +71,116 @@ export function Inicial() {
                     <span className="visually-hidden">Next</span>
                 </button>
             </div>
+
+            <h3 className='text-center py-4'>Produtos Destaques</h3>
+
+            <div className='container'>
+                <div className="row row-cols-1 row-cols-md-3 g-4 mb-4">
+                    <div className="col">
+                        <div className="card">
+                            <img src={Image} className="card-img-top" alt="..." />
+                            <div className="card-body">
+                                <h5 className="card-title">Titulo Produto</h5>
+                                <p className="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+
+                                <a href="#" className="btn btn-primary">
+                                    <i className="fa-solid fa-eye"></i>
+                                    <span> Ver mais</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col">
+                        <div className="card">
+                            <img src={Image} className="card-img-top" alt="..." />
+                            <div className="card-body">
+                                <h5 className="card-title">Card title</h5>
+                                <p className="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+
+                                <a href="#" className="btn btn-primary">
+                                    <i className="fa-solid fa-eye"></i>
+                                    <span> Ver mais</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col">
+                        <div className="card">
+                            <img src={Image} className="card-img-top" alt="..." />
+                            <div className="card-body">
+                                <h5 className="card-title">Card title</h5>
+                                <p className="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
+
+                                <a href="#" className="btn btn-primary">
+                                    <i className="fa-solid fa-eye"></i>
+                                    <span> Ver mais</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col">
+                        <div className="card">
+                            <img src={Image} className="card-img-top" alt="..." />
+                            <div className="card-body">
+                                <h5 className="card-title">Card title</h5>
+                                <p className="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+
+                                <a href="#" className="btn btn-primary">
+                                    <i className="fa-solid fa-eye"></i>
+                                    <span> Ver mais</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col">
+                        <div className="card">
+                            <img src={Image} className="card-img-top" alt="..." />
+                            <div className="card-body">
+                                <h5 className="card-title">Card title</h5>
+                                <p className="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+
+                                <a href="#" className="btn btn-primary">
+                                    <i className="fa-solid fa-eye"></i>
+                                    <span> Ver mais</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col">
+                        <div className="card">
+                            <img src={Image} className="card-img-top" alt="..." />
+                            <div className="card-body">
+                                <h5 className="card-title">Card title</h5>
+                                <p className="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+
+                                <a href="#" className="btn btn-primary">
+                                    <i className="fa-solid fa-eye"></i>
+                                    <span> Ver mais</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className='container'>
+                <div className="row align-items-md-stretch my-5">
+                    <div className="col-md-6">
+                        <div className="h-100 p-5 text-white bg-primary rounded-3">
+                            <h2>Change the background</h2>
+                            <p>Swap the background-color utility and add a `.text-*` color utility to mix up the jumbotron look. Then, mix and match with additional component themes and more.</p>
+                            <button className="btn btn-outline-light" type="button">Example button</button>
+                        </div>
+                    </div>
+                    <div className="col-md-6">
+                        <div className="h-100 p-5 bg-body-tertiary border rounded-3">
+                            <h2>Add borders</h2>
+                            <p>Or, keep it light and add a border for some added definition to the boundaries of your content. Be sure to look under the hood at the source HTML here as we've adjusted the alignment and sizing of both column's content for equal-height.</p>
+                            <button className="btn btn-outline-secondary" type="button">Example button</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </>
     )
 }
