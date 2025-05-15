@@ -1,6 +1,6 @@
 
 export function Inicial() {
     return (
-        <h1>Tela inicial da loja</h1>
+        <h1>Tela inicial</h1>
     )
 }
