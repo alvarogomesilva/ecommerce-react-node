@@ -48,10 +48,9 @@ export function StoreLayout() {
                 </div>
             </nav>
 
-            <div className="container mb-4">
+            <main>
                 <Outlet />
-
-            </div>
+            </main>
 
             <div className="bg-primary">
                 <div className="container">
