@@ -1,6 +1,15 @@
 
 export function Inicial() {
     return (
-        <h1>Tela inicial</h1>
+        <>
+            <h1>Conteudo</h1>
+            <h1>Conteudo</h1>
+            <h1>Conteudo</h1>
+            <h1>Conteudo</h1>
+            <h1>Conteudo</h1>
+            <h1>Conteudo</h1>
+            <h1>Conteudo</h1>
+            <h1>Conteudo</h1>
+        </>
     )
 }
