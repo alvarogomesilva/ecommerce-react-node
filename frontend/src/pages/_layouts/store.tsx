@@ -21,7 +21,7 @@ export function StoreLayout() {
                             </li>
 
                             <li className="nav-item">
-                                <a className="nav-link" href="#">Produtos</a>
+                                <Link className="nav-link" to={"/products"}>Produtos</Link>
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link" href="#">Blog</a>
@@ -35,13 +35,13 @@ export function StoreLayout() {
                         <div>
                             <button type="button" className="btn btn-info mx-2">
 
-                                <i className="fa-solid fa-user text-secondary"></i>
-                                <span className="mx-1 text-secondary">Login</span>
+                                <i className="fa-solid fa-user text-white"></i>
+                                <span className="mx-1 text-white">Login</span>
 
                             </button>
                             <button type="button" className="btn btn-info">
-                                <i className="fa-solid fa-cart-shopping text-secondary"></i>
-                                <span className="mx-1 text-secondary">Carrinho</span>
+                                <i className="fa-solid fa-cart-shopping text-white"></i>
+                                <span className="mx-1 text-white">Carrinho</span>
                             </button>
                         </div>
                     </div>
@@ -90,11 +90,11 @@ export function StoreLayout() {
                                 <form>
                                     <h5>Subscribe to our newsletter</h5>
                                     <p>Monthly digest of what's new and exciting from us.</p>
-                                    <div className="d-flex flex-column flex-sm-row w-100 gap-2"> <label htmlFor="newsletter1" className="visually-hidden">Email address</label> <input id="newsletter1" type="email" className="form-control" placeholder="Email address" /> <button className="btn btn-info text-secondary" type="button">Subscribe</button> </div>
+                                    <div className="d-flex flex-column flex-sm-row w-100 gap-2"> <label htmlFor="newsletter1" className="visually-hidden">Email address</label> <input id="newsletter1" type="email" className="form-control" placeholder="Email address" /> <button className="btn btn-info text-white" type="button">Subscribe</button> </div>
                                 </form>
                             </div>
                         </div>
-                        <div className="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
+                        <div className="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top text-white">
                             <p>© 2025 Company, Inc. All rights reserved.</p>
                             <ul className="list-unstyled d-flex">
                                 <li className="ms-3">

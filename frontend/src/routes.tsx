@@ -4,6 +4,7 @@ import { Inicial } from "./pages/store";
 import { StoreLayout } from "./pages/_layouts/store";
 import { Checkout } from "./pages/store/checkout";
 import { Categories } from "./pages/store/categories";
+import { Products } from "./pages/store/products";
 
 export const router = createBrowserRouter([
     {
@@ -17,7 +18,8 @@ export const router = createBrowserRouter([
         children: [
             { path: '/', element: <Inicial /> },
             { path: '/categories', element: <Categories /> },
-            { path: '/checkout', element: <Checkout />}
+            { path: '/checkout', element: <Checkout /> },
+            { path: '/products', element: <Products /> }
         ]
     }
 ])
