@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 
 export function StoreLayout() {
     return (
@@ -14,10 +14,10 @@ export function StoreLayout() {
                     <div className="collapse navbar-collapse" id="navbarsExample07XL">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
-                                <a className="nav-link active" aria-current="page" href="#">Inicio</a>
+                                <Link className="nav-link active" aria-current="page" to={"/"}>Inicio</Link>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#">Categorias</a>
+                                <Link className="nav-link" to={"/categories"}>Categorias</Link>
                             </li>
 
                             <li className="nav-item">

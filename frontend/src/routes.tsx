@@ -3,6 +3,7 @@ import { SignIn } from "./pages/auth/sign-in";
 import { Inicial } from "./pages/store";
 import { StoreLayout } from "./pages/_layouts/store";
 import { Checkout } from "./pages/store/checkout";
+import { Categories } from "./pages/store/categories";
 
 export const router = createBrowserRouter([
     {
@@ -15,6 +16,7 @@ export const router = createBrowserRouter([
         element: <StoreLayout />,
         children: [
             { path: '/', element: <Inicial /> },
+            { path: '/categories', element: <Categories /> },
             { path: '/checkout', element: <Checkout />}
         ]
     }
