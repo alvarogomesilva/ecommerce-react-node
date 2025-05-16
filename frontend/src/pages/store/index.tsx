@@ -1,4 +1,5 @@
 import Image from '../../assets/image.jpg'
+
 export function Inicial() {
     return (
         <>

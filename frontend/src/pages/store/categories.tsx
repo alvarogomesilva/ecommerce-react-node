@@ -1,3 +1,5 @@
+import Image from '../../assets/image.jpg'
+
 
 export function Categories() {
     return (
@@ -31,6 +33,77 @@ export function Categories() {
                                 <button type="submit" className="btn btn-primary ms-2"><i className="fa-solid fa-magnifying-glass"></i></button>
                             </div>
                             <h5 className="my-4">Lista de Categorias</h5>
+
+                            <div className="row row-cols-1 row-cols-md-3 g-4 mb-4">
+                                <div className="col">
+                                    <div className="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg">
+                                        <div className="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
+                                            <h3 className="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Another longer title belongs here</h3>
+                                            <ul className="d-flex list-unstyled mt-auto">
+                                                <li className="me-auto"> <img src="https://github.com/twbs.png" alt="Bootstrap" width="32" height="32" className="rounded-circle border border-white" /> </li>
+                                                <li className="d-flex align-items-center me-3">
+                                                    <svg className="bi me-2" width="1em" height="1em" role="img" aria-label="Location">
+                                                        <use xlinkHref="#geo-fill"></use>
+                                                    </svg>
+                                                    <small>California</small>
+                                                </li>
+                                                <li className="d-flex align-items-center">
+                                                    <svg className="bi me-2" width="1em" height="1em" role="img" aria-label="Duration">
+                                                        <use xlinkHref="#calendar3"></use>
+                                                    </svg>
+                                                    <small>5d</small>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg">
+                                        <div className="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
+                                            <h3 className="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Another longer title belongs here</h3>
+                                            <ul className="d-flex list-unstyled mt-auto">
+                                                <li className="me-auto"> <img src="https://github.com/twbs.png" alt="Bootstrap" width="32" height="32" className="rounded-circle border border-white" /> </li>
+                                                <li className="d-flex align-items-center me-3">
+                                                    <svg className="bi me-2" width="1em" height="1em" role="img" aria-label="Location">
+                                                        <use xlinkHref="#geo-fill"></use>
+                                                    </svg>
+                                                    <small>California</small>
+                                                </li>
+                                                <li className="d-flex align-items-center">
+                                                    <svg className="bi me-2" width="1em" height="1em" role="img" aria-label="Duration">
+                                                        <use xlinkHref="#calendar3"></use>
+                                                    </svg>
+                                                    <small>5d</small>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg">
+                                        <div className="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
+                                            <h3 className="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Another longer title belongs here</h3>
+                                            <ul className="d-flex list-unstyled mt-auto">
+                                                <li className="me-auto"> <img src="https://github.com/twbs.png" alt="Bootstrap" width="32" height="32" className="rounded-circle border border-white" /> </li>
+                                                <li className="d-flex align-items-center me-3">
+                                                    <svg className="bi me-2" width="1em" height="1em" role="img" aria-label="Location">
+                                                        <use xlinkHref="#geo-fill"></use>
+                                                    </svg>
+                                                    <small>California</small>
+                                                </li>
+                                                <li className="d-flex align-items-center">
+                                                    <svg className="bi me-2" width="1em" height="1em" role="img" aria-label="Duration">
+                                                        <use xlinkHref="#calendar3"></use>
+                                                    </svg>
+                                                    <small>5d</small>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
                         </div>
 
                     </div>
