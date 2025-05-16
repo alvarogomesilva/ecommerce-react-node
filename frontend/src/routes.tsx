@@ -5,6 +5,8 @@ import { StoreLayout } from "./pages/_layouts/store";
 import { Checkout } from "./pages/store/checkout";
 import { Categories } from "./pages/store/categories";
 import { Products } from "./pages/store/products";
+import { Dashboard } from "./pages/admin/dashboard";
+import { AdminLayout } from "./pages/_layouts/admin";
 
 export const router = createBrowserRouter([
     {
@@ -20,6 +22,14 @@ export const router = createBrowserRouter([
             { path: '/categories', element: <Categories /> },
             { path: '/checkout', element: <Checkout /> },
             { path: '/products', element: <Products /> }
+        ]
+    },
+
+    {
+        path: '/', 
+        element: <AdminLayout />,
+        children: [
+            { path: '/dashboard', element: <Dashboard /> }
         ]
     }
 ])
