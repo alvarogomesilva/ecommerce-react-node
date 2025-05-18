@@ -30,15 +30,14 @@ export function StoreLayout() {
                                 <a className="nav-link" href="#">Contatos</a>
                             </li>
 
-
                         </ul>
                         <div>
-                            <button type="button" className="btn btn-info mx-2">
+                            <Link to={"/login"} type="button" className="btn btn-info mx-2">
 
                                 <i className="fa-solid fa-user text-white"></i>
                                 <span className="mx-1 text-white">Login</span>
 
-                            </button>
+                            </Link>
                             <button type="button" className="btn btn-info">
                                 <i className="fa-solid fa-cart-shopping text-white"></i>
                                 <span className="mx-1 text-white">Carrinho</span>
