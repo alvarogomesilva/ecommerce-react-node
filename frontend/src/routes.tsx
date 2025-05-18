@@ -10,6 +10,7 @@ import { AdminLayout } from "./pages/_layouts/admin";
 import { SignUp } from "./pages/auth/sign-up";
 import { AdminCategories } from "./pages/admin/admin-categories";
 import { AdminSubCategories } from "./pages/admin/admin-sub-categories";
+import { AdminProducts } from "./pages/admin/admin-products";
 
 export const router = createBrowserRouter([
     {
@@ -40,6 +41,7 @@ export const router = createBrowserRouter([
             { path: '/dashboard', element: <Dashboard /> },
             { path: '/admin/categories', element: <AdminCategories /> },
             { path: '/admin/sub-categories', element: <AdminSubCategories /> },
+            { path: '/admin/products', element: <AdminProducts /> },
         ]
     }
 ])
