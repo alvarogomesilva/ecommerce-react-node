@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { LayoutDashboard, Shield  } from 'lucide-react';
 export function AdminLayout() {
     return (
@@ -13,17 +13,17 @@ export function AdminLayout() {
                     <div className="navbar-collapse collapse" id="navbarsExample07">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
-                                <a className="nav-link active d-flex gap-1" aria-current="page" href="#">
+                                <Link to={"/dashboard"} className="nav-link active d-flex gap-1" aria-current="page" >
                                     <LayoutDashboard />
                                     Dashboard
-                                </a>
+                                </Link>
                             </li>
 
                             <li className="nav-item">
-                                <a className="nav-link d-flex gap-1" href="#">
+                                <Link to={"/painel"} className="nav-link d-flex gap-1" >
                                     <Shield />
-                                    Configurações
-                                </a>
+                                    Painel
+                                </Link>
                             </li>
 
                             
