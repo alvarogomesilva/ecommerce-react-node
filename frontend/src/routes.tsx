@@ -8,6 +8,7 @@ import { Products } from "./pages/store/products";
 import { Dashboard } from "./pages/admin/dashboard";
 import { AdminLayout } from "./pages/_layouts/admin";
 import { SignUp } from "./pages/auth/sign-up";
+import { AdminCategories } from "./pages/admin/admin-categories";
 
 export const router = createBrowserRouter([
     {
@@ -35,7 +36,8 @@ export const router = createBrowserRouter([
         path: '/', 
         element: <AdminLayout />,
         children: [
-            { path: '/dashboard', element: <Dashboard /> }
+            { path: '/dashboard', element: <Dashboard /> },
+            { path: '/admin/categories', element: <AdminCategories /> }
         ]
     }
 ])
