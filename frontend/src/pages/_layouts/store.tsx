@@ -32,7 +32,7 @@ export function StoreLayout() {
 
                         </ul>
                         <div>
-                            <Link to={"/login"} type="button" className="btn btn-info mx-2">
+                            <Link to={"/sign-in"} type="button" className="btn btn-info mx-2">
 
                                 <i className="fa-solid fa-user text-white"></i>
                                 <span className="mx-1 text-white">Login</span>

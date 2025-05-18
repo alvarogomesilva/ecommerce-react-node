@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-export function SignIn() {
+export function SignUp() {
     return (
         <section className="p-3 p-md-4 p-xl-5">
             <div className="container">
@@ -21,12 +21,16 @@ export function SignIn() {
                                 <div className="row">
                                     <div className="col-12">
                                         <div className="mb-5">
-                                            <h3>Faça seu login</h3>
+                                            <h3>Cadastre-se</h3>
                                         </div>
                                     </div>
                                 </div>
                                 <form action="#!">
                                     <div className="row gy-3 gy-md-4 overflow-hidden">
+                                        <div className="col-12">
+                                            <label htmlFor="email" className="form-label">Nome Completo<span className="text-danger">*</span></label>
+                                            <input type="text" className="form-control" name="name" id="name" required />
+                                        </div>
                                         <div className="col-12">
                                             <label htmlFor="email" className="form-label">Email <span className="text-danger">*</span></label>
                                             <input type="email" className="form-control" name="email" id="email" placeholder="name@example.com" required />
@@ -42,7 +46,7 @@ export function SignIn() {
 
                                         <div className="col-12">
                                             <div className="d-grid">
-                                                <button className="btn bsb-btn-xl btn-primary p-2 mt-2" type="submit">Entrar</button>
+                                                <button className="btn bsb-btn-xl btn-primary p-2 mt-2" type="submit">Cadastrar</button>
                                             </div>
                                         </div>
                                     </div>
@@ -51,7 +55,7 @@ export function SignIn() {
                                     <div className="col-12">
                                         <hr className="mt-5 mb-4 border-secondary-subtle" />
                                         <div className="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-end">
-                                            <Link to={"/sign-up"} className="link-secondary text-decoration-none">Não possui conta? Cadastre-se</Link>
+                                            <Link to={"/sign-in"} className="link-secondary text-decoration-none">Já possui conta? Faça login</Link>
 
                                         </div>
                                     </div>

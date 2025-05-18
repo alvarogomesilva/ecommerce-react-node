@@ -7,11 +7,17 @@ import { Categories } from "./pages/store/categories";
 import { Products } from "./pages/store/products";
 import { Dashboard } from "./pages/admin/dashboard";
 import { AdminLayout } from "./pages/_layouts/admin";
+import { SignUp } from "./pages/auth/sign-up";
 
 export const router = createBrowserRouter([
     {
-        path: '/login',
+        path: '/sign-in',
         element: <SignIn />
+    },
+
+    {
+        path: '/sign-up',
+        element: <SignUp />
     },
 
     {
