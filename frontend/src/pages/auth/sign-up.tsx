@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useForm } from 'react-hook-form';
 import { z } from "zod";
+import { toast } from "sonner";
 
 
 const signSignUp = z.object({
@@ -15,7 +16,15 @@ export function SignUp() {
     const { register, handleSubmit, formState: { isSubmitting } } = useForm<SignUpForm>()
 
     async function handleSignUp(data: SignUpForm) {
-        console.log(data)
+        try {
+            await new Promise((resolve) => setTimeout(resolve, 2000))
+
+            toast.message('Novo Cadastro', {
+                description: 'Usuário cadastrado com sucesso',
+            })
+        } catch (error) {
+            toast.error('Erro ao cadastrar usuário')
+        }
     }
 
     return (
@@ -85,7 +94,7 @@ export function SignUp() {
                                             <div className="d-grid">
                                                 <button
                                                     disabled={isSubmitting}
-                                                    className="btn bsb-btn-xl btn-primary p-2 mt-2" 
+                                                    className="btn bsb-btn-xl btn-primary p-2 mt-2"
                                                     type="submit">
                                                     Cadastrar
                                                 </button>
