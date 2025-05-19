@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import { useForm } from 'react-hook-form';
 import { z } from "zod";
 import { toast } from "sonner";
+import { useMutation } from "@tanstack/react-query";
+import { signUp } from "../../api/sign-up";
 
 
 const signSignUp = z.object({
@@ -15,9 +17,17 @@ type SignUpForm = z.infer<typeof signSignUp>
 export function SignUp() {
     const { register, handleSubmit, formState: { isSubmitting } } = useForm<SignUpForm>()
 
+    const { mutateAsync: signUpFn } = useMutation({
+        mutationFn: signUp
+    })
+
     async function handleSignUp(data: SignUpForm) {
         try {
-            await new Promise((resolve) => setTimeout(resolve, 2000))
+            await signUpFn({
+                name: data.name,
+                email: data.email,
+                password: data.password
+            })
 
             toast.message('Novo Cadastro', {
                 description: 'Usuário cadastrado com sucesso',
