@@ -1,6 +1,23 @@
 import { Link } from "react-router-dom";
+import { useForm } from 'react-hook-form';
+import { z } from "zod";
+
+
+const signSignUp = z.object({
+    name: z.string(),
+    email: z.string().email(),
+    password: z.string().min(6)
+})
+
+type SignUpForm = z.infer<typeof signSignUp>
 
 export function SignUp() {
+    const { register, handleSubmit, formState: { isSubmitting } } = useForm<SignUpForm>()
+
+    async function handleSignUp(data: SignUpForm) {
+        console.log(data)
+    }
+
     return (
         <section className="p-3 p-md-4 p-xl-5">
             <div className="container">
@@ -25,28 +42,53 @@ export function SignUp() {
                                         </div>
                                     </div>
                                 </div>
-                                <form action="#!">
+                                <form action="#!" onSubmit={handleSubmit(handleSignUp)}>
                                     <div className="row gy-3 gy-md-4 overflow-hidden">
                                         <div className="col-12">
                                             <label htmlFor="email" className="form-label">Nome Completo<span className="text-danger">*</span></label>
-                                            <input type="text" className="form-control" name="name" id="name" required />
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                id="name"
+                                                required
+                                                {...register('name')}
+                                            />
                                         </div>
                                         <div className="col-12">
                                             <label htmlFor="email" className="form-label">Email <span className="text-danger">*</span></label>
-                                            <input type="email" className="form-control" name="email" id="email" placeholder="name@example.com" required />
+                                            <input
+                                                type="email"
+                                                className="form-control"
+                                                id="email"
+                                                placeholder="name@example.com"
+                                                required
+                                                {...register('email')}
+                                            />
                                         </div>
                                         <div className="col-12">
                                             <div className="d-flex justify-content-between">
                                                 <label htmlFor="password" className="form-label">Senha <span className="text-danger">*</span></label>
                                                 <a href="#!" className="link-secondary text-decoration-none">Esqueçeu sua senha?</a>
                                             </div>
-                                            <input type="password" className="form-control" name="password" id="password" value="" required />
+                                            <input
+
+                                                type="password"
+                                                className="form-control"
+                                                id="password"
+                                                required
+                                                {...register('password')}
+                                            />
 
                                         </div>
 
                                         <div className="col-12">
                                             <div className="d-grid">
-                                                <button className="btn bsb-btn-xl btn-primary p-2 mt-2" type="submit">Cadastrar</button>
+                                                <button
+                                                    disabled={isSubmitting}
+                                                    className="btn bsb-btn-xl btn-primary p-2 mt-2" 
+                                                    type="submit">
+                                                    Cadastrar
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
