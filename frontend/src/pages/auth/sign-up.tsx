@@ -4,6 +4,7 @@ import { z } from "zod";
 import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
 import { signUp } from "../../api/sign-up";
+import { Store } from "lucide-react";
 
 
 const signSignUp = z.object({
@@ -44,11 +45,11 @@ export function SignUp() {
                     <div className="row g-0">
                         <div className="col-12 col-md-6 bg-primary">
                             <div className="d-flex align-items-center justify-content-center h-100">
-                                <div className="col-10 col-xl-8 py-3">
-
-                                    <hr className="border-primary-subtle mb-4" />
-                                    <h2 className="h1 mb-4">We make digital products that drive you to stand out.</h2>
-                                    <p className="lead m-0">We write words, take photos, make videos, and interact with artificial intelligence.</p>
+                                <div className="col-10 col-xl-8 py-3 text-center">
+                                    <Store
+                                        size={150}
+                                        color="white"
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -116,7 +117,7 @@ export function SignUp() {
                                     <div className="col-12">
                                         <hr className="mt-5 mb-4 border-secondary-subtle" />
                                         <div className="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-end">
-                                            <Link to={"/sign-in"} className="link-secondary text-decoration-none">Já possui conta? Faça login</Link>
+                                            <Link to={"/sign-in"} className="link-primary text-decoration-none">Já possui conta? Faça login</Link>
 
                                         </div>
                                     </div>

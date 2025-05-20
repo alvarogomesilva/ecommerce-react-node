@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Store  } from 'lucide-react';
 
 export function SignIn() {
     return (
@@ -8,11 +9,11 @@ export function SignIn() {
                     <div className="row g-0">
                         <div className="col-12 col-md-6 bg-primary">
                             <div className="d-flex align-items-center justify-content-center h-100">
-                                <div className="col-10 col-xl-8 py-3">
-
-                                    <hr className="border-primary-subtle mb-4" />
-                                    <h2 className="h1 mb-4">We make digital products that drive you to stand out.</h2>
-                                    <p className="lead m-0">We write words, take photos, make videos, and interact with artificial intelligence.</p>
+                                <div className="col-10 col-xl-8 py-3 text-center">
+                                    <Store  
+                                        size={150}
+                                        color="white"
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -51,7 +52,7 @@ export function SignIn() {
                                     <div className="col-12">
                                         <hr className="mt-5 mb-4 border-secondary-subtle" />
                                         <div className="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-end">
-                                            <Link to={"/sign-up"} className="link-secondary text-decoration-none">Não possui conta? Cadastre-se</Link>
+                                            <Link to={"/sign-up"} className="link-primary text-decoration-none">Não possui conta? Cadastre-se</Link>
 
                                         </div>
                                     </div>
