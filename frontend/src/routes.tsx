@@ -13,6 +13,7 @@ import { AdminSubCategories } from "./pages/admin/admin-sub-categories";
 import { AdminProducts } from "./pages/admin/admin-products";
 import { AdminBanners } from "./pages/admin/admin-banners";
 import { Painel } from "./pages/admin/painel";
+import { Cart } from "./pages/store/cart";
 
 export const router = createBrowserRouter([
     {
@@ -32,7 +33,8 @@ export const router = createBrowserRouter([
             { path: '/', element: <Inicial /> },
             { path: '/categories', element: <Categories /> },
             { path: '/checkout', element: <Checkout /> },
-            { path: '/products', element: <Products /> }
+            { path: '/products', element: <Products /> },
+            { path: '/cart', element: <Cart /> },
         ]
     },
 
