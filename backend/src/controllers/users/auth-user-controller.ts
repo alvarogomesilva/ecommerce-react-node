@@ -33,7 +33,8 @@ export async function autenticate(request: Request, response: Response) {
             })
 
         response.status(200).send({
-            token
+            token,
+            user
         })
 
     } catch (error) {

@@ -14,6 +14,7 @@ import { AdminProducts } from "./pages/admin/admin-products";
 import { AdminBanners } from "./pages/admin/admin-banners";
 import { Painel } from "./pages/admin/painel";
 import { Cart } from "./pages/store/cart";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 
 export const router = createBrowserRouter([
     {
@@ -39,15 +40,21 @@ export const router = createBrowserRouter([
     },
 
     {
-        path: '/', 
-        element: <AdminLayout />,
+        path: '/',
+        element: <ProtectedRoute />,
         children: [
-            { path: '/dashboard', element: <Dashboard /> },
-            { path: '/painel', element: <Painel /> },
-            { path: '/admin/categories', element: <AdminCategories /> },
-            { path: '/admin/sub-categories', element: <AdminSubCategories /> },
-            { path: '/admin/products', element: <AdminProducts /> },
-            { path: '/admin/banners', element: <AdminBanners /> },
+            {
+                path: '/',
+                element: <AdminLayout />,
+                children: [
+                    { path: '/dashboard', element: <Dashboard /> },
+                    { path: '/painel', element: <Painel /> },
+                    { path: '/admin/categories', element: <AdminCategories /> },
+                    { path: '/admin/sub-categories', element: <AdminSubCategories /> },
+                    { path: '/admin/products', element: <AdminProducts /> },
+                    { path: '/admin/banners', element: <AdminBanners /> },
+                ]
+            }
         ]
     }
 ])

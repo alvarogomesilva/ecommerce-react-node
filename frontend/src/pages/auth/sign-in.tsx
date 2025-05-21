@@ -1,7 +1,43 @@
-import { Link } from "react-router-dom";
-import { Store  } from 'lucide-react';
+import { Link, useNavigate } from "react-router-dom";
+import { Store } from 'lucide-react';
+import { set, z } from "zod";
+import { useForm } from 'react-hook-form';
+import { useMutation } from "@tanstack/react-query";
+import { signIn } from "../../api/sign-in";
+import { useAuthStore } from "../../store/auth-store";
+
+const signSignIp = z.object({
+    email: z.string().email(),
+    password: z.string().min(6)
+})
+
+type SignIpForm = z.infer<typeof signSignIp>
 
 export function SignIn() {
+    const { register, handleSubmit, formState: { isSubmitting } } = useForm<SignIpForm>()
+    const setAuth = useAuthStore((set) => set.setAuth)
+    const navigate = useNavigate()
+    const { mutateAsync: signInFn } = useMutation({
+        mutationFn: signIn
+    })
+
+    async function handleSignIn(data: SignIpForm) {
+        
+        try {
+            const response = await signInFn({
+                email: data.email,
+                password: data.password
+            })
+            
+            setAuth(response.data.token,response.data.user)
+
+            response.data.user.role === 'ADMIN' ?  navigate('/painel'): navigate('/')
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <section className="p-3 p-md-4 p-xl-5">
             <div className="container">
@@ -10,7 +46,7 @@ export function SignIn() {
                         <div className="col-12 col-md-6 bg-primary">
                             <div className="d-flex align-items-center justify-content-center h-100">
                                 <div className="col-10 col-xl-8 py-3 text-center">
-                                    <Store  
+                                    <Store
                                         size={150}
                                         color="white"
                                     />
@@ -26,18 +62,31 @@ export function SignIn() {
                                         </div>
                                     </div>
                                 </div>
-                                <form action="#!">
+                                <form onSubmit={handleSubmit(handleSignIn)}>
                                     <div className="row gy-3 gy-md-4 overflow-hidden">
                                         <div className="col-12">
                                             <label htmlFor="email" className="form-label">Email <span className="text-danger">*</span></label>
-                                            <input type="email" className="form-control" name="email" id="email" placeholder="name@example.com" required />
+                                            <input
+                                                type="email"
+                                                className="form-control"
+                                                id="email"
+                                                placeholder="name@example.com"
+                                                required
+                                                {...register('email')}
+                                            />
                                         </div>
                                         <div className="col-12">
                                             <div className="d-flex justify-content-between">
                                                 <label htmlFor="password" className="form-label">Senha <span className="text-danger">*</span></label>
                                                 <a href="#!" className="link-secondary text-decoration-none">Esqueçeu sua senha?</a>
                                             </div>
-                                            <input type="password" className="form-control" name="password" id="password" value="" required />
+                                            <input
+                                                type="password"
+                                                className="form-control"
+                                                id="password"
+                                                required
+                                                {...register('password')}
+                                            />
 
                                         </div>
 
