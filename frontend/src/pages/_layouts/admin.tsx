@@ -1,39 +1,42 @@
 import { Link, Outlet } from "react-router-dom";
-import { LayoutDashboard, Shield  } from 'lucide-react';
+import { Store } from 'lucide-react';
+
 export function AdminLayout() {
     return (
         <>
-            <nav className="navbar navbar-expand-lg navbar-dark bg-primary" aria-label="Eighth navbar example">
+            <nav className="navbar navbar-expand-lg navbar-dark bg-primary p-3">
                 <div className="container">
-                    <a className="navbar-brand" href="#">Logo</a>
-                    <button className="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
+                    <a className="navbar-brand d-flex justify-content-center align-items-center" href="#">
+                        <Store className="me-2" />
+                        <div className="d-flex flex-column lh-1">
+                            <span>Store</span>
+                            <span>Manager</span>
+                        </div>
+                    </a>
+
+                    <button
+                        className="navbar-toggler collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarsExample07"
+                        aria-controls="navbarsExample07"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation"
+                    >
                         <span className="navbar-toggler-icon"></span>
                     </button>
 
                     <div className="navbar-collapse collapse" id="navbarsExample07">
-                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                        <ul className="navbar-nav mb-2 mb-lg-0 ms-auto">
                             <li className="nav-item">
-                                <Link to={"/dashboard"} className="nav-link active d-flex gap-1" aria-current="page" >
-                                    <LayoutDashboard />
-                                    Dashboard
-                                </Link>
+                                <Link to={"/dashboard"} className="nav-link active">Dashboard</Link>
                             </li>
-
                             <li className="nav-item">
-                                <Link to={"/painel"} className="nav-link d-flex gap-1" >
-                                    <Shield />
-                                    Painel
-                                </Link>
+                                <Link to={"/painel"} className="nav-link" >Painel</Link>
                             </li>
-
-                            
+                         
                             
                         </ul>
-                        <div className="dropdown">
-
-                            <img src="https://github.com/mdo.png" alt="" width="32" height="32" className="rounded-circle me-2" />
-
-                        </div>
                     </div>
                 </div>
             </nav>
