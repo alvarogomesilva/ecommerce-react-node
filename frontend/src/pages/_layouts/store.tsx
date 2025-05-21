@@ -1,12 +1,13 @@
+import { Store } from "lucide-react";
 import { Link, Outlet } from "react-router-dom";
 
 export function StoreLayout() {
     return (
         <div>
 
-            <nav className="navbar navbar-expand-lg navbar-dark bg-primary py-4" aria-label="Ninth navbar example">
+            <nav className="navbar navbar-expand-lg navbar-dark bg-primary py-3" aria-label="Ninth navbar example">
                 <div className="container-xl">
-                    <a className="navbar-brand" href="#">Loja</a>
+                   <Store className="me-2 text-white" />
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample07XL" aria-controls="navbarsExample07XL" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
@@ -32,16 +33,16 @@ export function StoreLayout() {
 
                         </ul>
                         <div>
-                            <Link to={"/sign-in"} type="button" className="btn btn-info mx-2">
+                            <Link to={"/sign-in"} type="button" className="btn btn-secondary mx-2">
 
                                 <i className="fa-solid fa-user text-white"></i>
                                 <span className="mx-1 text-white">Login</span>
 
                             </Link>
-                            <button type="button" className="btn btn-info">
+                            <Link to={"/cart"} type="button" className="btn btn-secondary ">
                                 <i className="fa-solid fa-cart-shopping text-white"></i>
                                 <span className="mx-1 text-white">Carrinho</span>
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 </div>
