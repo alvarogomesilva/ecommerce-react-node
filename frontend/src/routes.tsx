@@ -41,7 +41,7 @@ export const router = createBrowserRouter([
 
     {
         path: '/',
-        element: <ProtectedRoute />,
+        element: <ProtectedRoute onlyAdmin/>,
         children: [
             {
                 path: '/',
