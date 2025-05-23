@@ -29,10 +29,10 @@ export function AdminLayout() {
                     <div className="navbar-collapse collapse" id="navbarsExample07">
                         <ul className="navbar-nav mb-2 mb-lg-0 ms-auto">
                             <li className="nav-item">
-                                <Link to={"/dashboard"} className="nav-link active">Dashboard</Link>
+                                <Link to={"/admin/dashboard"} className="nav-link active">Dashboard</Link>
                             </li>
                             <li className="nav-item">
-                                <Link to={"/painel"} className="nav-link" >Painel</Link>
+                                <Link to={"/admin/painel"} className="nav-link" >Painel</Link>
                             </li>
                          
                             

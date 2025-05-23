@@ -1,10 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Store } from 'lucide-react';
-import { set, z } from "zod";
+import { z } from "zod";
 import { useForm } from 'react-hook-form';
 import { useMutation } from "@tanstack/react-query";
 import { signIn } from "../../api/sign-in";
-import { useAuthStore } from "../../store/auth-store";
+import { useAuthStore } from "../../store/use-auth-store";
 
 const signSignIp = z.object({
     email: z.string().email(),
@@ -15,28 +15,27 @@ type SignIpForm = z.infer<typeof signSignIp>
 
 export function SignIn() {
     const { register, handleSubmit, formState: { isSubmitting } } = useForm<SignIpForm>()
-    const setAuth = useAuthStore((set) => set.setAuth)
+    const { login } = useAuthStore()
     const navigate = useNavigate()
     const { mutateAsync: signInFn } = useMutation({
         mutationFn: signIn
     })
 
-    async function handleSignIn(data: SignIpForm) {
-        
+    async function handleSignIn(inputs: SignIpForm) {
         try {
-            const response = await signInFn({
-                email: data.email,
-                password: data.password
+            const { data } = await signInFn({
+                email: inputs.email,
+                password: inputs.password
             })
-            
-            setAuth(response.data.token,response.data.user)
 
-            response.data.user.role === 'ADMIN' ?  navigate('/painel'): navigate('/')
+            login(data.token, data.role)
 
+            navigate(data.role === 'ADMIN' ? '/painel' : '/')
         } catch (error) {
-            console.log(error)
+            console.error('Erro ao logar:', error)
         }
     }
+
 
     return (
         <section className="p-3 p-md-4 p-xl-5">
@@ -92,7 +91,13 @@ export function SignIn() {
 
                                         <div className="col-12">
                                             <div className="d-grid">
-                                                <button className="btn bsb-btn-xl btn-primary p-2 mt-2" type="submit">Entrar</button>
+                                                <button
+                                                    className="btn bsb-btn-xl btn-primary p-2 mt-2"
+                                                    type="submit"
+                                                    disabled={isSubmitting}
+                                                >
+                                                    {isSubmitting ? 'Entrando...' : 'Entrar'}
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
