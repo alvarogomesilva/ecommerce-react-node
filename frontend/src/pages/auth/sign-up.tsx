@@ -1,25 +1,34 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from 'react-hook-form';
 import { z } from "zod";
 import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
 import { signUp } from "../../api/sign-up";
 import { Store } from "lucide-react";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 
 const signSignUp = z.object({
-    name: z.string(),
-    email: z.string().email(),
-    password: z.string().min(6)
+    name: z.string().min(2, "Nome precisa ter pelo menos 2 caracteres"),
+    email: z.string().email("Email inválido"),
+    password: z.string().min(6, "A senha deve ter pelo menos 6 caracteres")
 })
 
 type SignUpForm = z.infer<typeof signSignUp>
 
 export function SignUp() {
-    const { register, handleSubmit, formState: { isSubmitting } } = useForm<SignUpForm>()
+    const navigate = useNavigate()
+    const {
+        register,
+        handleSubmit,
+        formState: {
+            isSubmitting,
+            errors
+        } } = useForm<SignUpForm>({ resolver: zodResolver(signSignUp) })
 
     const { mutateAsync: signUpFn } = useMutation({
-        mutationFn: signUp
+        mutationFn: signUp,
+        onError: () => { }
     })
 
     async function handleSignUp(data: SignUpForm) {
@@ -30,9 +39,12 @@ export function SignUp() {
                 password: data.password
             })
 
+            await new Promise((resolve) => setTimeout(resolve, 2000))
+
             toast.message('Novo Cadastro', {
                 description: 'Usuário cadastrado com sucesso',
             })
+            navigate('/sign-in')
         } catch (error) {
             toast.error('Erro ao cadastrar usuário')
         }
@@ -68,22 +80,32 @@ export function SignUp() {
                                             <label htmlFor="email" className="form-label">Nome Completo<span className="text-danger">*</span></label>
                                             <input
                                                 type="text"
-                                                className="form-control"
+                                                className={`form-control ${errors.name ? 'is-invalid' : ''}`}
                                                 id="name"
-                                                required
-                                                {...register('name')}
+                                                {...register("name", { required: true })}
                                             />
+                                            {errors.name && (
+                                                <p className="invalid-feedback d-block">
+                                                    {errors.name.message}
+                                                </p>
+                                            )}
                                         </div>
                                         <div className="col-12">
                                             <label htmlFor="email" className="form-label">Email <span className="text-danger">*</span></label>
                                             <input
                                                 type="email"
-                                                className="form-control"
+                                                className={`form-control ${errors.email ? 'is-invalid' : ''}`}
                                                 id="email"
                                                 placeholder="name@example.com"
-                                                required
-                                                {...register('email')}
+
+                                                {...register("email", { required: true })}
+
                                             />
+                                            {errors.email && (
+                                                <p className="invalid-feedback d-block">
+                                                    {errors.email.message}
+                                                </p>
+                                            )}
                                         </div>
                                         <div className="col-12">
                                             <div className="d-flex justify-content-between">
@@ -93,12 +115,16 @@ export function SignUp() {
                                             <input
 
                                                 type="password"
-                                                className="form-control"
+                                                className={`form-control ${errors.password ? 'is-invalid' : ''}`}
                                                 id="password"
-                                                required
-                                                {...register('password')}
-                                            />
 
+                                                {...register("password", { required: true })}
+                                            />
+                                            {errors.password && (
+                                                <p className="invalid-feedback d-block">
+                                                    {errors.password.message}
+                                                </p>
+                                            )}
                                         </div>
 
                                         <div className="col-12">
@@ -107,7 +133,7 @@ export function SignUp() {
                                                     disabled={isSubmitting}
                                                     className="btn bsb-btn-xl btn-primary p-2 mt-2"
                                                     type="submit">
-                                                    Cadastrar
+                                                    {isSubmitting? 'Cadastrando...': 'Cadastrar'}
                                                 </button>
                                             </div>
                                         </div>
