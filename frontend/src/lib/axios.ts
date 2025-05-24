@@ -5,23 +5,26 @@ export const api = axios.create({
     baseURL: import.meta.env.VITE_API_URL
 })
 
-// Aplica o token a cada requisição
+// Interceptor de requisição (adiciona o token)
 api.interceptors.request.use((config) => {
-  const token = useAuthStore.getState().token
+  const token = useAuthStore.getState().token;
   if (token) {
-    config.headers.Authorization = `Bearer ${token}`
+    config.headers.Authorization = `Bearer ${token}`;
   }
-  return config
-})
+  return config;
+});
 
-// Intercepta erros 401 (unauthorized)
+//Interceptor de resposta (detecta token expirado)
 api.interceptors.response.use(
-  (res) => res,
-  (err) => {
-    const logout = useAuthStore.getState().logout
-    if (err.response?.status === 401) {
-      logout()
+  (response) => response,
+  (error) => {
+    const status = error.response?.status;
+    if (status === 401) {
+      const { logout } = useAuthStore.getState();
+      logout(); // limpa Zustand
+      window.location.href = "/sign-in";
     }
-    return Promise.reject(err)
+
+    return Promise.reject(error);
   }
-)
+);

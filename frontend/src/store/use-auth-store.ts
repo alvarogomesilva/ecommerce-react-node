@@ -1,42 +1,45 @@
-// src/store/auth.ts
-import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
+import { create } from "zustand";
 
-interface AuthState {
-  token: string | null
-  role: 'CUSTOMER' | 'ADMIN' | null
-  isAuthenticated: boolean
-  login: (token: string, role: 'CUSTOMER' | 'ADMIN') => void
-  logout: () => void
-  validateToken: () => Promise<boolean>
+interface User {
+  id: string
+  email: string
+  name: string
+  password: string
+  role: string
+  createdAt: string
+  updatedAt: string
 }
 
-export const useAuthStore = create<AuthState>()(
-  persist(
-    (set, get) => ({
-      token: null,
-      role: null,
-      isAuthenticated: false,
-      login: (token, role) => set({ token, role, isAuthenticated: true }),
-      logout: () => set({ token: null, role: null, isAuthenticated: false }),
-      validateToken: async () => {
-        const token = get().token
-        if (!token) return false
+interface AuthState {
+  token: string | null;
+  user: User | null;
+  setUser: (user: User) => void;
+  login: (token: string, user: User) => boolean;
+  logout: () => void;
+}
 
-        try {
-          const res = await fetch('http://localhost:3000/api/me', {
-            headers: { Authorization: `Bearer ${token}` },
-          })
-          if (!res.ok) throw new Error()
-          const data = await res.json()
-          set({ isAuthenticated: true, role: data.role })
-          return true
-        } catch {
-          get().logout()
-          return false
-        }
-      },
-    }),
-    { name: 'auth' }
-  )
-)
+export const useAuthStore = create<AuthState>((set) => ({
+  token: localStorage.getItem('@t'),
+  user: null,
+
+
+  setUser: (user) => set({ user: user }),
+
+  login: (token, user) => {
+    set({ token: token, user: user })
+    localStorage.setItem('@t', token)
+
+    const savedToken = localStorage.getItem('@t')
+
+    if (savedToken) {
+      return true
+    }
+
+    return false
+  },
+
+  logout: () => {
+    set({ token: null, user: null })
+    localStorage.removeItem('@t')
+  },
+}));

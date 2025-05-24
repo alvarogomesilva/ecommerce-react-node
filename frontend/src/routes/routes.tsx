@@ -1,5 +1,4 @@
-// routes/index.tsx
-import { createBrowserRouter } from 'react-router-dom'
+import { createBrowserRouter, Outlet } from 'react-router-dom'
 import { SignIn } from '../pages/auth/sign-in'
 import { SignUp } from '../pages/auth/sign-up'
 import { StoreLayout } from '../pages/_layouts/store'
@@ -12,7 +11,10 @@ import { AdminLayout } from '../pages/_layouts/admin'
 import { Dashboard } from '../pages/admin/dashboard'
 import { Painel } from '../pages/admin/painel'
 import { AdminCategories } from '../pages/admin/admin-categories'
-import { protectedLoader } from './protected-loader'
+import { AdminSubCategories } from '../pages/admin/admin-sub-categories'
+import { AdminBanners } from '../pages/admin/admin-banners'
+import { AdminProducts } from '../pages/admin/admin-products'
+import { PrivateRoute } from './private-route'
 
 export const router = createBrowserRouter([
   {
@@ -32,20 +34,27 @@ export const router = createBrowserRouter([
       { path: '/cart', element: <Cart /> },
       { path: '/checkout', element: <Checkout /> },
     ],
-    loader: () => protectedLoader('CUSTOMER')
   },
 
   {
-
-    path: '/',
-    element: <AdminLayout />,
+    path: '/admin',
+    element: (
+      <PrivateRoute requiredRole="ADMIN">
+        <Outlet />
+      </PrivateRoute>
+    ),
     children: [
-      { path: '/dashboard', element: <Dashboard /> },
-      { path: '/painel', element: <Painel /> },
-      { path: '/admin/categories', element: <AdminCategories /> },
-    ],
-    loader: () => protectedLoader('ADMIN')
+      {
+        element: <AdminLayout />, // carrega somente depois da validação
+        children: [
+          { path: 'dashboard', element: <Dashboard /> },
+          { path: 'painel', element: <Painel /> },
+          { path: 'categories', element: <AdminCategories /> },
+          { path: 'products', element: <AdminProducts /> },
+          { path: 'sub-categories', element: <AdminSubCategories /> },
+          { path: 'banners', element: <AdminBanners /> },
+        ]
+      }
+    ]
   }
-
-
 ])

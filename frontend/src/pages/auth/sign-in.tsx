@@ -28,9 +28,17 @@ export function SignIn() {
                 password: inputs.password
             })
 
-            login(data.token, data.role)
 
-            navigate(data.role === 'ADMIN' ? '/painel' : '/')
+            const tokenSaved = login(data.token, data.user)
+
+            
+            if (tokenSaved && data.user.role === 'ADMIN') {
+                navigate('/admin/painel')
+            } else {
+                navigate('/')
+            }
+
+
         } catch (error) {
             console.error('Erro ao logar:', error)
         }
