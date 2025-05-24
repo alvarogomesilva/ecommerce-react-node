@@ -2,24 +2,33 @@ import { Link, useNavigate } from "react-router-dom";
 import { Store } from 'lucide-react';
 import { z } from "zod";
 import { useForm } from 'react-hook-form';
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { signIn } from "../../api/sign-in";
 import { useAuthStore } from "../../store/use-auth-store";
 import { toast } from "sonner";
 
 const signSignIp = z.object({
-    email: z.string().email(),
-    password: z.string().min(6)
+    email: z.string().email("Email inválido"),
+    password: z.string().min(6, "A senha deve ter pelo menos 6 caracteres")
 })
 
 type SignIpForm = z.infer<typeof signSignIp>
 
 export function SignIn() {
-    const { register, handleSubmit, formState: { isSubmitting } } = useForm<SignIpForm>()
+    const {
+        register,
+        handleSubmit,
+        formState: {
+            isSubmitting,
+            errors
+        } } = useForm<SignIpForm>({ resolver: zodResolver(signSignIp) })
+
     const { login } = useAuthStore()
     const navigate = useNavigate()
     const { mutateAsync: signInFn } = useMutation({
-        mutationFn: signIn
+        mutationFn: signIn,
+        onError: () => {}
     })
 
     async function handleSignIn(inputs: SignIpForm) {
@@ -44,15 +53,14 @@ export function SignIn() {
             } else {
                 navigate('/')
 
-                  toast.message('Autenticado', {
+                toast.message('Autenticado', {
                     description: 'Usuário autenticado com sucesso!',
                 })
 
             }
 
-
         } catch (error) {
-            console.error('Erro ao logar:', error)
+            toast.error('Credenciais inválidas')
         }
     }
 
@@ -81,18 +89,23 @@ export function SignIn() {
                                         </div>
                                     </div>
                                 </div>
-                                <form onSubmit={handleSubmit(handleSignIn)}>
+                                <form onSubmit={handleSubmit(handleSignIn)} className="needs-validation" noValidate>
                                     <div className="row gy-3 gy-md-4 overflow-hidden">
                                         <div className="col-12">
                                             <label htmlFor="email" className="form-label">Email <span className="text-danger">*</span></label>
                                             <input
                                                 type="email"
-                                                className="form-control"
+                                                className={`form-control ${errors.email ? 'is-invalid' : ''}`}
                                                 id="email"
                                                 placeholder="name@example.com"
-                                                required
-                                                {...register('email')}
+
+                                                {...register("email", { required: true })}
                                             />
+                                            {errors.email && (
+                                                <p className="invalid-feedback d-block">
+                                                    {errors.email.message}
+                                                </p>
+                                            )}
                                         </div>
                                         <div className="col-12">
                                             <div className="d-flex justify-content-between">
@@ -101,12 +114,16 @@ export function SignIn() {
                                             </div>
                                             <input
                                                 type="password"
-                                                className="form-control"
+                                                className={`form-control ${errors.password ? 'is-invalid' : ''}`}
                                                 id="password"
-                                                required
-                                                {...register('password')}
-                                            />
 
+                                                {...register("password", { required: true })}
+                                            />
+                                            {errors.password && (
+                                                <p className="invalid-feedback d-block">
+                                                    {errors.password.message}
+                                                </p>
+                                            )}
                                         </div>
 
                                         <div className="col-12">
