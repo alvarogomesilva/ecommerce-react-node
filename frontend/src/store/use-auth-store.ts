@@ -1,13 +1,13 @@
 import { create } from "zustand";
 
-interface User {
-  id: string
-  email: string
-  name: string
-  password: string
-  role: string
-  createdAt: string
-  updatedAt: string
+export interface User {
+  id: string;
+  email: string;
+  name: string;
+  password: string;
+  role: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface AuthState {
@@ -18,28 +18,36 @@ interface AuthState {
   logout: () => void;
 }
 
+const getInitialToken = (): string | null => {
+  if (typeof localStorage === "undefined") return null;
+  return localStorage.getItem("@t");
+};
+
+const getInitialUser = (): User | null => {
+  if (typeof localStorage === "undefined") return null;
+  const user = localStorage.getItem("@u");
+  return user ? JSON.parse(user) : null;
+};
+
 export const useAuthStore = create<AuthState>((set) => ({
-  token: localStorage.getItem('@t'),
-  user: null,
+  token: getInitialToken(),
+  user: getInitialUser(),
 
-
-  setUser: (user) => set({ user: user }),
+  setUser: (user) => {
+    set({ user });
+    localStorage.setItem("@u", JSON.stringify(user));
+  },
 
   login: (token, user) => {
-    set({ token: token, user: user })
-    localStorage.setItem('@t', token)
-
-    const savedToken = localStorage.getItem('@t')
-
-    if (savedToken) {
-      return true
-    }
-
-    return false
+    set({ token, user });
+    localStorage.setItem("@t", token);
+    localStorage.setItem("@u", JSON.stringify(user));
+    return true;
   },
 
   logout: () => {
-    set({ token: null, user: null })
-    localStorage.removeItem('@t')
+    set({ token: null, user: null });
+    localStorage.removeItem("@t");
+    localStorage.removeItem("@u");
   },
 }));

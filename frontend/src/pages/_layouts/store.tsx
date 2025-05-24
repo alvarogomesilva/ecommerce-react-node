@@ -1,47 +1,55 @@
 import { Store } from "lucide-react";
 import { Link, Outlet } from "react-router-dom";
+import { useAuthStore } from "../../store/use-auth-store";
+import { UserActive } from "../../components/user-active";
 
 export function StoreLayout() {
+    const { user } = useAuthStore();
     return (
         <div>
-
-            <nav className="navbar navbar-expand-lg navbar-dark bg-primary py-3" aria-label="Ninth navbar example">
+            {/* Navbar */}
+            <nav className="navbar navbar-expand-lg navbar-dark bg-primary py-3" aria-label="Main navbar">
                 <div className="container-xl">
-                   <Store className="me-2 text-white" />
-                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample07XL" aria-controls="navbarsExample07XL" aria-expanded="false" aria-label="Toggle navigation">
+                    <Link to="/" className="navbar-brand d-flex align-items-center text-white">
+                        <Store className="me-2" />
+                        <span>Store</span>
+                    </Link>
+
+                    <button
+                        className="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarContent"
+                        aria-controls="navbarContent"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation"
+                    >
                         <span className="navbar-toggler-icon"></span>
                     </button>
 
-                    <div className="collapse navbar-collapse" id="navbarsExample07XL">
+                    <div className="collapse navbar-collapse" id="navbarContent">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
-                                <Link className="nav-link active" aria-current="page" to={"/"}>Inicio</Link>
+                                <Link className="nav-link active" to="/">Início</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to={"/categories"}>Categorias</Link>
-                            </li>
-
-                            <li className="nav-item">
-                                <Link className="nav-link" to={"/products"}>Produtos</Link>
+                                <Link className="nav-link" to="/categories">Categorias</Link>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#">Blog</a>
+                                <Link className="nav-link" to="/products">Produtos</Link>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#">Contatos</a>
+                                <Link className="nav-link" to="/blog">Blog</Link>
                             </li>
-
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/contact">Contatos</Link>
+                            </li>
                         </ul>
-                        <div>
-                            <Link to={"/sign-in"} type="button" className="btn btn-secondary mx-2">
 
-                                <i className="fa-solid fa-user text-white"></i>
-                                <span className="mx-1 text-white">Login</span>
-
-                            </Link>
-                            <Link to={"/cart"} type="button" className="btn btn-secondary ">
-                                <i className="fa-solid fa-cart-shopping text-white"></i>
-                                <span className="mx-1 text-white">Carrinho</span>
+                        <div className="d-flex align-items-center">
+                            <UserActive logged={user} />
+                            <Link to="/cart" className="nav-link text-white">
+                                <i className="fa-solid fa-cart-shopping"></i>
                             </Link>
                         </div>
                     </div>
@@ -52,70 +60,52 @@ export function StoreLayout() {
                 <Outlet />
             </main>
 
-            <div className="bg-primary">
-                <div className="container">
-                    <footer className="py-5">
-                        <div className="row">
-                            <div className="col-6 col-md-2 mb-3">
+            <footer className="bg-primary text-white mt-5">
+                <div className="container py-5">
+                    <div className="row">
+                        {[...Array(3)].map((_, i) => (
+                            <div key={i} className="col-6 col-md-2 mb-3">
                                 <h5>Section</h5>
                                 <ul className="nav flex-column">
-                                    <li className="nav-item mb-2"><a href="#" className="nav-link p-0">Home</a></li>
-                                    <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-dark">Features</a></li>
-                                    <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-dark">Pricing</a></li>
-                                    <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-dark">FAQs</a></li>
-                                    <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-dark">About</a></li>
+                                    {["Home", "Features", "Pricing", "FAQs", "About"].map((item, idx) => (
+                                        <li key={idx} className="nav-item mb-2">
+                                            <Link to="#" className="nav-link p-0 text-white">{item}</Link>
+                                        </li>
+                                    ))}
                                 </ul>
                             </div>
-                            <div className="col-6 col-md-2 mb-3">
-                                <h5>Section</h5>
-                                <ul className="nav flex-column">
-                                    <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-dark">Home</a></li>
-                                    <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-dark">Features</a></li>
-                                    <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-dark">Pricing</a></li>
-                                    <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-dark">FAQs</a></li>
-                                    <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-dark">About</a></li>
-                                </ul>
-                            </div>
-                            <div className="col-6 col-md-2 mb-3">
-                                <h5>Section</h5>
-                                <ul className="nav flex-column">
-                                    <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-dark">Home</a></li>
-                                    <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-dark">Features</a></li>
-                                    <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-dark">Pricing</a></li>
-                                    <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-dark">FAQs</a></li>
-                                    <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-dark">About</a></li>
-                                </ul>
-                            </div>
-                            <div className="col-md-5 offset-md-1 mb-3">
-                                <form>
-                                    <h5>Subscribe to our newsletter</h5>
-                                    <p>Monthly digest of what's new and exciting from us.</p>
-                                    <div className="d-flex flex-column flex-sm-row w-100 gap-2"> <label htmlFor="newsletter1" className="visually-hidden">Email address</label> <input id="newsletter1" type="email" className="form-control" placeholder="Email address" /> <button className="btn btn-info text-white" type="button">Subscribe</button> </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div className="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top text-white">
-                            <p>© 2025 Company, Inc. All rights reserved.</p>
-                            <ul className="list-unstyled d-flex">
-                                <li className="ms-3">
-                                    <a className="link-body-emphasis" href="#" aria-label="Instagram">
-                                        <svg className="bi" width="24" height="24">
+                        ))}
 
-                                        </svg>
-                                    </a>
-                                </li>
-                                <li className="ms-3">
-                                    <a className="link-body-emphasis" href="#" aria-label="Facebook">
-                                        <svg className="bi" width="24" height="24" aria-hidden="true">
-
-                                        </svg>
-                                    </a>
-                                </li>
-                            </ul>
+                        <div className="col-md-5 offset-md-1 mb-3">
+                            <form>
+                                <h5>Assine nossa newsletter</h5>
+                                <p>Resumo mensal do que há de novo e interessante.</p>
+                                <div className="d-flex flex-column flex-sm-row w-100 gap-2">
+                                    <label htmlFor="newsletter1" className="visually-hidden">Email</label>
+                                    <input id="newsletter1" type="email" className="form-control" placeholder="Digite seu e-mail" />
+                                    <button className="btn btn-info text-white" type="button">Inscrever</button>
+                                </div>
+                            </form>
                         </div>
-                    </footer>
+                    </div>
+
+                    <div className="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
+                        <p>© 2025 Store, Inc. Todos os direitos reservados.</p>
+                        <ul className="list-unstyled d-flex">
+                            <li className="ms-3">
+                                <a className="link-light" href="#" aria-label="Instagram">
+                                    <i className="fa-brands fa-instagram"></i>
+                                </a>
+                            </li>
+                            <li className="ms-3">
+                                <a className="link-light" href="#" aria-label="Facebook">
+                                    <i className="fa-brands fa-facebook"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
+            </footer>
         </div>
-    )
+    );
 }
