@@ -1,30 +1,100 @@
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation } from "@tanstack/react-query"
+import { registerCategory } from "../../api/register-category"
+import { toast } from "sonner"
+import { useRef, useState } from "react"
+
+const registerCategorySchema = z.object({
+    name: z.string().min(1, "Nome é obrigatório!")
+})
+
+type RegisterCategoryForm = z.infer<typeof registerCategorySchema>
 
 export function AdminCategories() {
+    const closeBtnRef = useRef<HTMLButtonElement>(null)
+    const {
+        register,
+        reset,
+        handleSubmit,
+        formState: { isSubmitting, errors }
+    } = useForm<RegisterCategoryForm>({
+        resolver: zodResolver(registerCategorySchema)
+    })
+
+    const { mutateAsync: registerCategoryFn } = useMutation({
+        mutationFn: registerCategory,
+    })
+
+    async function handleRegisterCategory(data: RegisterCategoryForm) {
+        try {
+
+            await new Promise((resolve) => setTimeout(resolve, 1500))
+            await registerCategoryFn({
+                name: data.name
+            })
+            reset()
+            closeBtnRef.current?.click()
+            toast.message('Nova categoria', {
+                description: 'Categoria cadastrada com sucesso',
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return (
         <main className="container">
-            <div className="modal fade" id="exampleModal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
+            {/* Modal */}
+          
+             <div className="modal fade" id="exampleModal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
-                        <div className="modal-header">
-                            <h1 className="modal-title fs-5" id="exampleModalLabel">Nova categoria</h1>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div className="modal-body">
-                            <form>
+                        <form onSubmit={handleSubmit(handleRegisterCategory)}>
+                            <div className="modal-header">
+                                <h1 className="modal-title fs-5" id="exampleModalLabel">Nova categoria</h1>
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div className="modal-body">
                                 <div className="mb-3">
-                                    <label htmlFor="recipient-name" className="col-form-label">Nome</label>
-                                    <input type="text" className="form-control" id="recipient-name" />
+                                    <label htmlFor="name" className="col-form-label">Nome</label>
+                                    <input
+                                        type="text"
+                                        className={`form-control ${errors.name ? 'is-invalid' : ''}`}
+                                        id="name"
+                                        {...register("name", { required: true })}
+                                    />
+                                    {errors.name && (
+                                        <span className="text-danger">{errors.name.message}</span>
+                                    )}
                                 </div>
-                            </form>
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                            <button type="button" className="btn btn-primary">Cadastrar</button>
-                        </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button 
+                                type="button" 
+                                className="btn btn-secondary" 
+                                data-bs-dismiss="modal"
+                                ref={closeBtnRef}
+                                >
+                                    Fechar
+                                </button>
+                                <button
+                                    type="submit"
+                                    className="btn btn-primary"
+                                    disabled={isSubmitting}
+                                    
+                                >
+                                    {isSubmitting ? 'Cadastrando...': 'Cadastrar'}
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
+           
+
+            {/* Botão para abrir o modal */}
             <div className="d-flex justify-content-end">
                 <button
                     type="button"
@@ -35,6 +105,7 @@ export function AdminCategories() {
                 </button>
             </div>
 
+            {/* Tabela de categorias */}
             <table className="table table-sm table-responsive align-middle">
                 <thead>
                     <tr>
@@ -55,9 +126,10 @@ export function AdminCategories() {
                             <button type="button" className="btn btn-outline-danger"><i className="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>
-
                 </tbody>
             </table>
+
+            {/* Paginação */}
             <nav className="d-flex justify-content-end" aria-label="Page navigation example">
                 <ul className="pagination">
                     <li className="page-item">
