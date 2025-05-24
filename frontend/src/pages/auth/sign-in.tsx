@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useMutation } from "@tanstack/react-query";
 import { signIn } from "../../api/sign-in";
 import { useAuthStore } from "../../store/use-auth-store";
+import { toast } from "sonner";
 
 const signSignIp = z.object({
     email: z.string().email(),
@@ -29,13 +30,24 @@ export function SignIn() {
             })
 
 
+            await new Promise((resolve) => setTimeout(resolve, 1500))
             const tokenSaved = login(data.token, data.user)
 
-            
+
             if (tokenSaved && data.user.role === 'ADMIN') {
+
+                toast.message('Autenticado', {
+                    description: 'Admnistrador autenticado com sucesso!',
+                })
+
                 navigate('/admin/painel')
             } else {
                 navigate('/')
+
+                  toast.message('Autenticado', {
+                    description: 'Usuário autenticado com sucesso!',
+                })
+
             }
 
 
