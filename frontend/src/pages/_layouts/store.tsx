@@ -1,10 +1,10 @@
-import { Store } from "lucide-react";
+import { LogOut, Store } from "lucide-react";
 import { Link, Outlet } from "react-router-dom";
 import { useAuthStore } from "../../store/use-auth-store";
 import { UserActive } from "../../components/user-active";
 
 export function StoreLayout() {
-    const { user } = useAuthStore();
+    const { user, logout } = useAuthStore();
     return (
         <div>
             {/* Navbar */}
@@ -51,6 +51,16 @@ export function StoreLayout() {
                             <Link to="/cart" className="nav-link text-white">
                                 <i className="fa-solid fa-cart-shopping"></i>
                             </Link>
+
+                            {user && (
+                                <Link
+                                    to={"/sign-in"}
+                                    className="nav-link text-white"
+                                    onClick={() => logout()}
+                                >
+                                    <LogOut />
+                                </Link>
+                            )}
                         </div>
                     </div>
                 </div>
