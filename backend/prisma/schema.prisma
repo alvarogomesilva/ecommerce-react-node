@@ -34,18 +34,41 @@ model User {
 }
 
 model Store {
-  id                String   @id @default(uuid())
-  name              String
-  description       String?
-  logoUrl           String?
-  primaryColor      String?
-  email             String?
-  phone             String?
-  address           String?
-  admin             User     @relation("AdminStore", fields: [adminId], references: [id])
-  adminId           String
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  id           String   @id @default(uuid())
+  name         String
+  description  String?
+  logoUrl      String?
+  primaryColor String?
+  email        String?
+  phone        String?
+  address      String?
+  admin        User     @relation("AdminStore", fields: [adminId], references: [id])
+  adminId      String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
   @@map("stores")
+}
+
+model Categories {
+  id            String          @id @default(ulid())
+  name          String
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  subcategories SubCategories[]
+
+  @@map("categories")
+}
+
+model SubCategories {
+  id   String @id @default(ulid())
+  name String
+  categoryId String     
+
+  category   Categories @relation(fields: [categoryId], references: [id])
+  
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  @@map("sub_categories")
 }
