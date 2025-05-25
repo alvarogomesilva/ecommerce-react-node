@@ -60,6 +60,7 @@ export function AdminLayout() {
                                     <span className="mx-1">{user?.name}</span>
                                 </button>
                                 <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                    <Link to={"/admin/settings"} className="dropdown-item">Configurações</Link>
                                     <li>
                                         <button 
                                         className="dropdown-item" 

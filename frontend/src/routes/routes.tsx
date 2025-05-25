@@ -15,6 +15,7 @@ import { AdminSubCategories } from '../pages/admin/admin-sub-categories'
 import { AdminBanners } from '../pages/admin/admin-banners'
 import { AdminProducts } from '../pages/admin/admin-products'
 import { PrivateRoute } from './private-route'
+import { Settings } from '../pages/admin/settings'
 
 export const router = createBrowserRouter([
   {
@@ -53,6 +54,7 @@ export const router = createBrowserRouter([
           { path: 'products', element: <AdminProducts /> },
           { path: 'sub-categories', element: <AdminSubCategories /> },
           { path: 'banners', element: <AdminBanners /> },
+          { path: 'settings', element: <Settings /> },
         ]
       }
     ]
