@@ -1,5 +1,7 @@
 import { ResourceNotFoundError } from "../../errors/resource-not-found-error";
+import { StoreRepository } from "../../repositories/store-repository";
 import { UserRepository } from "../../repositories/user-repository";
+import { Store } from "../../types/store";
 import { User } from "../../types/user";
 
 interface ProfileUserUseCaseRequest {
@@ -7,12 +9,16 @@ interface ProfileUserUseCaseRequest {
 }
 
 interface ProfileUserUseCaseResponse {
-    user: User
+    user: User,
+    store: Store | null
 }
 
 
 export class ProfileUserUseCase {
-    constructor(private userRepository: UserRepository) { }
+    constructor(
+        private userRepository: UserRepository,
+        private storeRepository: StoreRepository
+    ) { }
 
     async execute({ userId }: ProfileUserUseCaseRequest): Promise<ProfileUserUseCaseResponse> {
 
@@ -22,8 +28,12 @@ export class ProfileUserUseCase {
             throw new ResourceNotFoundError()
         }
 
+        const store = await this.storeRepository.findStoreByUserId(user.id)
+
+
         return {
-            user
+            user,
+            store
         }
     }
 }

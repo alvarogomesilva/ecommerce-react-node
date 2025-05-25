@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { PrismaUserRepository } from "../../repositories/prisma/prisma-user-repository";
 import { ProfileUserUseCase } from "../../useCases/users/profile-user-usecase";
+import { PrismaStoreRepository } from "../../repositories/prisma/prisma-store-repository";
 
 export async function profile(request: Request, response: Response) {
 
@@ -8,13 +9,14 @@ export async function profile(request: Request, response: Response) {
 
     try {
         const prismaUserRepository = new PrismaUserRepository()
-        const profileUserUseCase = new ProfileUserUseCase(prismaUserRepository)
+        const prismaStoreRepository = new PrismaStoreRepository()
+        const profileUserUseCase = new ProfileUserUseCase(prismaUserRepository, prismaStoreRepository)
 
-        const { user } = await profileUserUseCase.execute({
+        const { user, store } = await profileUserUseCase.execute({
             userId
         })
 
-        response.status(200).send(user)
+        response.status(200).send({ user, store })
     } catch (error) {
         console.log(error)
     }
