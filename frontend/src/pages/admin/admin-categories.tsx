@@ -1,10 +1,12 @@
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import { registerCategory } from "../../api/register-category"
 import { toast } from "sonner"
 import { useRef, useState } from "react"
+import { getCategories } from "../../api/get-categories"
+import { queryClient } from "../../lib/react-query"
 
 const registerCategorySchema = z.object({
     name: z.string().min(1, "Nome é obrigatório!")
@@ -25,6 +27,9 @@ export function AdminCategories() {
 
     const { mutateAsync: registerCategoryFn } = useMutation({
         mutationFn: registerCategory,
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({ queryKey: ['categories'] })
+        }
     })
 
     async function handleRegisterCategory(data: RegisterCategoryForm) {
@@ -43,6 +48,11 @@ export function AdminCategories() {
             console.log(error)
         }
     }
+
+    const { data } = useQuery({
+        queryKey: ['categories'],
+        queryFn: getCategories
+    })
 
     return (
         <main className="container">
@@ -105,7 +115,7 @@ export function AdminCategories() {
                 </button>
             </div>
 
-            {/* Tabela de categorias */}
+            
             <table className="table table-sm table-responsive align-middle">
                 <thead>
                     <tr>
@@ -116,8 +126,9 @@ export function AdminCategories() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Sabonetes</td>
+                   {data && data.map((category) => (
+                     <tr key={category.id}>
+                        <td>{category.name}</td>
                         <td>1</td>
                         <td>20/10/2024</td>
                         <td className="d-flex justify-content-center gap-2">
@@ -126,6 +137,7 @@ export function AdminCategories() {
                             <button type="button" className="btn btn-outline-danger"><i className="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>
+                   )) }
                 </tbody>
             </table>
 
