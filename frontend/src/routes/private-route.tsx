@@ -26,9 +26,9 @@ export function PrivateRoute({ children, requiredRole }: Props) {
 
       try {
         const res = await api.get("/me");
-        setUser(res.data);
+        setUser(res.data.user);
 
-        if (requiredRole && res.data.role !== requiredRole) {
+        if (requiredRole && res.data.user.role !== requiredRole) {
           setIsValid(false);
         } else {
           setIsValid(true);

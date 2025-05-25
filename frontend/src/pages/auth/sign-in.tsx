@@ -40,9 +40,9 @@ export function SignIn() {
 
 
             await new Promise((resolve) => setTimeout(resolve, 1500))
-            const tokenSaved = login(data.token, data.user)
-
-
+            
+            const tokenSaved = login(data.token, data.user, data.store)
+            
             if (tokenSaved && data.user.role === 'ADMIN') {
 
                 toast.message('Autenticado', {

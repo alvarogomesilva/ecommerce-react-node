@@ -10,11 +10,27 @@ export interface User {
   updatedAt: string;
 }
 
+interface Store {
+    id: string
+    name: string
+    title: string | null
+    email: string | null
+    color: string | null
+    whatsapp: string | null
+    phone: string | null
+    address: string | null
+    logo: string | null
+    adminId: string
+    createdAt: Date
+    updatedAt: Date
+}
+
 interface AuthState {
   token: string | null;
   user: User | null;
+  store: Store | null;
   setUser: (user: User) => void;
-  login: (token: string, user: User) => boolean;
+  login: (token: string, user: User, store: Store) => boolean;
   logout: () => void;
 }
 
@@ -32,14 +48,15 @@ const getInitialUser = (): User | null => {
 export const useAuthStore = create<AuthState>((set) => ({
   token: getInitialToken(),
   user: getInitialUser(),
+  store: null,
 
   setUser: (user) => {
     set({ user });
     localStorage.setItem("@u", JSON.stringify(user));
   },
 
-  login: (token, user) => {
-    set({ token, user });
+  login: (token, user, store) => {
+    set({ token, user, store });
     localStorage.setItem("@t", token);
     localStorage.setItem("@u", JSON.stringify(user));
     return true;
