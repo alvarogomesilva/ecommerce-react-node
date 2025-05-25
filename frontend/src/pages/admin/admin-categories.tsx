@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { registerCategory } from "../../api/register-category"
 import { toast } from "sonner"
-import { useRef, useState } from "react"
+import { useRef } from "react"
 import { getCategories } from "../../api/get-categories"
 import { queryClient } from "../../lib/react-query"
 
@@ -57,8 +57,8 @@ export function AdminCategories() {
     return (
         <main className="container">
             {/* Modal */}
-          
-             <div className="modal fade" id="exampleModal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+            <div className="modal fade" id="exampleModal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <form onSubmit={handleSubmit(handleRegisterCategory)}>
@@ -81,11 +81,11 @@ export function AdminCategories() {
                                 </div>
                             </div>
                             <div className="modal-footer">
-                                <button 
-                                type="button" 
-                                className="btn btn-secondary" 
-                                data-bs-dismiss="modal"
-                                ref={closeBtnRef}
+                                <button
+                                    type="button"
+                                    className="btn btn-secondary"
+                                    data-bs-dismiss="modal"
+                                    ref={closeBtnRef}
                                 >
                                     Fechar
                                 </button>
@@ -93,16 +93,16 @@ export function AdminCategories() {
                                     type="submit"
                                     className="btn btn-primary"
                                     disabled={isSubmitting}
-                                    
+
                                 >
-                                    {isSubmitting ? 'Cadastrando...': 'Cadastrar'}
+                                    {isSubmitting ? 'Cadastrando...' : 'Cadastrar'}
                                 </button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-           
+
 
             {/* Botão para abrir o modal */}
             <div className="d-flex justify-content-end">
@@ -115,50 +115,60 @@ export function AdminCategories() {
                 </button>
             </div>
 
-            
-            <table className="table table-sm table-responsive align-middle">
-                <thead>
-                    <tr>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Itens</th>
-                        <th scope="col">Data cadastro</th>
-                        <th scope="col" className="text-center">Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                   {data && data.map((category) => (
-                     <tr key={category.id}>
-                        <td>{category.name}</td>
-                        <td>1</td>
-                        <td>20/10/2024</td>
-                        <td className="d-flex justify-content-center gap-2">
-                            <button type="button" className="btn btn-outline-success"><i className="fa-solid fa-eye"></i></button>
-                            <button type="button" className="btn btn-outline-primary"><i className="fa-solid fa-pen-to-square"></i></button>
-                            <button type="button" className="btn btn-outline-danger"><i className="fa-solid fa-trash"></i></button>
-                        </td>
-                    </tr>
-                   )) }
-                </tbody>
-            </table>
+            {!data && (
+                <p className="text-center">Nenhuma categoria cadastrada!</p>
+            )}
 
-            {/* Paginação */}
-            <nav className="d-flex justify-content-end" aria-label="Page navigation example">
-                <ul className="pagination">
-                    <li className="page-item">
-                        <a className="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li className="page-item"><a className="page-link" href="#">1</a></li>
-                    <li className="page-item"><a className="page-link" href="#">2</a></li>
-                    <li className="page-item"><a className="page-link" href="#">3</a></li>
-                    <li className="page-item">
-                        <a className="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+
+            {data && data.map((category) => (
+                <table 
+                    key={category.id}
+                    className="table table-sm table-responsive align-middle">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Itens</th>
+                            <th scope="col">Data cadastro</th>
+                            <th scope="col" className="text-center">Ações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr key={category.id}>
+                            <td>{category.name}</td>
+                            <td>1</td>
+                            <td>20/10/2024</td>
+                            <td className="d-flex justify-content-center gap-2">
+                                <button type="button" className="btn btn-outline-success"><i className="fa-solid fa-eye"></i></button>
+                                <button type="button" className="btn btn-outline-primary"><i className="fa-solid fa-pen-to-square"></i></button>
+                                <button type="button" className="btn btn-outline-danger"><i className="fa-solid fa-trash"></i></button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            ))}
+
+            {data && (
+                <nav className="d-flex justify-content-end" aria-label="Page navigation example">
+                    <ul className="pagination">
+                        <li className="page-item">
+                            <a className="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li className="page-item"><a className="page-link" href="#">1</a></li>
+                        <li className="page-item"><a className="page-link" href="#">2</a></li>
+                        <li className="page-item"><a className="page-link" href="#">3</a></li>
+                        <li className="page-item">
+                            <a className="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            )}
         </main>
     )
 }
