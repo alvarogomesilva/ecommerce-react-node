@@ -10,9 +10,9 @@ export async function listAll(request: Request, response: Response) {
         const prismaCategoryRepository = new PrismaCategoryRepository()
         const listAllCategoryUseCase = new ListAllCategoryUseCase(prismaCategoryRepository)
 
-        const { categories } = await listAllCategoryUseCase.execute()
+        const { listAllCategories } = await listAllCategoryUseCase.execute()
 
-        response.status(200).send(categories)
+        response.status(200).send(listAllCategories)
     } catch (error) {
         console.log(error)
     }

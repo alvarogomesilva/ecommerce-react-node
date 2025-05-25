@@ -7,21 +7,18 @@ interface ListAllCategoriesUseCaseRequest {
 }
 
 interface ListAllCategoriesUseCaseResponse {
-    categories: Category[]
+    listAllCategories: Category[] | null
 }
 
 export class ListAllCategoryUseCase {
     constructor(private categoryRepository: CategoryRepository) {}
 
     async execute(): Promise<ListAllCategoriesUseCaseResponse> {
-        const categories = await this.categoryRepository.listAll()
+        const listAllCategories = await this.categoryRepository.listAll()
 
-        if (!categories) {
-            throw new ResourceNotFoundError()
-        }
-
+    
         return {
-            categories
+            listAllCategories
         }
     }
 }
