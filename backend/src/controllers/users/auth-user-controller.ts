@@ -4,6 +4,7 @@ import { AuthUserUseCase } from "../../useCases/users/auth-user-useCase";
 import { PrismaUserRepository } from "../../repositories/prisma/prisma-user-repository";
 import { InvalidCredentialsErrors } from "../../errors/invalid-credentials-errors";
 import { sign } from "jsonwebtoken";
+import { PrismaStoreRepository } from "../../repositories/prisma/prisma-store-repository";
 
 export async function autenticate(request: Request, response: Response) {
 
@@ -17,9 +18,11 @@ export async function autenticate(request: Request, response: Response) {
 
     try {
         const prismaUserRepository = new PrismaUserRepository()
-        const authenticateUseCase = new AuthUserUseCase(prismaUserRepository)
+        const prismaStoreRepository = new PrismaStoreRepository()
 
-        const { user } = await authenticateUseCase.execute({
+        const authenticateUseCase = new AuthUserUseCase(prismaUserRepository, prismaStoreRepository)
+
+        const { user, store } = await authenticateUseCase.execute({
             email,
             password
         })
@@ -34,7 +37,8 @@ export async function autenticate(request: Request, response: Response) {
 
         response.status(200).send({
             token,
-            user
+            user,
+            store
         })
 
     } catch (error) {
