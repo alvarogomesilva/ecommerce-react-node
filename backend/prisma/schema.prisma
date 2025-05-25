@@ -51,7 +51,7 @@ model Store {
 }
 
 model Categories {
-  id            String          @id @default(ulid())
+  id            String          @id @default(uuid())
   name          String
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
@@ -61,7 +61,7 @@ model Categories {
 }
 
 model SubCategories {
-  id   String @id @default(ulid())
+  id   String @id @default(uuid())
   name String
   categoryId String     
 
