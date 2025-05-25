@@ -41,6 +41,7 @@ model Store {
   primaryColor String?
   email        String?
   phone        String?
+  whatsapp     String?
   address      String?
   admin        User     @relation("AdminStore", fields: [adminId], references: [id])
   adminId      String
