@@ -18,7 +18,7 @@ export class ProfileUserUseCase {
 
         const user = await this.userRepository.findById(userId)
 
-        if (!user ) {
+        if (!user) {
             throw new ResourceNotFoundError()
         }
 

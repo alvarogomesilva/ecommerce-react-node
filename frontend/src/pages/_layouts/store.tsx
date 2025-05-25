@@ -1,5 +1,5 @@
 import { LogOut, Store } from "lucide-react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
 import { useAuthStore } from "../../store/use-auth-store";
 import { UserActive } from "../../components/user-active";
 
@@ -30,19 +30,19 @@ export function StoreLayout() {
                     <div className="collapse navbar-collapse" id="navbarContent">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
-                                <Link className="nav-link active" to="/">Início</Link>
+                                <NavLink className="nav-link" to="/">Início</NavLink>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/categories">Categorias</Link>
+                                <NavLink className="nav-link" to="/categories">Categorias</NavLink>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/products">Produtos</Link>
+                                <NavLink className="nav-link" to="/products">Produtos</NavLink>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/blog">Blog</Link>
+                                <NavLink className="nav-link" to="/blog">Blog</NavLink>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/contact">Contatos</Link>
+                                <NavLink className="nav-link" to="/contact">Contatos</NavLink>
                             </li>
                         </ul>
 

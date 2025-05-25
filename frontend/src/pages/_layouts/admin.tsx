@@ -1,4 +1,4 @@
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { Store } from 'lucide-react';
 import { useAuthStore } from "../../store/use-auth-store";
 
@@ -32,14 +32,14 @@ export function AdminLayout() {
                     <div className="collapse navbar-collapse" id="navbarsExample07">
                         <ul className="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
                             <li className="nav-item">
-                                <Link to="/admin/dashboard" className="nav-link active" aria-current="page">
+                                <NavLink to="/admin/dashboard" className="nav-link" aria-current="page">
                                     Dashboard
-                                </Link>
+                                </NavLink>
                             </li>
                             <li className="nav-item me-2">
-                                <Link to="/admin/painel" className="nav-link">
+                                <NavLink to="/admin/painel" className="nav-link">
                                     Painel
-                                </Link>
+                                </NavLink>
                             </li>
 
                             <li className="nav-item dropdown">
