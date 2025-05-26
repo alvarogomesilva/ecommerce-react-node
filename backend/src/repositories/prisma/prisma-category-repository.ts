@@ -19,4 +19,10 @@ export class PrismaCategoryRepository implements CategoryRepository {
 
         return null
     }
+
+    async delete(id: string) {
+        return prisma.categories.delete({
+            where: { id }
+        })
+    }
 }
