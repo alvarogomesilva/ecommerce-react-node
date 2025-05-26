@@ -180,7 +180,7 @@ export function Settings() {
 
                     </div>
                     <button
-                        className="w-100 btn btn-primary btn-lg"
+                        className={`w-100 btn btn-${store?.color} btn-lg`}
                         type="submit"
                         disabled={isSubmitting}
                     >

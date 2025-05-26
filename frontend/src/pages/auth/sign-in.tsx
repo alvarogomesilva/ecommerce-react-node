@@ -24,7 +24,7 @@ export function SignIn() {
             errors
         } } = useForm<SignIpForm>({ resolver: zodResolver(signSignIp) })
 
-    const { login } = useAuthStore()
+    const { login, store } = useAuthStore()
     const navigate = useNavigate()
     const { mutateAsync: signInFn } = useMutation({
         mutationFn: signIn,
@@ -70,7 +70,7 @@ export function SignIn() {
             <div className="container">
                 <div className="card border-light-subtle shadow-sm">
                     <div className="row g-0">
-                        <div className="col-12 col-md-6 bg-primary">
+                        <div className={`col-12 col-md-6 bg-primary`}>
                             <div className="d-flex align-items-center justify-content-center h-100">
                                 <div className="col-10 col-xl-8 py-3 text-center">
                                     <Store
@@ -129,7 +129,7 @@ export function SignIn() {
                                         <div className="col-12">
                                             <div className="d-grid">
                                                 <button
-                                                    className="btn bsb-btn-xl btn-primary p-2 mt-2"
+                                                    className={`btn bsb-btn-xl btn-primary p-2 mt-2`}
                                                     type="submit"
                                                     disabled={isSubmitting}
                                                 >
@@ -143,7 +143,7 @@ export function SignIn() {
                                     <div className="col-12">
                                         <hr className="mt-5 mb-4 border-secondary-subtle" />
                                         <div className="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-end">
-                                            <Link to={"/sign-up"} className="link-primary text-decoration-none">Não possui conta? Cadastre-se</Link>
+                                            <Link to={"/sign-up"} className={`link-primary text-decoration-none`}>Não possui conta? Cadastre-se</Link>
 
                                         </div>
                                     </div>

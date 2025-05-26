@@ -1,13 +1,15 @@
 import { Store } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useAuthStore } from "../../store/use-auth-store";
 
 export function Painel() {
+  const { store } = useAuthStore()
   return (
     <div className="container">
       {/* Título e ícone principal */}
       <div className="d-flex justify-content-center align-items-center mt-4 mb-2">
         <Store
-          className="me-2 text-primary"
+          className={`me-2 text-${store?.color}`}
           size={48} // Ícone maior que o padrão
         />
         <div className="d-flex flex-column lh-1">
@@ -48,11 +50,11 @@ export function Painel() {
                 className="card-body d-flex flex-column justify-content-center align-items-center gap-2 text-decoration-none"
               >
                 <i
-                  className={`fa-solid ${item.icon} ${
+                  className={`fa-solid ${item.icon} text-${store?.color} ${
                     index === 2 ? "fs-2" : "fs-4"
                   }`} // Aumenta o ícone do card do meio (Produtos)
                 ></i>
-                <h5 className="card-title text-center">{item.title}</h5>
+                <h5 className={`card-title text-center text-${store?.color}`}>{item.title}</h5>
               </Link>
             </div>
           </div>

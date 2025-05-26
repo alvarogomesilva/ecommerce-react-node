@@ -3,11 +3,11 @@ import { Store } from 'lucide-react';
 import { useAuthStore } from "../../store/use-auth-store";
 
 export function AdminLayout() {
-    const { user, logout } = useAuthStore()
+    const { user, logout, store } = useAuthStore()
     const navigate = useNavigate()
     return (
         <>
-            <nav className="navbar navbar-expand-lg navbar-dark bg-primary p-3">
+            <nav className={`navbar navbar-expand-lg navbar-dark bg-${store?.color} p-3`}>
                 <div className="container">
                     <Link to="/admin/dashboard" className="navbar-brand d-flex align-items-center">
                         <Store className="me-2" />

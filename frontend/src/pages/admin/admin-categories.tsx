@@ -7,6 +7,7 @@ import { toast } from "sonner"
 import { useRef } from "react"
 import { getCategories } from "../../api/get-categories"
 import { queryClient } from "../../lib/react-query"
+import { useAuthStore } from "../../store/use-auth-store"
 
 const registerCategorySchema = z.object({
     name: z.string().min(1, "Nome é obrigatório!")
@@ -15,6 +16,7 @@ const registerCategorySchema = z.object({
 type RegisterCategoryForm = z.infer<typeof registerCategorySchema>
 
 export function AdminCategories() {
+    const { store } = useAuthStore()
     const closeBtnRef = useRef<HTMLButtonElement>(null)
     const {
         register,
@@ -108,7 +110,7 @@ export function AdminCategories() {
             <div className="d-flex justify-content-end">
                 <button
                     type="button"
-                    className="btn btn-primary m-3"
+                    className={`btn btn-${store?.color} m-3`}
                     data-bs-toggle="modal"
                     data-bs-target="#exampleModal">
                     Nova categoria
