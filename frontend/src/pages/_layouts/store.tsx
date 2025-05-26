@@ -42,7 +42,7 @@ export function StoreLayout() {
                                 <NavLink className="nav-link" to="/blog">Blog</NavLink>
                             </li>
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="/contact">Contatos</NavLink>
+                                <NavLink className="nav-link" to="/contacts">Contatos</NavLink>
                             </li>
                         </ul>
 
