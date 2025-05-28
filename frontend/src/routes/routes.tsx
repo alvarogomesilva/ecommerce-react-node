@@ -18,6 +18,7 @@ import { PrivateRoute } from './private-route'
 import { Settings } from '../pages/admin/settings'
 import { Blog } from '../pages/shop/blog'
 import { Contacts } from '../pages/shop/contacts'
+import { Profile } from '../pages/shop/profile'
 
 export const router = createBrowserRouter([
   {
@@ -38,6 +39,7 @@ export const router = createBrowserRouter([
       { path: '/checkout', element: <Checkout /> },
       { path: '/blog', element: <Blog /> },
       { path: '/contacts', element: <Contacts /> },
+      { path: '/profile', element: <Profile /> },
     ],
   },
 
