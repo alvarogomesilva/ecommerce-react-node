@@ -4,10 +4,11 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { registerCategory } from "../../api/register-category"
 import { toast } from "sonner"
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import { getCategories } from "../../api/get-categories"
 import { queryClient } from "../../lib/react-query"
 import { useAuthStore } from "../../store/use-auth-store"
+import { deleteCategory } from "../../api/delete-category"
 
 const registerCategorySchema = z.object({
     name: z.string().min(1, "Nome é obrigatório!")
@@ -17,7 +18,9 @@ type RegisterCategoryForm = z.infer<typeof registerCategorySchema>
 
 export function AdminCategories() {
     const { store } = useAuthStore()
+    const [categoryDelete, setCategoryDelete] = useState('')
     const closeBtnRef = useRef<HTMLButtonElement>(null)
+    const closeBtnRef2 = useRef<HTMLButtonElement>(null)
     const {
         register,
         reset,
@@ -29,6 +32,13 @@ export function AdminCategories() {
 
     const { mutateAsync: registerCategoryFn } = useMutation({
         mutationFn: registerCategory,
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({ queryKey: ['categories'] })
+        }
+    })
+
+    const { mutateAsync: deleteCategoryFn } = useMutation({
+        mutationFn: deleteCategory,
         onSuccess: async () => {
             await queryClient.invalidateQueries({ queryKey: ['categories'] })
         }
@@ -55,6 +65,26 @@ export function AdminCategories() {
         queryKey: ['categories'],
         queryFn: getCategories
     })
+
+
+    async function handleDeleteCategory(id: string) {
+        try {
+
+            await new Promise((resolve) => setTimeout(resolve, 1500))
+            await deleteCategoryFn({
+                id
+            })
+
+            toast.message('Categoria deletada', {
+                description: 'Categoria deletada com sucesso!',
+            })
+
+            closeBtnRef2.current?.click()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 
     return (
         <main className="container">
@@ -106,6 +136,41 @@ export function AdminCategories() {
             </div>
 
 
+            <div className="modal fade" id="exampleModal2" tabIndex={-1} aria-labelledby="exampleModalLabel2" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-centered">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel2">Confirmar exclusão</h5>
+                            <button 
+                                type="button" 
+                                className="btn-close" 
+                                data-bs-dismiss="modal" 
+                                aria-label="Fechar"
+                                ref={closeBtnRef2}
+                                >
+                                </button>
+                        </div>
+                        <div className="modal-body">
+                            Tem certeza que deseja excluir esta categoria?
+                        </div>
+                        <div className="modal-footer">
+                            <button 
+                                type="button" 
+                                className="btn btn-secondary" 
+                                data-bs-dismiss="modal">Cancelar</button>
+                            <button
+                                type="button"
+                                className="btn btn-danger"
+                                onClick={() => handleDeleteCategory(categoryDelete)}
+                            >
+                                Excluir
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
             {/* Botão para abrir o modal */}
             <div className="d-flex justify-content-end">
                 <button
@@ -123,7 +188,7 @@ export function AdminCategories() {
 
 
             {data && data.map((category) => (
-                <table 
+                <table
                     key={category.id}
                     className="table table-sm table-responsive align-middle">
                     <thead>
@@ -143,7 +208,15 @@ export function AdminCategories() {
                             <td className="d-flex justify-content-center gap-2">
                                 <button type="button" className="btn btn-outline-success"><i className="fa-solid fa-eye"></i></button>
                                 <button type="button" className="btn btn-outline-primary"><i className="fa-solid fa-pen-to-square"></i></button>
-                                <button type="button" className="btn btn-outline-danger"><i className="fa-solid fa-trash"></i></button>
+                                <button
+                                    type="button"
+                                    className="btn btn-outline-danger"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal2"
+                                    onClick={() => setCategoryDelete(category.id)}
+                                >
+                                    <i className="fa-solid fa-trash"></i>
+                                </button>
                             </td>
                         </tr>
 
