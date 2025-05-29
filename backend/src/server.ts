@@ -4,6 +4,7 @@ import { errorHandler } from './middlewares/error-handler'
 import cors from 'cors';
 import { categoriesRoutes } from './routes/category-routes';
 import { storeRoutes } from './routes/store-routes';
+import { subCategoriesRoutes } from './routes/sub-categories-routes';
 
 const app = express()
 
@@ -13,6 +14,7 @@ app.use(json())
 
 app.use(usersRoutes)
 app.use(categoriesRoutes)
+app.use(subCategoriesRoutes)
 app.use(storeRoutes)
 
 app.use(errorHandler)
