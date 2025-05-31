@@ -7,64 +7,77 @@ export function StoreLayout() {
     const { user, logout } = useAuthStore();
     return (
         <div>
-            {/* Navbar */}
-            <nav className="navbar navbar-expand-lg navbar-dark bg-primary py-3" aria-label="Main navbar">
-                <div className="container-xl">
-                    <Link to="/" className="navbar-brand d-flex align-items-center text-white">
-                        <Store className="me-2" />
-                        <span>Store</span>
+            <nav className="navbar navbar-expand-md navbar-dark bg-primary py-3" aria-label="Main navbar">
+                <div className="container">
+
+                    <Link
+                        to="/"
+                        className="navbar-brand d-flex flex-column flex-md-row align-items-center text-white"
+                    >
+                        <Store className="mb-1 mb-md-0 me-md-2" size={24} />
+                        <h5 className="m-0 text-center text-md-start">Título da Loja</h5>
                     </Link>
 
                     <button
                         className="navbar-toggler"
                         type="button"
                         data-bs-toggle="collapse"
-                        data-bs-target="#navbarContent"
-                        aria-controls="navbarContent"
+                        data-bs-target="#mainNavbar"
+                        aria-controls="mainNavbar"
                         aria-expanded="false"
                         aria-label="Toggle navigation"
                     >
                         <span className="navbar-toggler-icon"></span>
                     </button>
 
-                    <div className="collapse navbar-collapse" id="navbarContent">
-                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                    <div className="collapse navbar-collapse" id="mainNavbar">
+
+                        <ul className="navbar-nav mx-auto mb-3 mb-md-0">
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="/">Início</NavLink>
+                                <Link className="nav-link active" to="/">Home</Link>
                             </li>
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="/categories">Categorias</NavLink>
+                                <Link className="nav-link" to="/categories">Categorias</Link>
                             </li>
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="/products">Produtos</NavLink>
+                                <Link className="nav-link" to="/products">Produtos</Link>
                             </li>
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="/blog">Blog</NavLink>
+                                <Link className="nav-link" to="/blog">Blog</Link>
                             </li>
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="/contacts">Contatos</NavLink>
+                                <Link className="nav-link" to="/contacts">Contatos</Link>
                             </li>
                         </ul>
 
-                        <div className="d-flex align-items-center">
+
+                        <div className="d-flex align-items-center justify-content-center justify-content-md-end gap-3">
                             <UserActive logged={user} />
-                            <Link to="/cart" className="nav-link text-white">
-                                <i className="fa-solid fa-cart-shopping"></i>
+
+                            <Link className="text-white" to="/cart" title="Carrinho">
+                                <i className="fa-solid fa-cart-shopping fs-5"></i>
                             </Link>
 
                             {user && (
-                                <Link
-                                    to={"/sign-in"}
-                                    className="nav-link text-white"
-                                    onClick={() => logout()}
+                                <button
+                                    className="btn btn-sm btn-outline-light d-flex align-items-center"
+                                    onClick={logout}
+                                    title="Sair"
                                 >
-                                    <LogOut />
-                                </Link>
+                                    <LogOut className="me-1" size={16} />
+                                    Sair
+                                </button>
                             )}
                         </div>
                     </div>
                 </div>
             </nav>
+
+
+
+
+
+
 
             <main>
                 <Outlet />
