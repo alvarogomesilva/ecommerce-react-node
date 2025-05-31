@@ -4,7 +4,7 @@ import { useAuthStore } from "../../store/use-auth-store";
 import { UserActive } from "../../components/user-active";
 
 export function StoreLayout() {
-    const { user, logout } = useAuthStore();
+    const { user, store, logout } = useAuthStore();
     return (
         <div>
             <nav className="navbar navbar-expand-md navbar-dark bg-primary py-3" aria-label="Main navbar">
@@ -15,7 +15,7 @@ export function StoreLayout() {
                         className="navbar-brand d-flex flex-column flex-md-row align-items-center text-white"
                     >
                         <Store className="mb-1 mb-md-0 me-md-2" size={24} />
-                        <h5 className="m-0 text-center text-md-start">Título da Loja</h5>
+                        <h6 className="m-0 text-center text-md-start">{store?.name}</h6>
                     </Link>
 
                     <button
@@ -34,19 +34,19 @@ export function StoreLayout() {
 
                         <ul className="navbar-nav mx-auto mb-3 mb-md-0">
                             <li className="nav-item">
-                                <Link className="nav-link active" to="/">Home</Link>
+                                <NavLink className="nav-link" to="/">Home</NavLink>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/categories">Categorias</Link>
+                                <NavLink className="nav-link" to="/categories">Categorias</NavLink>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/products">Produtos</Link>
+                                <NavLink className="nav-link" to="/products">Produtos</NavLink>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/blog">Blog</Link>
+                                <NavLink className="nav-link" to="/blog">Blog</NavLink>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/contacts">Contatos</Link>
+                                <NavLink className="nav-link" to="/contacts">Contatos</NavLink>
                             </li>
                         </ul>
 
