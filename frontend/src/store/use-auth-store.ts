@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { getStore } from "../api/stores/get-store";
+import { toast } from "sonner";
 
 export interface User {
   id: string;
@@ -12,18 +13,18 @@ export interface User {
 }
 
 interface Store {
-    id: string
-    name: string
-    title: string | null
-    email: string | null
-    color: string | null
-    whatsapp: string | null
-    phone: string | null
-    address: string | null
-    logo: string | null
-    adminId: string
-    createdAt: Date
-    updatedAt: Date
+  id: string
+  name: string
+  title: string | null
+  email: string | null
+  color: string | null
+  whatsapp: string | null
+  phone: string | null
+  address: string | null
+  logo: string | null
+  adminId: string
+  createdAt: Date
+  updatedAt: Date
 }
 
 interface AuthState {
@@ -72,5 +73,8 @@ export const useAuthStore = create<AuthState>((set) => ({
     set({ token: null, user: null });
     localStorage.removeItem("@t");
     localStorage.removeItem("@u");
+    toast.message('Deslogado', {
+      description: 'Usuário deslogado com sucesso',
+    })
   },
 }));
