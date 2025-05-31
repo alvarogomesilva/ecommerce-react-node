@@ -15,7 +15,7 @@ export class PrismaStoreRepository implements StoreRepository {
         return store
     }
 
-    async updateStore(id: string, data: Store){
+    async updateStore(id: string, data: Store) {
         return await prisma.store.update({
             data,
 
@@ -24,5 +24,11 @@ export class PrismaStoreRepository implements StoreRepository {
             }
         })
 
+    }
+
+    async getStore(id: string) {
+        return await prisma.store.findFirst({
+            where: { id }
+        })
     }
 }
