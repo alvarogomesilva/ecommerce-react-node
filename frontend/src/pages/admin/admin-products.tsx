@@ -1,11 +1,63 @@
+import { useAuthStore } from "../../store/use-auth-store"
 
 
 export function AdminProducts() {
+    const { store } = useAuthStore()
 
     return (
         <main className="container">
+            {/* MODAL */}
+
+            <div className="modal fade" id="exampleModal3" tabIndex={-1} aria-labelledby="exampleModalLabel3" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <form>
+                            <div className="modal-header">
+                                <h1 className="modal-title fs-5" id="exampleModalLabel3">Novo Produto</h1>
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div className="modal-body">
+                                <div className="mb-3">
+                                    <label htmlFor="name" className="col-form-label">Nome</label>
+                                    <input
+                                        type="text"
+                                        className={`form-control`} />
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button
+                                    type="button"
+                                    className="btn btn-secondary"
+                                    data-bs-dismiss="modal"
+                                // ref={closeBtnRef}
+                                >
+                                    Fechar
+                                </button>
+                                <button
+                                    type="submit"
+                                    className="btn btn-primary"
+                                ///disabled={isSubmitting}
+
+                                >
+                                    {/* {isSubmitting ? 'Cadastrando...' : 'Cadastrar'} */}
+                                    Cadastrar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
             <div className="d-flex justify-content-end">
-                <button type="button" className="btn btn-primary m-3">Novo Produto</button>
+                <button
+                    type="button"
+                    className={`btn btn-${store?.color} m-3`}
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal3"
+                >
+                    Novo Produto
+                </button>
             </div>
 
             <table className="table table-sm table-responsive align-middle">
