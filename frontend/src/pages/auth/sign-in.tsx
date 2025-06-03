@@ -24,11 +24,11 @@ export function SignIn() {
             errors
         } } = useForm<SignIpForm>({ resolver: zodResolver(signSignIp) })
 
-    const { login, store } = useAuthStore()
+    const { login, setStore, store } = useAuthStore()
     const navigate = useNavigate()
     const { mutateAsync: signInFn } = useMutation({
         mutationFn: signIn,
-        onError: () => {}
+        onError: () => { }
     })
 
     async function handleSignIn(inputs: SignIpForm) {
@@ -40,9 +40,14 @@ export function SignIn() {
 
 
             await new Promise((resolve) => setTimeout(resolve, 1500))
-            
-            const tokenSaved = login(data.token, data.user, data.store)
-            
+
+            const tokenSaved = login(data.token, data.user);
+
+            if (data.store) {
+                setStore(data.store);
+            }
+
+
             if (tokenSaved && data.user.role === 'ADMIN') {
 
                 toast.message('Autenticado', {

@@ -8,7 +8,7 @@ import { useAuthStore } from "./store/use-auth-store";
 
 
 export function App() {
-  const { setStore, } = useAuthStore()
+  const { setStore } = useAuthStore()
 
   useEffect(() => {
     async function getConfigStore() {
@@ -17,8 +17,8 @@ export function App() {
       setStore(store)
     }
 
-    getConfigStore()
-  }, [setStore])
+    return () => { getConfigStore() }
+  }, [])
 
 
   return (

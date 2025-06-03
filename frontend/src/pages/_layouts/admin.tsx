@@ -31,6 +31,11 @@ export function AdminLayout() {
 
                     <div className="collapse navbar-collapse" id="navbarsExample07">
                         <ul className="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+                            <li className="nav-item me-2">
+                                <NavLink to="/" className="nav-link">
+                                    Loja
+                                </NavLink>
+                            </li>
                             <li className="nav-item">
                                 <NavLink to="/admin/dashboard" className="nav-link" aria-current="page">
                                     Dashboard

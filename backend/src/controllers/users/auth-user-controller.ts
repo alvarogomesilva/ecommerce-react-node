@@ -35,6 +35,14 @@ export async function autenticate(request: Request, response: Response) {
                 expiresIn: '10m'
             })
 
+        if (!store) {
+            response.status(200).send({
+                token,
+                user
+            })
+            return
+        }
+
         response.status(200).send({
             token,
             user,
