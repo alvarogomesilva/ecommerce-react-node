@@ -1,45 +1,356 @@
+import { useState } from "react";
 import { useAuthStore } from "../../store/use-auth-store"
 
-
 export function AdminProducts() {
+    const [preview, setPreview] = useState<string | null>(null);
     const { store } = useAuthStore()
+
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => setPreview(reader.result as string);
+            reader.readAsDataURL(file);
+        }
+    };
 
     return (
         <main className="container">
-            {/* MODAL */}
-
-            <div className="modal fade" id="exampleModal3" tabIndex={-1} aria-labelledby="exampleModalLabel3" aria-hidden="true">
-                <div className="modal-dialog">
+            <div
+                className="modal fade"
+                id="exampleModal3"
+                tabIndex={-1}
+                aria-labelledby="exampleModalLabel3"
+                aria-hidden="true"
+            >
+                <div className="modal-dialog modal-lg">
                     <div className="modal-content">
                         <form>
                             <div className="modal-header">
-                                <h1 className="modal-title fs-5" id="exampleModalLabel3">Novo Produto</h1>
-                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <h1 className="modal-title fs-5" id="exampleModalLabel3">
+                                    Novo Produto
+                                </h1>
+                                <button
+                                    type="button"
+                                    className="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                ></button>
                             </div>
+
                             <div className="modal-body">
-                                <div className="mb-3">
-                                    <label htmlFor="name" className="col-form-label">Nome</label>
-                                    <input
-                                        type="text"
-                                        className={`form-control`} />
+                                <div className="row">
+                                    <div className="col">
+                                        <div className="container my-5">
+                                            <div className="row g-4 align-items-start">
+                                                <div className="col-md-6">
+                                                    <div className="card p-4 shadow-sm rounded-4">
+                                                        <h5 className="mb-3 fw-semibold">Selecionar Imagem</h5>
+                                                        <label htmlFor="imageUpload" className="form-label">Escolha um arquivo de imagem</label>
+                                                        <input
+                                                            type="file"
+                                                            className="form-control"
+                                                            id="imageUpload"
+                                                            accept="image/*"
+                                                            onChange={handleImageChange}
+                                                        />
+                                                        <small className="text-muted mt-2 d-block">
+                                                            Formatos suportados: JPG, PNG, WEBP.
+                                                        </small>
+                                                    </div>
+                                                </div>
+
+                                                <div className="col-md-6">
+                                                    <div className="card shadow-sm rounded-4 border">
+                                                        <div className="card-body text-center">
+                                                            <h6 className="card-title mb-3 text-muted">Imagem do produto</h6>
+                                                            <img
+                                                                src={preview || 'https://via.placeholder.com/300x300.png?text=Prévia+do+Produto'}
+                                                                alt="Prévia"
+                                                                className="img-fluid rounded border"
+                                                                style={{ width: '100%', maxWidth: '300px', height: '300px', objectFit: 'fill' }}
+                                                            />
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div className="row mb-3">
+                                    <div className="col d-flex align-items-center gap-2">
+                                        <input
+                                            className="form-check-input"
+                                            type="checkbox"
+                                            id="produtoAtivo"
+                                        />
+                                        <label
+                                            className="form-check-label mb-0"
+                                            htmlFor="produtoAtivo"
+                                        >
+                                            Produto Ativo
+                                        </label>
+                                    </div>
+                                    <div className="col d-flex align-items-center gap-2">
+                                        <input
+                                            className="form-check-input"
+                                            type="checkbox"
+                                            id="controlaEstoque"
+                                        />
+                                        <label
+                                            className="form-check-label mb-0"
+                                            htmlFor="controlaEstoque"
+                                        >
+                                            Controla Estoque
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div className="row mb-3">
+                                    <div className="col">
+                                        <label htmlFor="nomeProduto" className="form-label">
+                                            Nome
+                                        </label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="nomeProduto"
+                                            placeholder="Nome do produto"
+                                        />
+                                    </div>
+                                    <div className="col">
+                                        <label htmlFor="categoria" className="form-label">
+                                            Categoria
+                                        </label>
+                                        <select className="form-select" id="categoria">
+                                            <option selected>Escolha uma categoria</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+                                    </div>
+                                    <div className="col">
+                                        <label htmlFor="subcategoria" className="form-label">
+                                            Sub Categoria
+                                        </label>
+                                        <select className="form-select" id="subcategoria">
+                                            <option selected>Escolha uma subcategoria</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div className="row mb-3">
+                                    <div className="col">
+                                        <label htmlFor="preco" className="form-label">
+                                            Preço
+                                        </label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="preco"
+                                            placeholder="R$"
+                                        />
+                                    </div>
+                                    <div className="col">
+                                        <label htmlFor="estoque" className="form-label">
+                                            Estoque
+                                        </label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="estoque"
+                                            placeholder="Quantidade"
+                                            disabled={true}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="row mb-3">
+                                    <div className="col">
+                                        <label className="form-label">Cores</label>
+                                        <div className="d-flex flex-column gap-1">
+                                            <div className="form-check">
+                                                <input
+                                                    className="form-check-input"
+                                                    type="checkbox"
+                                                    id="corUnico"
+                                                />
+                                                <label
+                                                    className="form-check-label"
+                                                    htmlFor="corUnico"
+                                                >
+                                                    Único
+                                                </label>
+                                            </div>
+                                            <div className="form-check">
+                                                <input
+                                                    className="form-check-input"
+                                                    type="checkbox"
+                                                    id="corAzul"
+                                                />
+                                                <label className="form-check-label" htmlFor="corAzul">
+                                                    Azul
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col">
+                                        <label className="form-label invisible">label</label>
+                                        <div className="d-flex flex-column gap-1 mt-2">
+                                            <div className="form-check">
+                                                <input
+                                                    className="form-check-input"
+                                                    type="checkbox"
+                                                    id="corVerde"
+                                                />
+                                                <label
+                                                    className="form-check-label"
+                                                    htmlFor="corVerde"
+                                                >
+                                                    Verde
+                                                </label>
+                                            </div>
+                                            <div className="form-check">
+                                                <input
+                                                    className="form-check-input"
+                                                    type="checkbox"
+                                                    id="corPreto"
+                                                />
+                                                <label
+                                                    className="form-check-label"
+                                                    htmlFor="corPreto"
+                                                >
+                                                    Preto
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="row mb-3">
+                                    <div className="col">
+                                        <label className="form-label">Tamanhos</label>
+                                        <div className="d-flex flex-column gap-1">
+                                            <div className="form-check">
+                                                <input
+                                                    className="form-check-input"
+                                                    type="checkbox"
+                                                    id="corUnico"
+                                                />
+                                                <label
+                                                    className="form-check-label"
+                                                    htmlFor="corUnico"
+                                                >
+                                                    Unico
+                                                </label>
+                                            </div>
+                                            <div className="form-check">
+                                                <input
+                                                    className="form-check-input"
+                                                    type="checkbox"
+                                                    id="corAzul"
+                                                />
+                                                <label className="form-check-label" htmlFor="corAzul">
+                                                    P
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col">
+                                        <label className="form-label invisible">label</label>
+                                        <div className="d-flex flex-column gap-1 mt-2">
+                                            <div className="form-check">
+                                                <input
+                                                    className="form-check-input"
+                                                    type="checkbox"
+                                                    id="corVerde"
+                                                />
+                                                <label
+                                                    className="form-check-label"
+                                                    htmlFor="corVerde"
+                                                >
+                                                    P / M
+                                                </label>
+                                            </div>
+                                            <div className="form-check">
+                                                <input
+                                                    className="form-check-input"
+                                                    type="checkbox"
+                                                    id="corPreto"
+                                                />
+                                                <label
+                                                    className="form-check-label"
+                                                    htmlFor="corPreto"
+                                                >
+                                                    P / M / G
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col">
+                                        <label className="form-label invisible">label</label>
+                                        <div className="d-flex flex-column gap-1 mt-2">
+                                            <div className="form-check">
+                                                <input
+                                                    className="form-check-input"
+                                                    type="checkbox"
+                                                    id="corVerde"
+                                                />
+                                                <label
+                                                    className="form-check-label"
+                                                    htmlFor="corVerde"
+                                                >
+                                                    P / M
+                                                </label>
+                                            </div>
+                                            <div className="form-check">
+                                                <input
+                                                    className="form-check-input"
+                                                    type="checkbox"
+                                                    id="corPreto"
+                                                />
+                                                <label
+                                                    className="form-check-label"
+                                                    htmlFor="corPreto"
+                                                >
+                                                    P / M / G
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="row mb-3">
+                                    <div className="col">
+                                        <label
+                                            htmlFor="descricaoCurta"
+                                            className="form-label"
+                                        >
+                                            Descrição curta
+                                        </label>
+                                        <textarea
+                                            className="form-control"
+                                            id="descricaoCurta"
+                                            rows={3}
+                                        ></textarea>
+                                    </div>
                                 </div>
                             </div>
+
                             <div className="modal-footer">
                                 <button
                                     type="button"
                                     className="btn btn-secondary"
                                     data-bs-dismiss="modal"
-                                // ref={closeBtnRef}
                                 >
                                     Fechar
                                 </button>
-                                <button
-                                    type="submit"
-                                    className="btn btn-primary"
-                                ///disabled={isSubmitting}
-
-                                >
-                                    {/* {isSubmitting ? 'Cadastrando...' : 'Cadastrar'} */}
+                                <button type="submit" className="btn btn-primary">
                                     Cadastrar
                                 </button>
                             </div>
@@ -47,7 +358,6 @@ export function AdminProducts() {
                     </div>
                 </div>
             </div>
-
 
             <div className="d-flex justify-content-end">
                 <button
@@ -66,7 +376,9 @@ export function AdminProducts() {
                         <th scope="col">Nome</th>
                         <th scope="col">Itens</th>
                         <th scope="col">Data cadastro</th>
-                        <th scope="col" className="text-center">Ações</th>
+                        <th scope="col" className="text-center">
+                            Ações
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -75,24 +387,36 @@ export function AdminProducts() {
                         <td>1</td>
                         <td>20/10/2024</td>
                         <td className="d-flex justify-content-center gap-2">
-                            <button type="button" className="btn btn-outline-success"><i className="fa-solid fa-eye"></i></button>
-                            <button type="button" className="btn btn-outline-primary"><i className="fa-solid fa-pen-to-square"></i></button>
-                            <button type="button" className="btn btn-outline-danger"><i className="fa-solid fa-trash"></i></button>
+                            <button type="button" className="btn btn-outline-success">
+                                <i className="fa-solid fa-eye"></i>
+                            </button>
+                            <button type="button" className="btn btn-outline-primary">
+                                <i className="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button type="button" className="btn btn-outline-danger">
+                                <i className="fa-solid fa-trash"></i>
+                            </button>
                         </td>
                     </tr>
-
                 </tbody>
             </table>
-            <nav className="d-flex justify-content-end" aria-label="Page navigation example">
+
+            <nav className="d-flex justify-content-end" aria-label="Page navigation">
                 <ul className="pagination">
                     <li className="page-item">
                         <a className="page-link" href="#" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-                    <li className="page-item"><a className="page-link" href="#">1</a></li>
-                    <li className="page-item"><a className="page-link" href="#">2</a></li>
-                    <li className="page-item"><a className="page-link" href="#">3</a></li>
+                    <li className="page-item">
+                        <a className="page-link" href="#">1</a>
+                    </li>
+                    <li className="page-item">
+                        <a className="page-link" href="#">2</a>
+                    </li>
+                    <li className="page-item">
+                        <a className="page-link" href="#">3</a>
+                    </li>
                     <li className="page-item">
                         <a className="page-link" href="#" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
