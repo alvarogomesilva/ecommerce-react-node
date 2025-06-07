@@ -75,6 +75,16 @@ model SubCategories {
   @@map("sub_categories")
 }
 
+model Characteristic {
+  id   String @id @default(uuid())
+  name String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("characteristics")
+}
+
 model Product {
   id            String             @id @default(uuid())
   name          String
@@ -96,8 +106,8 @@ model ProductVariation {
   id             String  @id @default(uuid())
   productId      String
   product        Product @relation(fields: [productId], references: [id])
-  attributes     Json 
-  stock_quantity Int? 
+  attributes     Json
+  stock_quantity Int?
   sku            String?
 
   @@map("product_variations")
