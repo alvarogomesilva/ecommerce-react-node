@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuthStore } from "../../store/use-auth-store"
+import Image from '../../assets/camera.svg'
 
 export function AdminProducts() {
     const [preview, setPreview] = useState<string | null>(null);
@@ -65,7 +66,7 @@ export function AdminProducts() {
                                                         <div className="card-body text-center">
                                                             <h6 className="card-title mb-3 text-muted">Imagem do produto</h6>
                                                             <img
-                                                                src={preview || 'https://via.placeholder.com/300x300.png?text=Prévia+do+Produto'}
+                                                                src={preview || Image}
                                                                 alt="Prévia"
                                                                 className="img-fluid rounded border"
                                                                 style={{ width: '100%', maxWidth: '300px', height: '300px', objectFit: 'fill' }}
@@ -170,160 +171,17 @@ export function AdminProducts() {
                                     </div>
                                 </div>
 
-                                <div className="row mb-3">
+                                <div className="row">
                                     <div className="col">
-                                        <label className="form-label">Cores</label>
-                                        <div className="d-flex flex-column gap-1">
-                                            <div className="form-check">
-                                                <input
-                                                    className="form-check-input"
-                                                    type="checkbox"
-                                                    id="corUnico"
-                                                />
-                                                <label
-                                                    className="form-check-label"
-                                                    htmlFor="corUnico"
-                                                >
-                                                    Único
-                                                </label>
-                                            </div>
-                                            <div className="form-check">
-                                                <input
-                                                    className="form-check-input"
-                                                    type="checkbox"
-                                                    id="corAzul"
-                                                />
-                                                <label className="form-check-label" htmlFor="corAzul">
-                                                    Azul
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col">
-                                        <label className="form-label invisible">label</label>
-                                        <div className="d-flex flex-column gap-1 mt-2">
-                                            <div className="form-check">
-                                                <input
-                                                    className="form-check-input"
-                                                    type="checkbox"
-                                                    id="corVerde"
-                                                />
-                                                <label
-                                                    className="form-check-label"
-                                                    htmlFor="corVerde"
-                                                >
-                                                    Verde
-                                                </label>
-                                            </div>
-                                            <div className="form-check">
-                                                <input
-                                                    className="form-check-input"
-                                                    type="checkbox"
-                                                    id="corPreto"
-                                                />
-                                                <label
-                                                    className="form-check-label"
-                                                    htmlFor="corPreto"
-                                                >
-                                                    Preto
-                                                </label>
-                                            </div>
-                                        </div>
+                                             <label htmlFor="email" className="form-label">Link<span className="text-muted"> (Se for produto digital)</span></label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="estoque"
+                                        />
                                     </div>
                                 </div>
 
-                                <div className="row mb-3">
-                                    <div className="col">
-                                        <label className="form-label">Tamanhos</label>
-                                        <div className="d-flex flex-column gap-1">
-                                            <div className="form-check">
-                                                <input
-                                                    className="form-check-input"
-                                                    type="checkbox"
-                                                    id="corUnico"
-                                                />
-                                                <label
-                                                    className="form-check-label"
-                                                    htmlFor="corUnico"
-                                                >
-                                                    Unico
-                                                </label>
-                                            </div>
-                                            <div className="form-check">
-                                                <input
-                                                    className="form-check-input"
-                                                    type="checkbox"
-                                                    id="corAzul"
-                                                />
-                                                <label className="form-check-label" htmlFor="corAzul">
-                                                    P
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col">
-                                        <label className="form-label invisible">label</label>
-                                        <div className="d-flex flex-column gap-1 mt-2">
-                                            <div className="form-check">
-                                                <input
-                                                    className="form-check-input"
-                                                    type="checkbox"
-                                                    id="corVerde"
-                                                />
-                                                <label
-                                                    className="form-check-label"
-                                                    htmlFor="corVerde"
-                                                >
-                                                    P / M
-                                                </label>
-                                            </div>
-                                            <div className="form-check">
-                                                <input
-                                                    className="form-check-input"
-                                                    type="checkbox"
-                                                    id="corPreto"
-                                                />
-                                                <label
-                                                    className="form-check-label"
-                                                    htmlFor="corPreto"
-                                                >
-                                                    P / M / G
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col">
-                                        <label className="form-label invisible">label</label>
-                                        <div className="d-flex flex-column gap-1 mt-2">
-                                            <div className="form-check">
-                                                <input
-                                                    className="form-check-input"
-                                                    type="checkbox"
-                                                    id="corVerde"
-                                                />
-                                                <label
-                                                    className="form-check-label"
-                                                    htmlFor="corVerde"
-                                                >
-                                                    P / M
-                                                </label>
-                                            </div>
-                                            <div className="form-check">
-                                                <input
-                                                    className="form-check-input"
-                                                    type="checkbox"
-                                                    id="corPreto"
-                                                />
-                                                <label
-                                                    className="form-check-label"
-                                                    htmlFor="corPreto"
-                                                >
-                                                    P / M / G
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
 
                                 <div className="row mb-3">
                                     <div className="col">
@@ -336,7 +194,7 @@ export function AdminProducts() {
                                         <textarea
                                             className="form-control"
                                             id="descricaoCurta"
-                                            rows={3}
+                                            rows={2}
                                         ></textarea>
                                     </div>
                                 </div>
