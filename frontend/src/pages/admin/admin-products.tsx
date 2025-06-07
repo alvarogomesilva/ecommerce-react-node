@@ -248,6 +248,9 @@ export function AdminProducts() {
                             <button type="button" className="btn btn-outline-success">
                                 <i className="fa-solid fa-eye"></i>
                             </button>
+                            <button type="button" className="btn btn-outline-secondary">
+                                <i className="fa-solid fa-palette"></i>
+                            </button>
                             <button type="button" className="btn btn-outline-primary">
                                 <i className="fa-solid fa-pen-to-square"></i>
                             </button>
