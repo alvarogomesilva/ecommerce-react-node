@@ -5,6 +5,7 @@ import cors from 'cors';
 import { categoriesRoutes } from './routes/category-routes';
 import { storeRoutes } from './routes/store-routes';
 import { subCategoriesRoutes } from './routes/sub-categories-routes';
+import { characteristicRoutes } from './routes/characteristic-routes';
 
 const app = express()
 
@@ -16,6 +17,7 @@ app.use(usersRoutes)
 app.use(categoriesRoutes)
 app.use(subCategoriesRoutes)
 app.use(storeRoutes)
+app.use(characteristicRoutes)
 
 app.use(errorHandler)
 
