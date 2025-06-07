@@ -19,6 +19,7 @@ import { Settings } from '../pages/admin/settings'
 import { Blog } from '../pages/shop/blog'
 import { Contacts } from '../pages/shop/contacts'
 import { Profile } from '../pages/shop/profile'
+import { AdminCharacteristics } from '../pages/admin/admin-characteristics'
 
 export const router = createBrowserRouter([
   {
@@ -59,6 +60,7 @@ export const router = createBrowserRouter([
           { path: 'categories', element: <AdminCategories /> },
           { path: 'products', element: <AdminProducts /> },
           { path: 'sub-categories', element: <AdminSubCategories /> },
+          { path: 'characteristics', element: <AdminCharacteristics /> },
           { path: 'banners', element: <AdminBanners /> },
           { path: 'settings', element: <Settings /> },
         ]

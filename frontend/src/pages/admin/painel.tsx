@@ -33,6 +33,7 @@ export function Painel() {
         {[
           { to: "/admin/categories", icon: "fa-layer-group", title: "Categorias" },
           { to: "/admin/sub-categories", icon: "fa-table-list", title: "Sub Categorias" },
+          { to: "/admin/characteristics", icon: "fa-solid fa-palette", title: "Caracteristicas" },
           { to: "/admin/products", icon: "fa-boxes-stacked", title: "Produtos" },
           { to: "/admin/banners", icon: "fa-images", title: "Banners" },
           { to: "/admin/banners", icon: "fa-cart-shopping", title: "Vendas" },
