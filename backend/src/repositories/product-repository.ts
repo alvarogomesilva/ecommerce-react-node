@@ -1,0 +1,5 @@
+import { CreateProductDto, Product } from "../types/product";
+
+export abstract class ProductRepository {
+    abstract create(data: CreateProductDto): Promise<Product>
+}

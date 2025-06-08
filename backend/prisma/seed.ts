@@ -21,10 +21,8 @@ async function main() {
     where: { id: admin.id },
     update: {},
     create: {
-      name: 'Minha Loja Legal',
-      description: 'A melhor loja para seus produtos favoritos.',
-      logoUrl: 'https://example.com/logo.png',
-      primaryColor: '#FF5722',
+      title: 'Minha Loja',
+      color: 'primary',
       email: 'suporte@loja.com',
       phone: '+55 47 99999-9999',
       address: 'Rua Exemplo, 123 - São Paulo, SP',
@@ -38,7 +36,6 @@ async function main() {
 main()
   .catch((e) => {
     console.error('❌ Erro ao executar seed:', e)
-    process.exit(1)
   })
   .finally(() => {
     prisma.$disconnect()

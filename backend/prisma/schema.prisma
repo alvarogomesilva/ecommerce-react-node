@@ -35,7 +35,6 @@ model User {
 
 model Store {
   id        String   @id @default(uuid())
-  name      String
   title     String?
   logo      String?
   color     String?
@@ -57,6 +56,7 @@ model Categories {
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
   subcategories SubCategories[]
+  products      Product[]
 
   @@map("categories")
 }
@@ -86,39 +86,43 @@ model Characteristic {
 }
 
 model Product {
-  id            String             @id @default(uuid())
-  name          String
-  description   String?
-  price         Float
-  control_stock Boolean            @default(false)
-  active        Boolean            @default(true)
-  subCategoryId String
-  subCategory   SubCategories      @relation(fields: [subCategoryId], references: [id])
-  variations    ProductVariation[]
-  images        ProductImage[]
-  createdAt     DateTime           @default(now())
-  updatedAt     DateTime           @updatedAt
+  id             String         @id @default(uuid())
+  name           String
+  description    String?
+  price          Float
+  control_stock  Boolean        @default(false)
+  active         Boolean        @default(true)
+  link           String?
+  subCategory    SubCategories? @relation(fields: [subCategoryId], references: [id])
+  subCategoryId  String?
+
+  category       Categories?    @relation(fields: [categoryId], references: [id])
+  categoryId     String?        // Esta será a coluna no banco com nome 'categoryId'
+
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
 
   @@map("products")
 }
 
-model ProductVariation {
-  id             String  @id @default(uuid())
-  productId      String
-  product        Product @relation(fields: [productId], references: [id])
-  attributes     Json
-  stock_quantity Int?
-  sku            String?
 
-  @@map("product_variations")
-}
+// model ProductVariation {
+//   id             String  @id @default(uuid())
+//   productId      String
+//   product        Product @relation(fields: [productId], references: [id])
+//   attributes     Json
+//   stock_quantity Int?
+//   sku            String?
 
-model ProductImage {
-  id        String   @id @default(uuid())
-  url       String
-  productId String
-  product   Product  @relation(fields: [productId], references: [id])
-  createdAt DateTime @default(now())
+//   @@map("product_variations")
+// }
 
-  @@map("product_images")
-}
+// model ProductImage {
+//   id        String   @id @default(uuid())
+//   url       String
+//   productId String
+//   product   Product  @relation(fields: [productId], references: [id])
+//   createdAt DateTime @default(now())
+
+//   @@map("product_images")
+// }

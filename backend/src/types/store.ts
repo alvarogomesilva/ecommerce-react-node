@@ -1,7 +1,6 @@
 
 export type Store = {
     id: string
-    name: string
     title: string | null
     email: string | null
     color: string | null
