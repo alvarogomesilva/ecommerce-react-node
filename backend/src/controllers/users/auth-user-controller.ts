@@ -32,7 +32,7 @@ export async function autenticate(request: Request, response: Response) {
             process.env.JWT_SECRET as string,
             {
                 subject: user.id,
-                expiresIn: '10m'
+                expiresIn: '1d'
             })
 
         if (!store) {
