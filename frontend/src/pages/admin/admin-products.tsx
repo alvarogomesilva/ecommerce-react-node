@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useAuthStore } from "../../store/use-auth-store"
 import Image from '../../assets/camera.svg'
 import { useForm } from 'react-hook-form'
 import { number, z } from "zod";
 import { createProduct } from "../../api/products/create-product";
+import { toast } from "sonner";
 
 const createProductschemaBody = z.object({
     active: z.boolean(),
@@ -17,6 +18,7 @@ const createProductschemaBody = z.object({
 type CreateProductschemaBody = z.infer<typeof createProductschemaBody >
 
 export function AdminProducts() {
+    const modalRef = useRef<HTMLButtonElement>(null)
     const [preview, setPreview] = useState<string | null>(null);
     const { store } = useAuthStore()
 
@@ -41,7 +43,7 @@ export function AdminProducts() {
 
     async function handleCreateProduct(data: CreateProductschemaBody) {
         try {
-            const response = await createProduct({
+            await createProduct({
                 active: data.active,
                 name: data.name,
                 control_stock: data.control_stock,
@@ -49,7 +51,11 @@ export function AdminProducts() {
                 categoryId: "cbc71d42-873b-4603-8fed-28a1f053b220"
                 
             })
-            console.log(response)
+            modalRef.current?.click()
+            
+            toast.message("Cadastro de Produto", {
+                description: "Produto Cadastrado com sucesso"
+            })
 
         } catch (error) {
             console.log(error)
@@ -77,6 +83,7 @@ export function AdminProducts() {
                                     className="btn-close"
                                     data-bs-dismiss="modal"
                                     aria-label="Close"
+                                    ref={modalRef}
                                 ></button>
                             </div>
 
@@ -254,8 +261,12 @@ export function AdminProducts() {
                                 >
                                     Fechar
                                 </button>
-                                <button type="submit" className="btn btn-primary">
-                                    Cadastrar
+                                <button 
+                                type="submit" 
+                                className="btn btn-primary"
+                                disabled={isSubmitting}
+                                >
+                                    {isSubmitting ? "Cadastrando...": "Cadastrar"}
                                 </button>
                             </div>
                         </form>
