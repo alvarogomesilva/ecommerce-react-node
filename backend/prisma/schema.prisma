@@ -95,8 +95,8 @@ model ProductCharacteristic {
   characteristicId String
 
   description String
-  addition    Int
-  hex_value   String
+  addition    Int?
+  hex_value   String?
 
   @@map("products_characteristics")
 }
