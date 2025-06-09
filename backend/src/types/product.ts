@@ -1,5 +1,3 @@
-import { BlobOptions } from "buffer"
-
 export type Product = {
     id?: string
     name: string

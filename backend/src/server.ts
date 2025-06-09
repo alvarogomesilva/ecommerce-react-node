@@ -7,6 +7,7 @@ import { storeRoutes } from './routes/store-routes';
 import { subCategoriesRoutes } from './routes/sub-categories-routes';
 import { characteristicRoutes } from './routes/characteristic-routes';
 import { productsRoutes } from './routes/product-routes';
+import { productCharacteristicsRoutes } from './routes/product-characteristic-routes';
 
 const app = express()
 
@@ -20,6 +21,7 @@ app.use(subCategoriesRoutes)
 app.use(storeRoutes)
 app.use(characteristicRoutes)
 app.use(productsRoutes)
+app.use(productCharacteristicsRoutes)
 
 app.use(errorHandler)
 
