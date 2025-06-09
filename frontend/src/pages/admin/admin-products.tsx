@@ -1,6 +1,20 @@
 import { useState } from "react";
 import { useAuthStore } from "../../store/use-auth-store"
 import Image from '../../assets/camera.svg'
+import { useForm } from 'react-hook-form'
+import { number, z } from "zod";
+import { createProduct } from "../../api/products/create-product";
+
+const createProductschemaBody = z.object({
+    active: z.boolean(),
+    control_stock: z.boolean(),
+    name: z.string(),
+    price: z.number(),
+    categoryId: z.string()
+
+})
+
+type CreateProductschemaBody = z.infer<typeof createProductschemaBody >
 
 export function AdminProducts() {
     const [preview, setPreview] = useState<string | null>(null);
@@ -15,6 +29,33 @@ export function AdminProducts() {
         }
     };
 
+    const { register, handleSubmit, formState: { isSubmitting } } = useForm({
+        defaultValues: {
+            active: false,
+            control_stock: false,
+            name: "",
+            price: 0,
+            categoryId: ""
+        }
+    })
+
+    async function handleCreateProduct(data: CreateProductschemaBody) {
+        try {
+            const response = await createProduct({
+                active: data.active,
+                name: data.name,
+                control_stock: data.control_stock,
+                price: Number(data.price),
+                categoryId: "cbc71d42-873b-4603-8fed-28a1f053b220"
+                
+            })
+            console.log(response)
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <main className="container">
             <div
@@ -26,7 +67,7 @@ export function AdminProducts() {
             >
                 <div className="modal-dialog modal-lg">
                     <div className="modal-content">
-                        <form>
+                        <form onSubmit={handleSubmit(handleCreateProduct)}>
                             <div className="modal-header">
                                 <h1 className="modal-title fs-5" id="exampleModalLabel3">
                                     Novo Produto
@@ -86,6 +127,8 @@ export function AdminProducts() {
                                             className="form-check-input"
                                             type="checkbox"
                                             id="produtoAtivo"
+                                        
+                                            {...register('active')}
                                         />
                                         <label
                                             className="form-check-label mb-0"
@@ -99,6 +142,7 @@ export function AdminProducts() {
                                             className="form-check-input"
                                             type="checkbox"
                                             id="controlaEstoque"
+                                            {...register("control_stock")}
                                         />
                                         <label
                                             className="form-check-label mb-0"
@@ -119,6 +163,7 @@ export function AdminProducts() {
                                             className="form-control"
                                             id="nomeProduto"
                                             placeholder="Nome do produto"
+                                            {...register("name", { required: true })}
                                         />
                                     </div>
                                     <div className="col">
@@ -126,7 +171,7 @@ export function AdminProducts() {
                                             Categoria
                                         </label>
                                         <select className="form-select" id="categoria">
-                                            <option selected>Escolha uma categoria</option>
+                                            <option defaultValue={""} selected>Escolha uma categoria</option>
                                             <option value="1">One</option>
                                             <option value="2">Two</option>
                                             <option value="3">Three</option>
@@ -155,6 +200,7 @@ export function AdminProducts() {
                                             className="form-control"
                                             id="preco"
                                             placeholder="R$"
+                                            {...register("price", { required: true })}
                                         />
                                     </div>
                                     <div className="col">
@@ -173,7 +219,7 @@ export function AdminProducts() {
 
                                 <div className="row">
                                     <div className="col">
-                                             <label htmlFor="email" className="form-label">Link<span className="text-muted"> (Se for produto digital)</span></label>
+                                        <label htmlFor="email" className="form-label">Link<span className="text-muted"> (Se for produto digital)</span></label>
                                         <input
                                             type="text"
                                             className="form-control"
