@@ -9,4 +9,14 @@ export class PrismaProductRepository implements ProductRepository {
             data
         })
     }
+
+    async listAll() {
+        const products = await prisma.product.findMany()
+
+        if (products.length > 0) {
+            return products
+        }
+
+        return null
+    }
 }
