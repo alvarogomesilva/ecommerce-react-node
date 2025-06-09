@@ -11,4 +11,14 @@ export class PrismaCharacteristicRepository implements CharacteristicRepository{
             }
         })
     }
+
+    async listAll() {
+        const characteristics = await prisma.characteristic.findMany() 
+
+        if (characteristics.length > 0) {
+            return characteristics
+        } 
+
+        return null
+    }
 }
