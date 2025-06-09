@@ -79,32 +79,48 @@ model Characteristic {
   id   String @id @default(uuid())
   name String
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
+  ProductCharacteristic ProductCharacteristic[]
 
   @@map("characteristics")
 }
 
+model ProductCharacteristic {
+  id        String  @id @default(uuid())
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+
+  Characteristics  Characteristic @relation(fields: [characteristicId], references: [id])
+  characteristicId String
+
+  description String
+  addition    Int
+  hex_value   String
+
+  @@map("products_characteristics")
+}
+
 model Product {
-  id             String         @id @default(uuid())
-  name           String
-  description    String?
-  price          Float
-  control_stock  Boolean        @default(false)
-  active         Boolean        @default(true)
-  link           String?
-  subCategory    SubCategories? @relation(fields: [subCategoryId], references: [id])
-  subCategoryId  String?
+  id            String         @id @default(uuid())
+  name          String
+  description   String?
+  price         Float
+  control_stock Boolean        @default(false)
+  active        Boolean        @default(true)
+  link          String?
+  subCategory   SubCategories? @relation(fields: [subCategoryId], references: [id])
+  subCategoryId String?
 
-  category       Categories?    @relation(fields: [categoryId], references: [id])
-  categoryId     String?        // Esta será a coluna no banco com nome 'categoryId'
+  category   Categories? @relation(fields: [categoryId], references: [id])
+  categoryId String?
 
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
+  ProductCharacteristic ProductCharacteristic[]
 
   @@map("products")
 }
-
 
 // model ProductVariation {
 //   id             String  @id @default(uuid())
