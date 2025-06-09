@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import { number, z } from "zod";
 import { createProduct } from "../../api/products/create-product";
 import { toast } from "sonner";
+import { useCategories } from "../../hooks/use-categories";
 
 const createProductschemaBody = z.object({
     active: z.boolean(),
@@ -15,12 +16,13 @@ const createProductschemaBody = z.object({
 
 })
 
-type CreateProductschemaBody = z.infer<typeof createProductschemaBody >
+type CreateProductschemaBody = z.infer<typeof createProductschemaBody>
 
 export function AdminProducts() {
     const modalRef = useRef<HTMLButtonElement>(null)
     const [preview, setPreview] = useState<string | null>(null);
     const { store } = useAuthStore()
+    const { categories } = useCategories()
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -48,11 +50,11 @@ export function AdminProducts() {
                 name: data.name,
                 control_stock: data.control_stock,
                 price: Number(data.price),
-                categoryId: "cbc71d42-873b-4603-8fed-28a1f053b220"
-                
+                categoryId: data.categoryId
+
             })
             modalRef.current?.click()
-            
+
             toast.message("Cadastro de Produto", {
                 description: "Produto Cadastrado com sucesso"
             })
@@ -134,7 +136,7 @@ export function AdminProducts() {
                                             className="form-check-input"
                                             type="checkbox"
                                             id="produtoAtivo"
-                                        
+
                                             {...register('active')}
                                         />
                                         <label
@@ -177,12 +179,22 @@ export function AdminProducts() {
                                         <label htmlFor="categoria" className="form-label">
                                             Categoria
                                         </label>
-                                        <select className="form-select" id="categoria">
-                                            <option defaultValue={""} selected>Escolha uma categoria</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
+                                        <select
+                                            className="form-select"
+                                            id="categoria"
+                                            defaultValue=""
+                                            {...register("categoryId")}
+                                        >
+                                            <option value="" disabled>
+                                                Escolha uma categoria
+                                            </option>
+                                            {categories.map((category) => (
+                                                <option key={category.id} value={category.id}>
+                                                    {category.name}
+                                                </option>
+                                            ))}
                                         </select>
+
                                     </div>
                                     <div className="col">
                                         <label htmlFor="subcategoria" className="form-label">
@@ -261,12 +273,12 @@ export function AdminProducts() {
                                 >
                                     Fechar
                                 </button>
-                                <button 
-                                type="submit" 
-                                className="btn btn-primary"
-                                disabled={isSubmitting}
+                                <button
+                                    type="submit"
+                                    className="btn btn-primary"
+                                    disabled={isSubmitting}
                                 >
-                                    {isSubmitting ? "Cadastrando...": "Cadastrar"}
+                                    {isSubmitting ? "Cadastrando..." : "Cadastrar"}
                                 </button>
                             </div>
                         </form>
