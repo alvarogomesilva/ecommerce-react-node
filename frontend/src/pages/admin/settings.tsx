@@ -9,7 +9,6 @@ import { toast } from "sonner"
 
 const updateStoreSchema = z.object({
     id: z.string(),
-    name: z.string().min(1, "Nome é obrigatório!"),
     title: z.string().min(1, "Titulo é obrigatório!"),
     address: z.string(),
     phone: z.string(),
@@ -32,7 +31,6 @@ export function Settings() {
         resolver: zodResolver(updateStoreSchema),
         defaultValues: {
             id: "",
-            name: "",
             title: "",
             address: "",
             phone: "",
@@ -47,7 +45,6 @@ export function Settings() {
         if (store) {
             reset({
                 id: store.id,
-                name: store.name || "",
                 title: store.title || "",
                 address: store?.address || "",
                 phone: store?.phone || "",
@@ -92,7 +89,7 @@ export function Settings() {
                                 type="text"
                                 className="form-control"
                                 id="firstName"
-                                {...register("name")}
+                                {...register("title")}
                             />
                             <div className="invalid-feedback">
                                 Valid first name is required.
@@ -162,16 +159,6 @@ export function Settings() {
                             </select>
                         </div>
 
-                        <div className="col-12">
-                            <label htmlFor="exampleFormControlTextarea1" className="form-label">Texto Destaque Cabeçalho</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="address"
-                                {...register("title")}
-
-                            />
-                        </div>
 
                         <div className="mb-3">
                             <label htmlFor="exampleFormControlTextarea1" className="form-label">Logo</label>

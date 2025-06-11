@@ -15,7 +15,7 @@ export function StoreLayout() {
                         className="navbar-brand d-flex flex-column flex-md-row align-items-center text-white"
                     >
                         <Store className="mb-1 mb-md-0 me-md-2" size={24} />
-                        <h6 className="m-0 text-center text-md-start">{store?.name}</h6>
+                        <h6 className="m-0 text-center text-md-start">{store?.title}</h6>
                     </Link>
 
                     <button
