@@ -2,10 +2,13 @@ import { useRef, useState } from "react";
 import { useAuthStore } from "../../store/use-auth-store"
 import Image from '../../assets/camera.svg'
 import { useForm } from 'react-hook-form'
-import { number, z } from "zod";
+import { z } from "zod";
 import { createProduct } from "../../api/products/create-product";
 import { toast } from "sonner";
 import { useCategories } from "../../hooks/use-categories";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getAllProducts } from "../../api/products/get-all-products";
+import { queryClient } from "../../lib/react-query";
 
 const createProductschemaBody = z.object({
     active: z.boolean(),
@@ -43,9 +46,16 @@ export function AdminProducts() {
         }
     })
 
+      const { mutateAsync: createProductFn } = useMutation({
+        mutationFn: createProduct,
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({ queryKey: ['products'] })
+        }
+    })
+
     async function handleCreateProduct(data: CreateProductschemaBody) {
         try {
-            await createProduct({
+            await createProductFn({
                 active: data.active,
                 name: data.name,
                 control_stock: data.control_stock,
@@ -63,6 +73,11 @@ export function AdminProducts() {
             console.log(error)
         }
     }
+
+    const { data } = useQuery({
+        queryKey: ['products'],
+        queryFn: getAllProducts
+    })
 
     return (
         <main className="container">
@@ -297,7 +312,15 @@ export function AdminProducts() {
                 </button>
             </div>
 
-            <table className="table table-sm table-responsive align-middle">
+            {!data && (
+                <p className="text-center">Nenhuma producto cadastrado!</p>
+            )}
+
+
+            {data && (
+                <table
+
+                className="table table-sm table-responsive align-middle">
                 <thead>
                     <tr>
                         <th scope="col">Nome</th>
@@ -308,30 +331,35 @@ export function AdminProducts() {
                         </th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>Sabonetes</td>
-                        <td>1</td>
-                        <td>20/10/2024</td>
-                        <td className="d-flex justify-content-center gap-2">
-                            <button type="button" className="btn btn-outline-success">
-                                <i className="fa-solid fa-eye"></i>
-                            </button>
-                            <button type="button" className="btn btn-outline-secondary">
-                                <i className="fa-solid fa-palette"></i>
-                            </button>
-                            <button type="button" className="btn btn-outline-primary">
-                                <i className="fa-solid fa-pen-to-square"></i>
-                            </button>
-                            <button type="button" className="btn btn-outline-danger">
-                                <i className="fa-solid fa-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
+                {data && data.map((product) => (
+                    <tbody key={product.id}>
+                        <tr >
+                            <td>{product.name}</td>
+                            <td>1</td>
+                            <td>20/10/2024</td>
+                            <td className="d-flex justify-content-center gap-2">
+                                <button type="button" className="btn btn-outline-success">
+                                    <i className="fa-solid fa-eye"></i>
+                                </button>
+                                <button type="button" className="btn btn-outline-secondary">
+                                    <i className="fa-solid fa-palette"></i>
+                                </button>
+                                <button type="button" className="btn btn-outline-primary">
+                                    <i className="fa-solid fa-pen-to-square"></i>
+                                </button>
+                                <button type="button" className="btn btn-outline-danger">
+                                    <i className="fa-solid fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                ))}
             </table>
+            )}
 
-            <nav className="d-flex justify-content-end" aria-label="Page navigation">
+
+            {data && (
+                <nav className="d-flex justify-content-end" aria-label="Page navigation">
                 <ul className="pagination">
                     <li className="page-item">
                         <a className="page-link" href="#" aria-label="Previous">
@@ -354,6 +382,7 @@ export function AdminProducts() {
                     </li>
                 </ul>
             </nav>
+            )}
         </main>
     )
 }
