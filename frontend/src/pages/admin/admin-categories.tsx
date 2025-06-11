@@ -2,13 +2,13 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQuery } from "@tanstack/react-query"
-import { registerCategory } from "../../api/register-category"
 import { toast } from "sonner"
 import { useRef, useState } from "react"
-import { getCategories } from "../../api/get-categories"
 import { queryClient } from "../../lib/react-query"
 import { useAuthStore } from "../../store/use-auth-store"
-import { deleteCategory } from "../../api/delete-category"
+import { registerCategory } from "../../api/categories/register-category"
+import { deleteCategory } from "../../api/categories/delete-category"
+import { getCategories } from "../../api/categories/get-categories"
 
 const registerCategorySchema = z.object({
     name: z.string().min(1, "Nome é obrigatório!")
