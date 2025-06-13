@@ -10,6 +10,17 @@ export class PrismaCategoryRepository implements CategoryRepository {
         })
     }
 
+    async update(id: string, name: string) {
+        return await prisma.categories.update({
+            data: {
+                name
+            },
+            where: {
+                id
+            }
+        })
+    }
+
     async listAll() {
         const categories = await prisma.categories.findMany()
 
