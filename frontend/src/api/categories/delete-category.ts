@@ -5,8 +5,6 @@ export interface DeleteCategoryBody {
 }
 
 
-export async function deleteCategory({
-    id
-}: DeleteCategoryBody) {
+export async function deleteCategory({ id }: DeleteCategoryBody) {
     await api.delete(`/categories/${id}`)
 }

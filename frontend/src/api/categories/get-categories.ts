@@ -10,6 +10,6 @@ export interface GetCategoriesResponse {
 
 export async function getCategories() {
     const response = await api.get<GetCategoriesResponse[]>('/categories')
-
+    
     return response.data
 }
