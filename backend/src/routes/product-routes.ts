@@ -8,7 +8,7 @@ import { listAll } from "../controllers/products/list-product-controller";
 const route = Router()
 
 route.post('/products', isAutenticated, create)
-route.get('/products', isAutenticated, listAll)
+route.get('/products', listAll)
 
 
 export { route as productsRoutes }

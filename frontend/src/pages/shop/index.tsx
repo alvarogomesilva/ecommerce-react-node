@@ -1,6 +1,8 @@
 import Image from '../../assets/image.jpg'
+import { useProducts } from '../../hooks/use-products'
 
 export function Inicial() {
+    const { products } = useProducts()
     return (
         <>
             <div id="myCarousel" className="carousel slide" data-bs-ride="carousel">
@@ -77,90 +79,24 @@ export function Inicial() {
 
             <div className='container'>
                 <div className="row row-cols-1 row-cols-md-3 g-4 mb-4">
-                    <div className="col">
-                        <div className="card">
-                            <img src={Image} className="card-img-top" alt="..." />
-                            <div className="card-body">
-                                <h5 className="card-title">Titulo Produto</h5>
-                                <p className="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    {products && (
+                        products.map((product) => (
+                            <div className="col" key={product.id}>
+                            <div className="card">
+                                <img src={Image} className="card-img-top" alt="..." />
+                                <div className="card-body">
+                                    <h5 className="card-title">{product.name}</h5>
+                                    <p className="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
 
-                                <a href="#" className="btn btn-primary">
-                                    <i className="fa-solid fa-eye"></i>
-                                    <span> Ver mais</span>
-                                </a>
+                                    <a href="#" className="btn btn-primary">
+                                        <i className="fa-solid fa-eye"></i>
+                                        <span> Ver mais</span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="col">
-                        <div className="card">
-                            <img src={Image} className="card-img-top" alt="..." />
-                            <div className="card-body">
-                                <h5 className="card-title">Card title</h5>
-                                <p className="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-
-                                <a href="#" className="btn btn-primary">
-                                    <i className="fa-solid fa-eye"></i>
-                                    <span> Ver mais</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col">
-                        <div className="card">
-                            <img src={Image} className="card-img-top" alt="..." />
-                            <div className="card-body">
-                                <h5 className="card-title">Card title</h5>
-                                <p className="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
-
-                                <a href="#" className="btn btn-primary">
-                                    <i className="fa-solid fa-eye"></i>
-                                    <span> Ver mais</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col">
-                        <div className="card">
-                            <img src={Image} className="card-img-top" alt="..." />
-                            <div className="card-body">
-                                <h5 className="card-title">Card title</h5>
-                                <p className="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-
-                                <a href="#" className="btn btn-primary">
-                                    <i className="fa-solid fa-eye"></i>
-                                    <span> Ver mais</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col">
-                        <div className="card">
-                            <img src={Image} className="card-img-top" alt="..." />
-                            <div className="card-body">
-                                <h5 className="card-title">Card title</h5>
-                                <p className="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-
-                                <a href="#" className="btn btn-primary">
-                                    <i className="fa-solid fa-eye"></i>
-                                    <span> Ver mais</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col">
-                        <div className="card">
-                            <img src={Image} className="card-img-top" alt="..." />
-                            <div className="card-body">
-                                <h5 className="card-title">Card title</h5>
-                                <p className="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-
-                                <a href="#" className="btn btn-primary">
-                                    <i className="fa-solid fa-eye"></i>
-                                    <span> Ver mais</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                        ))
+                    )}
                 </div>
             </div>
 
