@@ -2,7 +2,7 @@
 export interface Product {
     id?: string
     name: string
-    price: number
+    price: string
     description: string | null
     control_stock: boolean
     active: boolean

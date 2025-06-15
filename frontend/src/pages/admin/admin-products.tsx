@@ -3,18 +3,19 @@ import { useAuthStore } from "../../store/use-auth-store"
 import Image from '../../assets/camera.svg'
 import { useForm } from 'react-hook-form'
 import { z } from "zod";
-import { createProduct } from "../../api/products/create-product";
+import { createProduct, } from "../../api/products/create-product";
 import { toast } from "sonner";
 import { useCategories } from "../../hooks/use-categories";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getAllProducts } from "../../api/products/get-all-products";
 import { queryClient } from "../../lib/react-query";
+import { parsePriceToInt } from "../../utils/parsePriceToInt";
 
 const createProductschemaBody = z.object({
     active: z.boolean(),
     control_stock: z.boolean(),
     name: z.string(),
-    price: z.number(),
+    price: z.string(),
     categoryId: z.string()
 
 })
@@ -24,6 +25,7 @@ type CreateProductschemaBody = z.infer<typeof createProductschemaBody>
 export function AdminProducts() {
     const modalRef = useRef<HTMLButtonElement>(null)
     const [preview, setPreview] = useState<string | null>(null);
+    const [file, setFile] = useState<File | undefined>()
     const { store } = useAuthStore()
     const { categories } = useCategories()
 
@@ -34,6 +36,8 @@ export function AdminProducts() {
             reader.onloadend = () => setPreview(reader.result as string);
             reader.readAsDataURL(file);
         }
+
+        setFile(file)
     };
 
     const { register, handleSubmit, formState: { isSubmitting } } = useForm({
@@ -41,12 +45,12 @@ export function AdminProducts() {
             active: false,
             control_stock: false,
             name: "",
-            price: 0,
+            price: "",
             categoryId: ""
         }
     })
 
-      const { mutateAsync: createProductFn } = useMutation({
+    const { mutateAsync: createProductFn } = useMutation({
         mutationFn: createProduct,
         onSuccess: async () => {
             await queryClient.invalidateQueries({ queryKey: ['products'] })
@@ -54,25 +58,32 @@ export function AdminProducts() {
     })
 
     async function handleCreateProduct(data: CreateProductschemaBody) {
-        try {
-            await createProductFn({
-                active: data.active,
-                name: data.name,
-                control_stock: data.control_stock,
-                price: Number(data.price),
-                categoryId: data.categoryId
+        const formData = new FormData()
 
-            })
+        formData.append("name", data.name)
+        formData.append("price", String(parsePriceToInt(data.price)))
+        formData.append("control_stock", String(data.control_stock))
+        formData.append("active", String(data.active))
+        formData.append("categoryId", data.categoryId)
+
+        if (file) {
+            formData.append("image", file)
+        }
+
+        try {
+            await new Promise((resolve) => setTimeout(resolve, 1500))
+            await createProductFn(formData)
             modalRef.current?.click()
 
-            toast.message("Cadastro de Produto", {
-                description: "Produto Cadastrado com sucesso"
+            toast.message("Cadstro de produto", {
+                description: "Produto cadastrado com sucesso"
             })
-
+            
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     }
+
 
     const { data } = useQuery({
         queryKey: ['products'],
@@ -320,68 +331,68 @@ export function AdminProducts() {
             {data && (
                 <table
 
-                className="table table-sm table-responsive align-middle">
-                <thead>
-                    <tr>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Itens</th>
-                        <th scope="col">Data cadastro</th>
-                        <th scope="col" className="text-center">
-                            Ações
-                        </th>
-                    </tr>
-                </thead>
-                {data && data.map((product) => (
-                    <tbody key={product.id}>
-                        <tr >
-                            <td>{product.name}</td>
-                            <td>1</td>
-                            <td>20/10/2024</td>
-                            <td className="d-flex justify-content-center gap-2">
-                                <button type="button" className="btn btn-outline-success">
-                                    <i className="fa-solid fa-eye"></i>
-                                </button>
-                                <button type="button" className="btn btn-outline-secondary">
-                                    <i className="fa-solid fa-palette"></i>
-                                </button>
-                                <button type="button" className="btn btn-outline-primary">
-                                    <i className="fa-solid fa-pen-to-square"></i>
-                                </button>
-                                <button type="button" className="btn btn-outline-danger">
-                                    <i className="fa-solid fa-trash"></i>
-                                </button>
-                            </td>
+                    className="table table-sm table-responsive align-middle">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Itens</th>
+                            <th scope="col">Data cadastro</th>
+                            <th scope="col" className="text-center">
+                                Ações
+                            </th>
                         </tr>
-                    </tbody>
-                ))}
-            </table>
+                    </thead>
+                    {data && data.map((product) => (
+                        <tbody key={product.id}>
+                            <tr >
+                                <td>{product.name}</td>
+                                <td>1</td>
+                                <td>20/10/2024</td>
+                                <td className="d-flex justify-content-center gap-2">
+                                    <button type="button" className="btn btn-outline-success">
+                                        <i className="fa-solid fa-eye"></i>
+                                    </button>
+                                    <button type="button" className="btn btn-outline-secondary">
+                                        <i className="fa-solid fa-palette"></i>
+                                    </button>
+                                    <button type="button" className="btn btn-outline-primary">
+                                        <i className="fa-solid fa-pen-to-square"></i>
+                                    </button>
+                                    <button type="button" className="btn btn-outline-danger">
+                                        <i className="fa-solid fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    ))}
+                </table>
             )}
 
 
             {data && (
                 <nav className="d-flex justify-content-end" aria-label="Page navigation">
-                <ul className="pagination">
-                    <li className="page-item">
-                        <a className="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li className="page-item">
-                        <a className="page-link" href="#">1</a>
-                    </li>
-                    <li className="page-item">
-                        <a className="page-link" href="#">2</a>
-                    </li>
-                    <li className="page-item">
-                        <a className="page-link" href="#">3</a>
-                    </li>
-                    <li className="page-item">
-                        <a className="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+                    <ul className="pagination">
+                        <li className="page-item">
+                            <a className="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li className="page-item">
+                            <a className="page-link" href="#">1</a>
+                        </li>
+                        <li className="page-item">
+                            <a className="page-link" href="#">2</a>
+                        </li>
+                        <li className="page-item">
+                            <a className="page-link" href="#">3</a>
+                        </li>
+                        <li className="page-item">
+                            <a className="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             )}
         </main>
     )
