@@ -1,4 +1,5 @@
 import { useProducts } from "../../hooks/use-products"
+import { formatPrice } from "../../utils/formatMoney"
 
 export function Products() {
     const { products } = useProducts()
@@ -57,7 +58,7 @@ export function Products() {
                                         {/* Conteúdo */}
                                         <div className="card-body p-3 text-center">
                                             <h5 className="fw-bold mb-2">{product.name}</h5>
-                                            <p className="text-muted mb-0">${product.price}</p>
+                                            <p className="text-muted mb-0">{formatPrice(product.price)}</p>
                                         </div>
 
                                         {/* Botões */}
