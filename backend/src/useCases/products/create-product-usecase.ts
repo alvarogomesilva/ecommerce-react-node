@@ -3,7 +3,8 @@ import { CreateProductDto, Product } from "../../types/product"
 
 
 interface CreateProductUseCaseRequest {
-    data: CreateProductDto
+    data: CreateProductDto,
+    image: string | null
 }
 
 interface CreateProductUseCaseResponse {
@@ -13,9 +14,9 @@ interface CreateProductUseCaseResponse {
 export class CreateProductUseCase {
     constructor(private productRepository: ProductRepository) { }
 
-    async execute({ data }: CreateProductUseCaseRequest): Promise<CreateProductUseCaseResponse> {
+    async execute({ data, image }: CreateProductUseCaseRequest): Promise<CreateProductUseCaseResponse> {
 
-        const product = await this.productRepository.create(data)
+        const product = await this.productRepository.create(data, image)
 
         return {
             product

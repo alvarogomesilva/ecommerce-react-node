@@ -105,8 +105,9 @@ model Product {
   id            String         @id @default(uuid())
   name          String
   description   String?
-  price         Float
+  price         Int
   control_stock Boolean        @default(false)
+  image         String?
   active        Boolean        @default(true)
   link          String?
   subCategory   SubCategories? @relation(fields: [subCategoryId], references: [id])

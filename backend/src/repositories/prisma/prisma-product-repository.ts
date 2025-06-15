@@ -4,9 +4,19 @@ import { ProductRepository } from "../product-repository";
 
 export class PrismaProductRepository implements ProductRepository {
 
-    async create(data: CreateProductDto) {
+    async create(data: CreateProductDto, image: string) {
         return await prisma.product.create({
-            data
+            data: {
+                name: data.name,
+                control_stock: data.control_stock,
+                categoryId: data.categoryId,
+                price: data.price,
+                description: data.description,
+                image: image,
+                link: data.link,
+                subCategoryId: data.subCategoryId,
+                active: data.active
+            }
         })
     }
 
