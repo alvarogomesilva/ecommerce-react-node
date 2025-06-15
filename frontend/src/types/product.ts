@@ -7,6 +7,7 @@ export interface Product {
     control_stock: boolean
     active: boolean
     link: string | null
+    image: string | null
     categoryId: string | null
     subCategoryId: string | null
     createdAt: Date

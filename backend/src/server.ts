@@ -1,4 +1,4 @@
-import express, { json } from 'express'
+import express, { json, static as static_ } from 'express'
 import { usersRoutes } from './routes/user-routes'
 import { errorHandler } from './middlewares/error-handler'
 import cors from 'cors';
@@ -8,8 +8,11 @@ import { subCategoriesRoutes } from './routes/sub-categories-routes';
 import { characteristicRoutes } from './routes/characteristic-routes';
 import { productsRoutes } from './routes/product-routes';
 import { productCharacteristicsRoutes } from './routes/product-characteristic-routes';
+import { resolve } from 'node:path';
 
 const app = express()
+
+app.use('/files', static_(resolve(__dirname, '..', 'uploads')))
 
 app.use(cors())
 app.use(json())

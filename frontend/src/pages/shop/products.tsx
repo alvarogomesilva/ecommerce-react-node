@@ -1,114 +1,84 @@
+import { useProducts } from "../../hooks/use-products"
 
 export function Products() {
+    const { products } = useProducts()
+    const path = 'http://localhost:3333/files/products'
+    const fallbackImage = "https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
+
     return (
-        <>
-        <>
-            <div className='container'>
-                <div className="row align-items-md-stretch my-5">
-                    <div className="accordion col-md-2" id="accordionExample">
-                        <div className="accordion-item">
-                            <h2 className="accordion-header">
-                                <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    Produtos
-                                </button>
-                            </h2>
-                            <div id="collapseOne" className="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-                                <div className="accordion-body">
-                                    <p><a href="#" className="link-underline-light text-decoration-none">Produtos 1</a></p>
-                                    <p><a href="#" className="link-underline-light text-decoration-none">Produtos 2</a></p>
-                                    <p><a href="#" className="link-underline-light text-decoration-none">Produtos 3</a></p>
-                                    <p><a href="#" className="link-underline-light text-decoration-none">Produtos 4</a></p>
-                                    <p><a href="#" className="link-underline-light text-decoration-none">Produtos 5</a></p>
-                                </div>
+        <div className="container">
+            <div className="row align-items-start my-4">
+                {/* Menu lateral */}
+                <div className="accordion col-12 col-md-2 mb-4 mb-md-0" id="accordionExample">
+                    <div className="accordion-item">
+                        <h2 className="accordion-header">
+                            <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Produtos
+                            </button>
+                        </h2>
+                        <div id="collapseOne" className="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                            <div className="accordion-body">
+                                {["Produtos 1", "Produtos 2", "Produtos 3", "Produtos 4", "Produtos 5"].map((p, i) => (
+                                    <p key={i}>
+                                        <a href="#" className="text-decoration-none">{p}</a>
+                                    </p>
+                                ))}
                             </div>
                         </div>
                     </div>
-                    <div className="col-md-10">
-                        <div className="h-100 p-3 bg-body-tertiary border rounded-3">
+                </div>
 
-                            <div className="d-flex align-items-center">
+                {/* Conteúdo principal */}
+                <div className="col-12 col-md-10">
+                    <div className="h-100 p-3 bg-body-tertiary border rounded-3">
 
-                                <input type="password" className="form-control " id="inputPassword2" placeholder="Pesquisar produto" />
-                                <button type="submit" className="btn btn-primary ms-2"><i className="fa-solid fa-magnifying-glass"></i></button>
-                            </div>
-                            <h5 className="my-4">Lista de Produtos</h5>
+                        {/* Pesquisa */}
+                        <div className="d-flex align-items-center mb-4">
+                            <input type="text" className="form-control" placeholder="Pesquisar produto" />
+                            <button type="submit" className="btn btn-primary ms-2">
+                                <i className="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </div>
 
-                            <div className="row row-cols-1 row-cols-md-3 g-4 mb-4">
-                                <div className="col">
-                                    <div className="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg">
-                                        <div className="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
-                                            <h3 className="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Another longer title belongs here</h3>
-                                            <ul className="d-flex list-unstyled mt-auto">
-                                                <li className="me-auto"> <img src="https://github.com/twbs.png" alt="Bootstrap" width="32" height="32" className="rounded-circle border border-white" /> </li>
-                                                <li className="d-flex align-items-center me-3">
-                                                    <svg className="bi me-2" width="1em" height="1em" role="img" aria-label="Location">
-                                                        <use xlinkHref="#geo-fill"></use>
-                                                    </svg>
-                                                    <small>California</small>
-                                                </li>
-                                                <li className="d-flex align-items-center">
-                                                    <svg className="bi me-2" width="1em" height="1em" role="img" aria-label="Duration">
-                                                        <use xlinkHref="#calendar3"></use>
-                                                    </svg>
-                                                    <small>5d</small>
-                                                </li>
-                                            </ul>
+                        {/* Lista de produtos */}
+                        <div className="row gx-4 gy-4 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+                            {(products || []).map((product, index) => (
+                                <div className="col" key={index}>
+                                    <div className="card h-100 d-flex flex-column justify-content-between">
+                                        
+                                        {/* Imagem padronizada */}
+                                        <img
+                                            className="card-img-top object-fit-cover"
+                                            style={{ height: "200px", objectFit: "cover" }}
+                                            src={product.image ? `${path}/${product.image}` : fallbackImage}
+                                            alt={product.name}
+                                        />
+
+                                        {/* Conteúdo */}
+                                        <div className="card-body p-3 text-center">
+                                            <h5 className="fw-bold mb-2">{product.name}</h5>
+                                            <p className="text-muted mb-0">${product.price}</p>
+                                        </div>
+
+                                        {/* Botões */}
+                                        <div className="card-footer bg-transparent border-0 pb-3">
+                                            <div className="d-flex justify-content-center gap-2">
+                                                <a className="btn btn-outline-dark" href="#" title="Adicionar ao carrinho">
+                                                    <i className="fa-solid fa-cart-shopping"></i>
+                                                </a>
+                                                <a className="btn btn-outline-dark" href="#" title="Visualizar produto">
+                                                    <i className="fa-solid fa-eye"></i>
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col">
-                                    <div className="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg">
-                                        <div className="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
-                                            <h3 className="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Another longer title belongs here</h3>
-                                            <ul className="d-flex list-unstyled mt-auto">
-                                                <li className="me-auto"> <img src="https://github.com/twbs.png" alt="Bootstrap" width="32" height="32" className="rounded-circle border border-white" /> </li>
-                                                <li className="d-flex align-items-center me-3">
-                                                    <svg className="bi me-2" width="1em" height="1em" role="img" aria-label="Location">
-                                                        <use xlinkHref="#geo-fill"></use>
-                                                    </svg>
-                                                    <small>California</small>
-                                                </li>
-                                                <li className="d-flex align-items-center">
-                                                    <svg className="bi me-2" width="1em" height="1em" role="img" aria-label="Duration">
-                                                        <use xlinkHref="#calendar3"></use>
-                                                    </svg>
-                                                    <small>5d</small>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col">
-                                    <div className="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg">
-                                        <div className="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
-                                            <h3 className="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Another longer title belongs here</h3>
-                                            <ul className="d-flex list-unstyled mt-auto">
-                                                <li className="me-auto"> <img src="https://github.com/twbs.png" alt="Bootstrap" width="32" height="32" className="rounded-circle border border-white" /> </li>
-                                                <li className="d-flex align-items-center me-3">
-                                                    <svg className="bi me-2" width="1em" height="1em" role="img" aria-label="Location">
-                                                        <use xlinkHref="#geo-fill"></use>
-                                                    </svg>
-                                                    <small>California</small>
-                                                </li>
-                                                <li className="d-flex align-items-center">
-                                                    <svg className="bi me-2" width="1em" height="1em" role="img" aria-label="Duration">
-                                                        <use xlinkHref="#calendar3"></use>
-                                                    </svg>
-                                                    <small>5d</small>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
+                            ))}
                         </div>
 
                     </div>
                 </div>
             </div>
-        </>
-        </>
+        </div>
     )
 }

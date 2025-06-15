@@ -40,7 +40,7 @@ export function AdminProducts() {
         setFile(file)
     };
 
-    const { register, handleSubmit, formState: { isSubmitting } } = useForm({
+    const { register, handleSubmit, formState: { isSubmitting }, reset } = useForm({
         defaultValues: {
             active: false,
             control_stock: false,
@@ -72,13 +72,16 @@ export function AdminProducts() {
 
         try {
             await new Promise((resolve) => setTimeout(resolve, 1500))
+            // formData.forEach((value, key) => {
+            //     console.log(`${key}:`, value)
+            // })
             await createProductFn(formData)
             modalRef.current?.click()
 
             toast.message("Cadstro de produto", {
                 description: "Produto cadastrado com sucesso"
             })
-            
+            reset()
         } catch (error) {
             console.error(error)
         }
