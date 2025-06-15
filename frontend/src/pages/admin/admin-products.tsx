@@ -108,7 +108,7 @@ export function AdminProducts() {
                                 <div className="row">
                                     <div className="col">
                                         <div className="container my-5">
-                                            <div className="row g-4 align-items-start">
+                                            <div className="row g-4">
                                                 <div className="col-md-6">
                                                     <div className="card p-4 shadow-sm rounded-4">
                                                         <h5 className="mb-3 fw-semibold">Selecionar Imagem</h5>
