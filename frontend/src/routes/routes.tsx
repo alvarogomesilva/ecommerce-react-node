@@ -20,6 +20,7 @@ import { Blog } from '../pages/shop/blog'
 import { Contacts } from '../pages/shop/contacts'
 import { Profile } from '../pages/shop/profile'
 import { AdminCharacteristics } from '../pages/admin/admin-characteristics'
+import { PageProduct } from '../pages/shop/page-product'
 
 export const router = createBrowserRouter([
   {
@@ -35,6 +36,7 @@ export const router = createBrowserRouter([
     children: [
       { path: '/', element: <Inicial /> },
       { path: '/products', element: <Products /> },
+      { path: '/products/:id', element: <PageProduct /> },
       { path: '/categories', element: <Categories /> },
       { path: '/cart', element: <Cart /> },
       { path: '/checkout', element: <Checkout /> },
