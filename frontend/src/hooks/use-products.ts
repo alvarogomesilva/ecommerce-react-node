@@ -4,6 +4,7 @@ import { getAllProducts } from "../api/products/get-all-products"
 
 export const useProducts = () => {
     const [products, setProducts] = useState<Product[]>()
+  
 
     useEffect(() => {
         async function loadAllProducts() {
@@ -15,5 +16,8 @@ export const useProducts = () => {
         return () => { loadAllProducts() }
 
     } ,[])
+
+
+
     return { products }
 }

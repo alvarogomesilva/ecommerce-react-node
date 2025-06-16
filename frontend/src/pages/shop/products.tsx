@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import { useProducts } from "../../hooks/use-products"
 import { formatPrice } from "../../utils/formatMoney"
 
@@ -67,9 +68,9 @@ export function Products() {
                                                 <a className="btn btn-outline-dark" href="#" title="Adicionar ao carrinho">
                                                     <i className="fa-solid fa-cart-shopping"></i>
                                                 </a>
-                                                <a className="btn btn-outline-dark" href="#" title="Visualizar produto">
+                                                <Link to={`/products/${product.id}`} className="btn btn-outline-dark" title="Visualizar produto">
                                                     <i className="fa-solid fa-eye"></i>
-                                                </a>
+                                                </Link>
                                             </div>
                                         </div>
                                     </div>

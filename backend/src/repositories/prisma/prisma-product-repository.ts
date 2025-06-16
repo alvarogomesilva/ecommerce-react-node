@@ -29,4 +29,10 @@ export class PrismaProductRepository implements ProductRepository {
 
         return null
     }
+
+    async listOne(id: string) {
+        return await prisma.product.findFirst({
+            where: { id }
+        })
+    }
 }
