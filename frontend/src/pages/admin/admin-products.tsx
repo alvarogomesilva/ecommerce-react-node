@@ -42,7 +42,7 @@ export function AdminProducts() {
 
     const { register, handleSubmit, formState: { isSubmitting }, reset } = useForm({
         defaultValues: {
-            active: false,
+            active: true,
             control_stock: false,
             name: "",
             price: "",
@@ -165,7 +165,6 @@ export function AdminProducts() {
                                             className="form-check-input"
                                             type="checkbox"
                                             id="produtoAtivo"
-
                                             {...register('active')}
                                         />
                                         <label

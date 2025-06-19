@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { date, z } from "zod";
 import { Request, Response } from "express";
 import { PrismaProductRepository } from "../../repositories/prisma/prisma-product-repository";
 import { CreateProductUseCase } from "../../useCases/products/create-product-usecase";
@@ -13,8 +13,8 @@ export async function create(request: Request, response: Response) {
         categoryId: z.string().uuid(),
         link: z.string().url().optional(),
         subCategoryId: z.string().uuid().optional(),
-        control_stock: z.coerce.boolean(),
-        active: z.coerce.boolean(),
+        control_stock: z.enum(['true', 'false']).transform((value) => value === 'true'),
+        active: z.enum(['true', 'false']).transform((value) => value === 'true'),
     })
 
     try {
