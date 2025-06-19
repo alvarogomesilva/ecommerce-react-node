@@ -35,9 +35,6 @@ export function Table({ categories }: TableProps) {
 
   const handleDeleteCategory = async (id: string) => {
     await deleteCategory({ id });
-    toast.message("Exclusão de categoria", {
-      description: "Categoria excluída com sucesso"
-    });
   };
 
   useEffect(() => {

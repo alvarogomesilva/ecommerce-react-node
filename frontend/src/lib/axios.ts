@@ -2,7 +2,8 @@ import axios from "axios";
 import { useAuthStore } from "../store/use-auth-store";
 
 export const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL
+    baseURL: import.meta.env.VITE_API_URL,
+    timeout: 10000,
 })
 
 // Interceptor de requisição (adiciona o token)
@@ -13,6 +14,7 @@ api.interceptors.request.use((config) => {
   }
   return config;
 });
+
 
 //Interceptor de resposta (detecta token expirado)
 api.interceptors.response.use(

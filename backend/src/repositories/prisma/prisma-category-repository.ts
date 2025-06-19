@@ -1,5 +1,6 @@
 import { prisma } from "../../lib/prisma";
 import { Category } from "../../types/category";
+import { Product } from "../../types/product";
 import { CategoryRepository } from "../category-repository";
 
 export class PrismaCategoryRepository implements CategoryRepository {
@@ -29,6 +30,14 @@ export class PrismaCategoryRepository implements CategoryRepository {
         }
 
         return null
+    }
+
+    async listOneProduct(id: string) {
+        return await prisma.product.findFirst({
+            where: {
+                categoryId: id
+            }
+        })
     }
 
     async delete(id: string) {

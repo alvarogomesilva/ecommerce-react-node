@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { DeleteCategoryUseCase } from "../../useCases/categories/delete-category-usecase";
 import { PrismaCategoryRepository } from "../../repositories/prisma/prisma-category-repository";
 import { z } from "zod";
+import { ForeignKeyConstraintError } from "../../errors/foreign-key-constraint-error";
 
 export async function remove(request: Request, response: Response) {
    
@@ -18,6 +19,10 @@ export async function remove(request: Request, response: Response) {
 
         response.status(200).send(category)
     } catch (error) {
-        console.log(error)
+
+        if (error instanceof ForeignKeyConstraintError) {
+            response.status(409).json({ message: 'Essa categoria está vinculada a um produto!' })
+        }
+
     }
 }

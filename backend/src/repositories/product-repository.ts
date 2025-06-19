@@ -4,4 +4,5 @@ export abstract class ProductRepository {
     abstract create(data: CreateProductDto, image: string | null): Promise<Product>
     abstract listAll(): Promise<Product[] | null>
     abstract listOne(id: string): Promise<Product | null>
+
 }
