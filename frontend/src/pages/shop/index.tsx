@@ -1,4 +1,5 @@
 import Image from '../../assets/image.jpg'
+import { CardProduct } from '../../components/products/card'
 import { useProducts } from '../../hooks/use-products'
 
 export function Inicial() {
@@ -81,20 +82,11 @@ export function Inicial() {
                 <div className="row row-cols-1 row-cols-md-3 g-4 mb-4">
                     {products && (
                         products.map((product) => (
-                            <div className="col" key={product.id}>
-                            <div className="card">
-                                <img src={Image} className="card-img-top" alt="..." />
-                                <div className="card-body">
-                                    <h5 className="card-title">{product.name}</h5>
-                                    <p className="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-
-                                    <a href="#" className="btn btn-primary">
-                                        <i className="fa-solid fa-eye"></i>
-                                        <span> Ver mais</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+                            <CardProduct
+                                key={product.id}
+                                id={product.id}
+                                product={product}
+                            />
                         ))
                     )}
                 </div>
