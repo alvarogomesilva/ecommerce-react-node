@@ -55,7 +55,7 @@ export function SignUp() {
             <div className="container">
                 <div className="card border-light-subtle shadow-sm">
                     <div className="row g-0">
-                        <div className="col-12 col-md-6 bg-primary">
+                        <div className="col-12 col-md-6 bg-primary rounded-3">
                             <div className="d-flex align-items-center justify-content-center h-100">
                                 <div className="col-10 col-xl-8 py-3 text-center">
                                     <Store
