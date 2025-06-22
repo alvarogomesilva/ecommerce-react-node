@@ -10,7 +10,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { getAllProducts } from "../../api/products/get-all-products";
 import { queryClient } from "../../lib/react-query";
 import { parsePriceToInt } from "../../utils/parsePriceToInt";
-import { useCharacteristics } from "../../hooks/use-characteristics";
+import { ModalProductCharacteristic } from "../../components/modal-product-characteristic";
 
 const createProductschemaBody = z.object({
     active: z.boolean(),
@@ -25,8 +25,7 @@ type CreateProductschemaBody = z.infer<typeof createProductschemaBody>
 
 export function AdminProducts() {
     const modalRef = useRef<HTMLButtonElement>(null)
-    const addCharacteristicModal = useRef<HTMLButtonElement>(null)
-    const { characteristics } = useCharacteristics()
+    const [productIdSelected, setProductIdSelected] = useState("")
 
     const [preview, setPreview] = useState<string | null>(null);
     const [file, setFile] = useState<File | undefined>()
@@ -232,8 +231,8 @@ export function AdminProducts() {
                                         <label htmlFor="subcategoria" className="form-label">
                                             Sub Categoria
                                         </label>
-                                        <select className="form-select" id="subcategoria">
-                                            <option selected>Escolha uma subcategoria</option>
+                                        <select className="form-select" id="subcategoria" defaultValue="">
+                                            <option selected defaultValue="">Escolha uma subcategoria</option>
                                             <option value="1">One</option>
                                             <option value="2">Two</option>
                                             <option value="3">Three</option>
@@ -362,7 +361,9 @@ export function AdminProducts() {
                                         type="button"
                                         className="btn btn-outline-secondary"
                                         data-bs-toggle="modal"
-                                        data-bs-target="#characteristicModal">
+                                        data-bs-target="#characteristicModal"
+                                        onClick={() => setProductIdSelected(product.id)}
+                                    >
                                         <i className="fa-solid fa-palette"></i>
                                     </button>
                                     <button type="button" className="btn btn-outline-primary">
@@ -378,77 +379,10 @@ export function AdminProducts() {
                 </table>
             )}
 
-            {/* MODAL DE ADICIONAR CARACTERISTICA */}
-            <div className="modal fade" id="characteristicModal" tabIndex={-1} aria-labelledby="characteristicModal" aria-hidden="true">
-                <div className="modal-dialog modal-lg">
-                    <div className="modal-content">
-                        <form>
-                            <div className="modal-header">
-                                <h1 className="modal-title fs-5">Adicionar Característica</h1>
-                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div className="modal-body">
-                                <div className="row">
-                                    <div className="col">
-                                        <div className="mb-3">
-                                            <label htmlFor="name" className="col-form-label">Característica</label>
-                                            <select className="form-select form-select-sm" aria-label=".form-select-sm example">
-                                                {characteristics?.map((characteristic) => (
-                                                    <option key={characteristic.id} value={characteristic.id}>{characteristic.name}</option>
-                                                ))}
-                                            </select>
-                                        </div>
-                                        <div className="mb-3">
-                                            <label htmlFor="exampleFormControlInput1" className="form-label">Descrição</label>
-                                            <input type="email" className="form-control form-control-sm"   />
-                                        </div>
-                                        <div className="mb-3">
-                                             <label htmlFor="email" className="form-label">Valor<span className="text-muted"> (Se tiver acréscimo)</span></label>
-                                            <input type="email" className="form-control form-control-sm"   />
-                                        </div>
-                                        <div className="mb-3">
-                                            <label htmlFor="email" className="form-label">Código<span className="text-muted"> (Hexadecimal da cor)</span></label>
-                                            <input type="email" className="form-control form-control-sm"   />
-                                        </div>
-                                    </div>
-                                    <div className="col">
-                                        <div className="mb-3">
-                                            <label htmlFor="name" className="col-form-label">Características do produto</label>
+            <ModalProductCharacteristic
+                productId={productIdSelected}
+            />
 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="modal-footer">
-                                <button
-                                    type="button"
-                                    className="btn btn-secondary"
-                                    data-bs-dismiss="modal"
-                                //ref={createModalRef}
-                                >
-                                    Fechar
-                                </button>
-                                <button
-                                    type="submit"
-                                    className="btn btn-primary"
-                                    disabled={isSubmitting}
-                                    style={{ width: "120px" }}
-                                >
-                                    {isSubmitting ? (
-                                        <div className="spinner-border text-light spinner-border-sm" role="status">
-                                            <span className="visually-hidden">Carregando...</span>
-                                        </div>
-                                    ) : (
-                                        "Cadastrar"
-                                    )}
-                                </button>
-
-
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
 
         </main>
     )
