@@ -2,6 +2,8 @@ import { useForm } from "react-hook-form"
 import { useCharacteristics } from "../hooks/use-characteristics"
 import type { ProductCharacteristicInput } from "../validations/product-characteristic-schema"
 import { useProductCharacteristics } from "../hooks/use-product-characteristic"
+import { useEffect, useState } from "react"
+import { listAllCharacteristics } from "../api/products-characteristics/list-all-products-characteristics"
 
 
 interface ModalProps {
@@ -10,7 +12,8 @@ interface ModalProps {
 
 export function ModalProductCharacteristic({ productId }: ModalProps) {
     const { characteristics } = useCharacteristics()
-    const {createModalRef, onSubmit} = useProductCharacteristics()
+    const { createModalRef, onSubmit } = useProductCharacteristics()
+    const [productsCharacteristics, setProductsCharacteristics] = useState([])
 
     const { register, handleSubmit, formState: { isSubmitting } } = useForm<ProductCharacteristicInput>({
         defaultValues: {
@@ -31,6 +34,22 @@ export function ModalProductCharacteristic({ productId }: ModalProps) {
             hex_value: data.hex_value
         })
     }
+
+    useEffect(() => {
+        async function loadAllProductsCharacteristics() {
+            const response = await listAllCharacteristics(productId)
+            setProductsCharacteristics(response)
+
+        }
+
+        if (productId) {
+            loadAllProductsCharacteristics()
+
+        }
+
+        return () => {}
+    }, [productId])
+
 
     return (
         <div className="modal fade" id="characteristicModal" tabIndex={-1} aria-labelledby="characteristicModal" aria-hidden="true" ref={createModalRef}>
@@ -78,8 +97,20 @@ export function ModalProductCharacteristic({ productId }: ModalProps) {
                                 </div>
                                 <div className="col">
                                     <div className="mb-3">
-                                        <label htmlFor="name" className="col-form-label">Características do produto</label>
+                                        <label className="col-form-label">Características do produto</label>
+                                        {Object.entries(productsCharacteristics).map(([name, items]) => (
+                                            <div key={name}>
+                                                <h6>{name}</h6>
+                                                <ul>
+                                                    {items.map((item) => (
+                                                        <li key={item.id}>
+                                                            {item.description}
 
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        ))}
                                     </div>
                                 </div>
                             </div>
@@ -99,7 +130,7 @@ export function ModalProductCharacteristic({ productId }: ModalProps) {
                                 disabled={isSubmitting}
                                 style={{ width: "120px" }}
                             >
-                                {isSubmitting ? "Cadastrando...": "Cadastrar"}
+                                {isSubmitting ? "Cadastrando..." : "Cadastrar"}
                             </button>
 
 

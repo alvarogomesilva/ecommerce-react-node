@@ -11,6 +11,7 @@ import { getAllProducts } from "../../api/products/get-all-products";
 import { queryClient } from "../../lib/react-query";
 import { parsePriceToInt } from "../../utils/parsePriceToInt";
 import { ModalProductCharacteristic } from "../../components/modal-product-characteristic";
+import { useProductCharacteristics } from "../../hooks/use-product-characteristic";
 
 const createProductschemaBody = z.object({
     active: z.boolean(),
