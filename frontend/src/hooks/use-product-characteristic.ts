@@ -2,13 +2,17 @@ import { useMutation, useQuery } from "@tanstack/react-query"
 import { createProductCharacteristic } from "../api/products-characteristics/create-products-characteristics"
 import type { ProductCharacteristicInput } from "../validations/product-characteristic-schema";
 import { toast } from "sonner";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { listAllCharacteristics } from "../api/products-characteristics/list-all-products-characteristics";
 
-export const useProductCharacteristics = () => {
+export const useProductCharacteristics = (searchTerm: string) => {
     const createModalRef = useRef<HTMLButtonElement | any>(null)
 
-   
+    // Query para listar características
+    const { data: productsCharacteristics } = useQuery({
+        queryKey: ['products-characteristics', searchTerm],
+        queryFn: () => listAllCharacteristics(searchTerm),
+    })
 
     const createMutation = useMutation({
         mutationFn: createProductCharacteristic
@@ -26,12 +30,13 @@ export const useProductCharacteristics = () => {
         })
     };
 
-  
+
 
 
     return {
         createModalRef,
         onSubmit,
-        
+        productsCharacteristics,
+
     }
 } 
