@@ -3,10 +3,12 @@ import { useParams } from "react-router-dom"
 import { listOneProduct } from "../../api/products/list-one-product"
 import type { Product } from "../../types/product"
 import { formatPrice } from "../../utils/formatMoney"
+import { useProductCharacteristics } from "../../hooks/use-product-characteristic"
 
 export function PageProduct() {
     const { id } = useParams()
     const [product, setProduct] = useState<Product | null>(null)
+    const { productsCharacteristics } = useProductCharacteristics(id!)
     const path = 'http://localhost:3333/files/products'
 
     useEffect(() => {
@@ -40,10 +42,25 @@ export function PageProduct() {
                             <p className="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium at dolorem quidem modi. Nam sequi consequatur obcaecati excepturi alias magni, accusamus eius blanditiis delectus ipsam minima ea iste laborum vero?</p>
                             <div className="d-flex">
                                 <input className="form-control text-center me-3" style={{ maxWidth: '3rem' }} />
-                                <button className="btn btn-outline-dark flex-shrink-0" type="button">
+                                <button className="btn btn-primary flex-shrink-0" type="button">
                                     <i className="bi-cart-fill me-1"></i>
-                                    Add to cart
+                                    Adicionar ao carrinho 
                                 </button>
+                            </div>
+
+                            <div className="row mt-3">
+                                {productsCharacteristics && Object.entries(productsCharacteristics).map(([name, items]) => (
+                                    <div key={name} className="col-md-4 mb-3">
+                                        <label className="form-label">{name}</label>
+                                        <select className="form-select">
+                                            {items.map(item => (
+                                                <option key={item.id} value={item.id}>
+                                                    {item.description}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </div>
