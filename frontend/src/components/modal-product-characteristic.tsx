@@ -10,8 +10,7 @@ interface ModalProps {
 
 export function ModalProductCharacteristic({ productId }: ModalProps) {
     const { characteristics } = useCharacteristics()
-    const { createModalRef, onSubmit, productsCharacteristics, } = useProductCharacteristics(productId)
-
+    const { createModalRef, onSubmit, productsCharacteristics } = useProductCharacteristics(productId)
     const { register, handleSubmit, formState: { isSubmitting } } = useForm<ProductCharacteristicInput>({
         defaultValues: {
             characteristicId: "",
@@ -32,15 +31,14 @@ export function ModalProductCharacteristic({ productId }: ModalProps) {
         })
     }
 
-
     return (
-        <div className="modal fade" id="characteristicModal" tabIndex={-1} aria-labelledby="characteristicModal" aria-hidden="true" ref={createModalRef}>
+        <div className="modal fade" id="characteristicModal" tabIndex={-1} ref={createModalRef}>
             <div className="modal-dialog modal-lg">
                 <div className="modal-content">
                     <form onSubmit={handleSubmit(handleRegisterProductCharacteristic)}>
                         <div className="modal-header">
                             <h1 className="modal-title fs-5">Adicionar Característica</h1>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" ></button>
                         </div>
                         <div className="modal-body">
                             <div className="row">

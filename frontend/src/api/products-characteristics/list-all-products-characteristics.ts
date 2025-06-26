@@ -13,7 +13,12 @@ export type CharacteristicsResponse = {
   [key: string]: Characteristics[];
 }
 
-export async function listAllCharacteristics(productId: string): Promise<CharacteristicsResponse> {
-  const response = await api.get<CharacteristicsResponse>(`/product-characteristics/${productId}`)
-  return response.data
+export async function listAllCharacteristics(productId: string) {
+  try {
+    const response = await api.get<CharacteristicsResponse>(`/product-characteristics/${productId}`)
+    return response.data
+  } catch (error) {
+    
+    console.log()
+  }
 }

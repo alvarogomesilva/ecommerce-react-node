@@ -10,8 +10,9 @@ export const useProductCharacteristics = (searchTerm: string) => {
 
     // Query para listar características
     const { data: productsCharacteristics } = useQuery({
-        queryKey: ['products-characteristics', searchTerm],
+        queryKey: ['products-characteristics', searchTerm!],
         queryFn: () => listAllCharacteristics(searchTerm),
+        enabled: !!searchTerm
     })
 
     const createMutation = useMutation({
@@ -36,7 +37,6 @@ export const useProductCharacteristics = (searchTerm: string) => {
     return {
         createModalRef,
         onSubmit,
-        productsCharacteristics,
-
+        productsCharacteristics
     }
 } 

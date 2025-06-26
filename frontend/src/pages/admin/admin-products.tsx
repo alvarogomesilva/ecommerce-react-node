@@ -104,7 +104,6 @@ export function AdminProducts() {
                 id="exampleModal3"
                 tabIndex={-1}
                 aria-labelledby="exampleModalLabel3"
-                aria-hidden="true"
             >
                 <div className="modal-dialog modal-lg">
                     <div className="modal-content">
@@ -233,7 +232,7 @@ export function AdminProducts() {
                                             Sub Categoria
                                         </label>
                                         <select className="form-select" id="subcategoria" defaultValue="">
-                                            <option selected defaultValue="">Escolha uma subcategoria</option>
+                                            <option defaultValue="">Escolha uma subcategoria</option>
                                             <option value="1">One</option>
                                             <option value="2">Two</option>
                                             <option value="3">Three</option>
@@ -380,11 +379,11 @@ export function AdminProducts() {
                 </table>
             )}
 
+
+
             <ModalProductCharacteristic
                 productId={productIdSelected}
             />
-
-
         </main>
     )
 }
