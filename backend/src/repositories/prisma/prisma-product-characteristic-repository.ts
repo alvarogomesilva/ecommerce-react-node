@@ -45,4 +45,27 @@ export class PrismaProductCharacteristicRepository implements ProductCharacteris
         return grouped
     }
 
+    async listOneProductCharacteristic(id: string) {
+        return await prisma.productCharacteristic.findFirst({
+            where: { id }
+        })
+    }
+
+    async disableProductCharacteristic(id: string) {
+        const existing = await prisma.productCharacteristic.findUnique({
+            where: { id },
+            select: { active: true }
+        });
+
+        if (!existing) {
+            return null;
+        }
+
+        return await prisma.productCharacteristic.update({
+            where: { id },
+            data: { active: !existing.active }
+        });
+    }
+
+
 }

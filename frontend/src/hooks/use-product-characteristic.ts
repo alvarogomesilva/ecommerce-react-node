@@ -1,11 +1,13 @@
-import { useMutation, useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { createProductCharacteristic } from "../api/products-characteristics/create-products-characteristics"
 import type { ProductCharacteristicInput } from "../validations/product-characteristic-schema";
 import { toast } from "sonner";
 import { useRef } from "react";
 import { listAllCharacteristics } from "../api/products-characteristics/list-all-products-characteristics";
+import { toggleActive } from "../api/products-characteristics/toggle-products-characteristics";
 
 export const useProductCharacteristics = (searchTerm: string) => {
+   // const queryClient = useQueryClient()
     const createModalRef = useRef<HTMLButtonElement | any>(null)
 
     // Query para listar características
@@ -14,6 +16,19 @@ export const useProductCharacteristics = (searchTerm: string) => {
         queryFn: () => listAllCharacteristics(searchTerm),
         enabled: !!searchTerm
     })
+
+
+    const toggleActiveMutation = useMutation({
+        mutationFn: toggleActive
+    })
+
+    const toggleProductCharacteristic = async (id: string) => {
+        toggleActiveMutation.mutate(id)
+
+        toast.message('Característica', {
+            description: "Característica atualizada com sucesso!"
+        })
+    }
 
     const createMutation = useMutation({
         mutationFn: createProductCharacteristic
@@ -37,6 +52,7 @@ export const useProductCharacteristics = (searchTerm: string) => {
     return {
         createModalRef,
         onSubmit,
-        productsCharacteristics
+        productsCharacteristics,
+        toggleProductCharacteristic
     }
 } 

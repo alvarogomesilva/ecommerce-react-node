@@ -10,7 +10,7 @@ interface ModalProps {
 
 export function ModalProductCharacteristic({ productId }: ModalProps) {
     const { characteristics } = useCharacteristics()
-    const { createModalRef, onSubmit, productsCharacteristics } = useProductCharacteristics(productId)
+    const { createModalRef, onSubmit, productsCharacteristics, toggleProductCharacteristic } = useProductCharacteristics(productId)
     const { register, handleSubmit, formState: { isSubmitting } } = useForm<ProductCharacteristicInput>({
         defaultValues: {
             characteristicId: "",
@@ -77,20 +77,44 @@ export function ModalProductCharacteristic({ productId }: ModalProps) {
                                 </div>
                                 <div className="col">
                                     <div className="mb-3">
-                                        <label className="col-form-label">Características do produto</label>
+                                        <label className="col-form-label fw-bold">Características do produto</label>
+                                        <hr />
+
+
                                         {Object.entries(productsCharacteristics ?? {}).map(([name, items]) => (
-                                            <div key={name}>
-                                                <h6>{name}</h6>
-                                                <ul>
-                                                    {items.map(item => (
-                                                        <li key={item.id}>{item.description}</li>
+                                            <div key={name} className="mb-4">
+                                                <h6 className="mb-2">{name}</h6>
+
+                                                <ul className="list-group">
+                                                    {items.map((item) => (
+                                                        <li
+                                                            key={item.id}
+                                                            className="list-group-item d-flex justify-content-between align-items-center"
+                                                        >
+                                                            <span>{item.description}</span>
+
+                                                            <div className="btn-group" role="group">
+                                                                <button
+                                                                    type="button"
+                                                                    className="btn btn-sm btn-outline-primary me-2"
+                                                                    onClick={() => toggleProductCharacteristic(item.id)}
+                                                                >
+                                                                    Desativar
+                                                                </button>
+                                                                <button 
+                                                                    type="button"
+                                                                    className="btn btn-sm btn-outline-danger">
+                                                                    Excluir
+                                                                </button>
+                                                            </div>
+                                                        </li>
                                                     ))}
                                                 </ul>
                                             </div>
                                         ))}
-
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                         <div className="modal-footer">
