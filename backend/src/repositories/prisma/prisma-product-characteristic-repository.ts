@@ -28,6 +28,7 @@ export class PrismaProductCharacteristicRepository implements ProductCharacteris
 
             acc[name].push({
                 id: item.id,
+                active: item.active,
                 description: item.description,
                 addition: item.addition,
                 hex_value: item.hex_value
@@ -36,6 +37,44 @@ export class PrismaProductCharacteristicRepository implements ProductCharacteris
             return acc
         }, {} as Record<string, {
             id: string
+            active: boolean
+            description: string
+            addition: number | null
+            hex_value: string | null
+        }[]>)
+
+
+        return grouped
+    }
+
+    async listAllActiveCharacteristicByProduct(id: string) {
+          const characteristics = await prisma.productCharacteristic.findMany({
+            where: { productId: id, active: true },
+            include: {
+                characteristic: true
+            }
+        })
+
+        // Agrupar por nome da characteristic
+        const grouped = characteristics.reduce((acc, item) => {
+            const name = item.characteristic.name as string
+
+            if (!acc[name]) {
+                acc[name] = []
+            }
+
+            acc[name].push({
+                id: item.id,
+                active: item.active,
+                description: item.description,
+                addition: item.addition,
+                hex_value: item.hex_value
+            })
+
+            return acc
+        }, {} as Record<string, {
+            id: string
+            active: boolean
             description: string
             addition: number | null
             hex_value: string | null

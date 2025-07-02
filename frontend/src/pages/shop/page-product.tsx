@@ -8,7 +8,7 @@ import { useProductCharacteristics } from "../../hooks/use-product-characteristi
 export function PageProduct() {
     const { id } = useParams()
     const [product, setProduct] = useState<Product | null>(null)
-    const { productsCharacteristics } = useProductCharacteristics(id!)
+    const { productsCharacteristicsActive } = useProductCharacteristics(id!)
     const path = 'http://localhost:3333/files/products'
 
     useEffect(() => {
@@ -49,7 +49,7 @@ export function PageProduct() {
                             </div>
 
                             <div className="row mt-3">
-                                {productsCharacteristics && Object.entries(productsCharacteristics).map(([name, items]) => (
+                                {productsCharacteristicsActive && Object.entries(productsCharacteristicsActive).map(([name, items]) => (
                                     <div key={name} className="col-md-4 mb-3">
                                         <label className="form-label">{name}</label>
                                         <select className="form-select">

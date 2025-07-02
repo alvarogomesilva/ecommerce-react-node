@@ -11,6 +11,7 @@ interface ModalProps {
 export function ModalProductCharacteristic({ productId }: ModalProps) {
     const { characteristics } = useCharacteristics()
     const { createModalRef, onSubmit, productsCharacteristics, toggleProductCharacteristic } = useProductCharacteristics(productId)
+
     const { register, handleSubmit, formState: { isSubmitting } } = useForm<ProductCharacteristicInput>({
         defaultValues: {
             characteristicId: "",
@@ -99,7 +100,7 @@ export function ModalProductCharacteristic({ productId }: ModalProps) {
                                                                     className="btn btn-sm btn-outline-primary me-2"
                                                                     onClick={() => toggleProductCharacteristic(item.id)}
                                                                 >
-                                                                    Desativar
+                                                                    {item.active ? "Desativar": "Ativar"}
                                                                 </button>
                                                                 <button 
                                                                     type="button"

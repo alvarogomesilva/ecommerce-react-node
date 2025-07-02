@@ -5,15 +5,22 @@ import { toast } from "sonner";
 import { useRef } from "react";
 import { listAllCharacteristics } from "../api/products-characteristics/list-all-products-characteristics";
 import { toggleActive } from "../api/products-characteristics/toggle-products-characteristics";
+import { listAllActiveCharacteristics } from "../api/products-characteristics/list-all-active-products-characteristics";
 
 export const useProductCharacteristics = (searchTerm: string) => {
-   // const queryClient = useQueryClient()
+    // const queryClient = useQueryClient()
     const createModalRef = useRef<HTMLButtonElement | any>(null)
 
     // Query para listar características
     const { data: productsCharacteristics } = useQuery({
         queryKey: ['products-characteristics', searchTerm!],
         queryFn: () => listAllCharacteristics(searchTerm),
+        enabled: !!searchTerm
+    })
+
+    const { data: productsCharacteristicsActive } = useQuery({
+        queryKey: ['products-characteristics-active', searchTerm!],
+        queryFn: () => listAllActiveCharacteristics(searchTerm),
         enabled: !!searchTerm
     })
 
@@ -53,6 +60,7 @@ export const useProductCharacteristics = (searchTerm: string) => {
         createModalRef,
         onSubmit,
         productsCharacteristics,
+        productsCharacteristicsActive,
         toggleProductCharacteristic
     }
 } 
