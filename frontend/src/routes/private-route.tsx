@@ -2,7 +2,6 @@ import { useEffect, useState, type ReactNode } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuthStore } from "../store/use-auth-store";
 import { api } from "../lib/axios";
-import { toast } from "sonner";
 
 interface Props {
   children: ReactNode;

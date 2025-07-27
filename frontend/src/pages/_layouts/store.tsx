@@ -2,9 +2,12 @@ import { LogOut, Store } from "lucide-react";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import { useAuthStore } from "../../store/use-auth-store";
 import { UserActive } from "../../components/user-active";
+import { useCartStore } from "../../store/use-cart-store";
 
 export function StoreLayout() {
     const { user, store, logout } = useAuthStore();
+    const { cart } = useCartStore()
+
     return (
         <div>
             <nav className="navbar navbar-expand-md navbar-dark bg-primary py-3" aria-label="Main navbar">
@@ -56,6 +59,8 @@ export function StoreLayout() {
 
                             <Link className="text-white" to="/cart" title="Carrinho">
                                 <i className="fa-solid fa-cart-shopping fs-5"></i>
+                                {cart.length > 0 && <span className="badge badge-danger">{cart.length}</span> }
+                              
                             </Link>
 
                             {user && (
